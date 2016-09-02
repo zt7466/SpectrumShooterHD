@@ -1,8 +1,21 @@
 package com.thompson.spectrumshooter;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.thompson.spectrumshooter.color.ColorWheel;
 
-public class MainScreen implements Screen {
+public class MainScreen implements Screen
+{
+
+	private int currentColorCode;
+	private ColorWheel colorWheel;
+
+	public MainScreen()
+	{
+		currentColorCode = 0;
+		colorWheel = new ColorWheel();
+	}
 
 	@Override
 	public void show() {
@@ -11,9 +24,15 @@ public class MainScreen implements Screen {
 	}
 
 	@Override
-	public void render(float delta) {
-		// TODO Auto-generated method stub
+	public void render(float delta)
+	{
+		Gdx.gl.glClearColor(colorWheel.getRedValue(currentColorCode)/255.0f,
+							colorWheel.getBlueValue(currentColorCode)/255.0f,
+							colorWheel.getGreenValue(currentColorCode)/255.0f,
+							1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		currentColorCode++;
 	}
 
 	@Override

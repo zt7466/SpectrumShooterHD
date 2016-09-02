@@ -135,7 +135,10 @@ public class ColorWheel
 		return "#" + hexCode;
 	}
 
-
+	public int incrementColorCode(int currentColorCode)
+	{
+		return (currentColorCode >= colorWheel.size() - 1) ? 0 : currentColorCode++;
+	}
 
 
 }
