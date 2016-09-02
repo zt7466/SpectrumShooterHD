@@ -2,42 +2,34 @@ package com.thompson.spectrumshooter;
 
 import com.badlogic.gdx.Game;
 
+/**
+ * SpectrumShooter.java
+ * @author Zach
+ * Main class for the game that manages the games screens
+ *
+ */
 public class SpectrumShooter extends Game 
 {
-
+	private static SpectrumShooter instance = null;
+	
 	@Override
-	public void create() {
-		// TODO Auto-generated method stub
-
+	public void create() 
+	{
+		instance = this;
+		
+		instance.setScreen(new MainScreen());
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
+	public void render()
+	{
+		super.render();
 	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
+	
+	
+	
+	public static  SpectrumShooter getInstance()
+	{
+		return instance;
 	}
 }
