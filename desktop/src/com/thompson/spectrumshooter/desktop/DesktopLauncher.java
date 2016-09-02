@@ -5,8 +5,10 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.util.Constants;
 
-public class DesktopLauncher {
-	public static void main(String[] arg) {
+public class DesktopLauncher
+{
+	public static void main(String[] arg)
+	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = Constants.GAME_NAME;
