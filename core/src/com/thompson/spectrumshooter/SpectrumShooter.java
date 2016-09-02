@@ -12,6 +12,9 @@ public class SpectrumShooter extends Game
 {
 	private static SpectrumShooter instance = null;
 	
+	/**
+	 * Class run where the game is started
+	 */
 	@Override
 	public void create() 
 	{
@@ -20,16 +23,22 @@ public class SpectrumShooter extends Game
 		instance.setScreen(new MainScreen());
 	}
 
+	/**
+	 * Class run on repeat
+	 */
 	@Override
 	public void render()
 	{
 		super.render();
 	}
 	
-	
-	
-	public static  SpectrumShooter getInstance()
+	/**
+	 * Singleton method call
+	 * @return
+	 */
+	public static SpectrumShooter getInstance()
 	{
 		return instance;
 	}
+	
 }
