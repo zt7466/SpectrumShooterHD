@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author Christopher Boyer
  *
- * Version: 1.01
+ * Version: 1.02
  */
 public class ColorWheel
 {
@@ -18,6 +18,8 @@ public class ColorWheel
 	private static final int EMPTY_COLOR = 0;
 
 	private ArrayList<Integer> colorWheel; // all the color values of the wheel
+	
+	private int colorIncrement;	// the power by which color increments
 
 	/**
 	 * Generate a new color wheel going from red, to blue, to green, and then
@@ -27,7 +29,9 @@ public class ColorWheel
 	 */
 	public ColorWheel()
 	{
-		colorWheel = new ArrayList<Integer>();
+		this.colorIncrement = 1;
+		
+		this.colorWheel = new ArrayList<Integer>();
 
 		// start with Red
 		int nextRed = 255;
@@ -70,7 +74,29 @@ public class ColorWheel
 				 nextGreen !=EMPTY_COLOR ||
 				 nextBlue != EMPTY_COLOR);
 	}
+	
+	/**
+	 * Increment the given color code by the color increment factor. If it goes over
+	 * the alloted array of color codes, then return the overflow.
+	 * @param currentColorCode the current color code to be incremented
+	 * @return the incremented color code
+	 */
+	public int incrementColorCode(int currentColorCode)
+	{
+		return (currentColorCode >= colorWheel.size() - colorIncrement) 
+				? ((currentColorCode + colorIncrement) - colorWheel.size()) 
+				: currentColorCode+colorIncrement;
+	}
 
+	/**
+	 * Set the factor by which the color code will be incremented.
+	 * @param colorIncrement the factor be which the color code will be incremented.
+	 */
+	public void setColorIncrement(int colorIncrement)
+	{
+		this.colorIncrement = colorIncrement;
+	}
+	
 	/**
 	 * Get the number of colors inside the color wheel
 	 * @return the number of colors inside the color wheel
@@ -133,11 +159,6 @@ public class ColorWheel
 		hexCode = ("000000" + hexCode).substring(hexCode.length());
 		hexCode = hexCode.toUpperCase();
 		return "#" + hexCode;
-	}
-
-	public int incrementColorCode(int currentColorCode)
-	{
-		return (currentColorCode >= colorWheel.size() - 1) ? 0 : currentColorCode++;
 	}
 
 

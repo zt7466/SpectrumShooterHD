@@ -32,7 +32,7 @@ public class MainScreen implements Screen
 							1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		currentColorCode++;
+		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
 	}
 
 	@Override
