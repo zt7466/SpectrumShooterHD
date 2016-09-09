@@ -1,8 +1,9 @@
 package com.thompson.spectrumshooter;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
+import com.thompson.spectrumshooter.screens.MainScreen;
 import com.thompson.spectrumshooter.util.Constants;
+import com.badlogic.gdx.Gdx;
 
 /**
  * SpectrumShooter.java
@@ -20,7 +21,9 @@ public class SpectrumShooter extends Game
 	@Override
 	public void create()
 	{
+		
 		instance = this;
+		
 		instance.setScreen(new MainScreen());
 	}
 
