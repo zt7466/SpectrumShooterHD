@@ -1,6 +1,7 @@
 package com.thompson.spectrumshooter.color;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Creates a color wheel that contains all colors on the RGB color wheel
@@ -18,8 +19,10 @@ public class ColorWheel
 	private static final int EMPTY_COLOR = 0;
 
 	private ArrayList<Integer> colorWheel; // all the color values of the wheel
-	
+
 	private int colorIncrement;	// the power by which color increments
+
+	private Random ran;
 
 	/**
 	 * Generate a new color wheel going from red, to blue, to green, and then
@@ -30,7 +33,7 @@ public class ColorWheel
 	public ColorWheel()
 	{
 		this.colorIncrement = 1;
-		
+
 		this.colorWheel = new ArrayList<Integer>();
 
 		// start with Red
@@ -73,8 +76,19 @@ public class ColorWheel
 		} while (nextRed != FULL_COLOR ||
 				 nextGreen !=EMPTY_COLOR ||
 				 nextBlue != EMPTY_COLOR);
+
+		ran = new Random();
 	}
-	
+
+	/**
+	 * Gets a random color code that will fit inside the color wheel.
+	 * @return random color code
+	 */
+	public int random()
+	{
+		return ran.nextInt(this.colorWheel.size());
+	}
+
 	/**
 	 * Increment the given color code by the color increment factor. If it goes over
 	 * the alloted array of color codes, then return the overflow.
@@ -83,8 +97,8 @@ public class ColorWheel
 	 */
 	public int incrementColorCode(int currentColorCode)
 	{
-		return (currentColorCode >= colorWheel.size() - colorIncrement) 
-				? ((currentColorCode + colorIncrement) - colorWheel.size()) 
+		return (currentColorCode >= colorWheel.size() - colorIncrement)
+				? ((currentColorCode + colorIncrement) - colorWheel.size())
 				: currentColorCode+colorIncrement;
 	}
 
@@ -96,7 +110,7 @@ public class ColorWheel
 	{
 		this.colorIncrement = colorIncrement;
 	}
-	
+
 	/**
 	 * Get the number of colors inside the color wheel
 	 * @return the number of colors inside the color wheel

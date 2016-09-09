@@ -1,6 +1,8 @@
 package com.thompson.spectrumshooter;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * SpectrumShooter.java
@@ -8,18 +10,17 @@ import com.badlogic.gdx.Game;
  * Main class for the game that manages the games screens
  *
  */
-public class SpectrumShooter extends Game 
+public class SpectrumShooter extends Game
 {
 	private static SpectrumShooter instance = null;
-	
+
 	/**
 	 * Class run where the game is started
 	 */
 	@Override
-	public void create() 
+	public void create()
 	{
 		instance = this;
-		
 		instance.setScreen(new MainScreen());
 	}
 
@@ -31,7 +32,7 @@ public class SpectrumShooter extends Game
 	{
 		super.render();
 	}
-	
+
 	/**
 	 * Singleton method call
 	 * @return
@@ -40,5 +41,5 @@ public class SpectrumShooter extends Game
 	{
 		return instance;
 	}
-	
+
 }

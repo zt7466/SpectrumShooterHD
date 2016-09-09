@@ -18,7 +18,7 @@ public class Enemy extends Sprite
 	 * @param texture		the texture of this Enemy
 	 * @param colorCode		the color code of this Enemy
 	 */
-	public Enemy(Texture texture, int colorCode)
+	public Enemy(int colorCode, Texture texture)
 	{
 		super(texture);
 		this.colorCode = colorCode;
