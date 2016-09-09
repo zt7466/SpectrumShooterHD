@@ -70,7 +70,8 @@ public class EnemyFactroy
 
 		Enemy enemy = new Enemy(colorCode, texture);
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
-//		enemy.setSize(1, 1);
+		enemy.setSize(25, 25);
+		enemy.setPosition(0, 0);
 
 		return enemy;
 	}

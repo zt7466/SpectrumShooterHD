@@ -45,6 +45,7 @@ public class MainScreen implements Screen
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
 
+		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
 		sprite.draw(spriteBatch);
 		spriteBatch.end();
