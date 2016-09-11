@@ -28,18 +28,10 @@ public class EnemyFactroy
 		int height = 42;
 
 //		Pixmap pixmap = new Pixmap(width, height, Format.RGB888);
-
-		// Fill square with red color at 50% opacity
+//
+//		//Fill square with red color at 50% opacity
 //		pixmap.setColor(1, 0, 0, 0.5f);
 //		pixmap.fill();
-//
-//		// Draw a yellow X shape on square
-//		pixmap.setColor(1, 1, 0, 1);
-//		pixmap.drawLine(0,  0,  width, height);
-//		pixmap.drawLine(width, 0, 0, height);
-//
-//		// Draw a cyan-color berder around square
-//		pixmap.setColor(0, 1, 1, 1);
 //
 //		Texture texture = new Texture(pixmap);
 //
@@ -60,18 +52,19 @@ public class EnemyFactroy
 
 
 		int colorCode = colorWheel.random();
-		Pixmap pixmap = new Pixmap(50, 50, Format.RGBA8888);
+		Pixmap pixmap = new Pixmap(300, 300, Format.RGBA8888);
 		pixmap.setColor(colorWheel.getRedValue(colorCode),
 						colorWheel.getGreenValue(colorCode),
 						colorWheel.getBlueValue(colorCode),
 						1);
-		pixmap.fillCircle(25, 25, 25);
+		pixmap.fillCircle(pixmap.getWidth()/2, pixmap.getHeight()/2, 250);
 		Texture texture = new Texture(pixmap);
 
 		Enemy enemy = new Enemy(colorCode, texture);
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
-		enemy.setSize(25, 25);
-		enemy.setPosition(0, 0);
+		enemy.setSize(1, 1);
+		enemy.setPosition(MathUtils.random(-2.0f, 2.0f),
+						  MathUtils.random(-2.0f, 2.0f));
 
 		return enemy;
 	}
