@@ -35,6 +35,12 @@ public class SpectrumShooter extends Game
 	{
 		super.render();
 	}
+	
+	@Override
+	public void resize(int width, int height)
+	{
+		instance.getScreen().resize(width, height);
+	}
 
 	/**
 	 * Singleton method call
