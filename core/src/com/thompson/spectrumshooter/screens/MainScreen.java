@@ -55,6 +55,7 @@ public class MainScreen implements Screen
 	public void resize(int width, int height)
 	{
 		camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
+		camera.update();
 	}
 
 	@Override
