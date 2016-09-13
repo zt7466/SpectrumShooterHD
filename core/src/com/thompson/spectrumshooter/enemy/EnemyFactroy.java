@@ -35,7 +35,8 @@ public class EnemyFactroy
 
 		Enemy enemy = new Enemy(colorCode, texture);
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
-		enemy.setSize(1, 1);
+		float spriteSize = MathUtils.random(0.25f, 0.5f);
+		enemy.setSize(spriteSize, spriteSize);
 		enemy.setPosition(MathUtils.random(-2.0f, 2.0f),
 						  MathUtils.random(-2.0f, 2.0f));
 

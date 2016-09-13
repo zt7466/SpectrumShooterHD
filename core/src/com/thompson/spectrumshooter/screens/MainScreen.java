@@ -4,22 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.color.ColorWheel;
-import com.thompson.spectrumshooter.enemy.EnemyFactroy;
+import com.thompson.spectrumshooter.enemy.Enemy;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class MainScreen implements Screen
 {
-
+	private Array<Enemy> enemyHorde;
+	
 	private int currentColorCode;
 	private ColorWheel colorWheel;
 	private SpriteBatch spriteBatch;
-
-	private EnemyFactroy enemyFactory;
-
-	private Sprite sprite;
 
 	private OrthographicCamera camera;
 
@@ -37,6 +34,16 @@ public class MainScreen implements Screen
 	@Override
 	public void render(float delta)
 	{
+		updateBackgroundColor();
+
+		spriteBatch.setProjectionMatrix(camera.combined);
+		spriteBatch.begin();
+		// render here
+		spriteBatch.end();
+	}
+
+	private void updateBackgroundColor()
+	{
 		Gdx.gl.glClearColor(colorWheel.getRedValue(currentColorCode)/255.0f,
 							colorWheel.getBlueValue(currentColorCode)/255.0f,
 							colorWheel.getGreenValue(currentColorCode)/255.0f,
@@ -44,11 +51,6 @@ public class MainScreen implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-
-		spriteBatch.setProjectionMatrix(camera.combined);
-		spriteBatch.begin();
-		sprite.draw(spriteBatch);
-		spriteBatch.end();
 	}
 
 	@Override
@@ -88,6 +90,8 @@ public class MainScreen implements Screen
 
 	private void init()
 	{
+		enemyHorde = new Array<Enemy>();
+		
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
 										Constants.VIEWPORT_HEIGHT);
 		camera.position.set(0, 0, 0);
@@ -96,9 +100,6 @@ public class MainScreen implements Screen
 		currentColorCode = 0;
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
-		enemyFactory = new EnemyFactroy();
-
-		sprite = enemyFactory.makeBasicEnemy();
 	}
 
 }
