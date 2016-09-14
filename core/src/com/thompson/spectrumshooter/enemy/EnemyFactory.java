@@ -12,12 +12,12 @@ import com.thompson.spectrumshooter.color.ColorWheel;
  *
  * @author cb9619
  */
-public class EnemyFactroy
+public class EnemyFactory
 {
 
 	private ColorWheel colorWheel;
 
-	public EnemyFactroy()
+	public EnemyFactory()
 	{
 		this.colorWheel = new ColorWheel();
 	}
