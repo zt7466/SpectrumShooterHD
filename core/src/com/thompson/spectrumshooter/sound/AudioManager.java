@@ -10,7 +10,7 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class AudioManager {
 
-	private static AudioManager audioManager; //Current instance of our AudioManager
+	private static final AudioManager audioManager = new AudioManager(); //Instance of our AudioManager
 
 	/**
 	 * Constructor for AudioManager
@@ -25,18 +25,6 @@ public class AudioManager {
 	 */
 	public void play(Sound sound){
 		sound.play();
-	}
-
-	/**
-	 * Gets the current instance of the AudioManager, because AudioManager is a singleton,
-	 * we do not want to allow a second instance
-	 */
-	public void getAudioManager(){
-		if(audioManager != null){
-
-		}else{
-			audioManager = new AudioManager();
-		}
 	}
 
 }
