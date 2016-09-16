@@ -38,10 +38,10 @@ public class MainScreen implements Screen {
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render(float deltaTime) {
 		updateBackgroundColor();
 
-		spawningAlgorithm.update(enemyHorde, world);
+		spawningAlgorithm.update(enemyHorde, world, deltaTime);
 
 		world.step(1 / 30f, 9, 2);
 		

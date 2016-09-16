@@ -17,6 +17,7 @@ public class NormalSpawn implements SpawningAlgorithm
 	private int spawnTime;
 	private int previousEnemyCount;
 	private EnemyFactory enemyFactory;
+	private float previousTime;
 
 	/**
 	 * Construct the spawning algorithm with the default spawn time of ten
@@ -24,13 +25,20 @@ public class NormalSpawn implements SpawningAlgorithm
 	 */
 	public NormalSpawn()
 	{
-		this.spawnTime = 10;
+		this(10);
+	}
+	
+	public NormalSpawn(int spawnTime)
+	{
+		this.spawnTime = spawnTime;
 		this.enemyFactory = new EnemyFactory();
+		this.previousTime = 0f;
 	}
 
 	@Override
-	public Array<Enemy> update(Array<Enemy> enemies, World world)
+	public Array<Enemy> update(Array<Enemy> enemies, World world, float deltaTime)
 	{
+		
 		if (enemies.size < previousEnemyCount)
 		{
 			enemies.add(enemyFactory.makeBasicEnemy(world));

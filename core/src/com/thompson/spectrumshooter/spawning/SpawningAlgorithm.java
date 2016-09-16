@@ -16,5 +16,5 @@ public interface SpawningAlgorithm
 	 * @param deltaTime		the amount of time since the last update
 	 * @return				the new array of enemies
 	 */
-	public Array<Enemy> update(Array<Enemy> enemies, World world);
+	public Array<Enemy> update(Array<Enemy> enemies, World world, float deltaTime);
 }
