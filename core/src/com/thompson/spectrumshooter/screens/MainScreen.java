@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.enemy.Enemy;
 import com.thompson.spectrumshooter.enemy.EnemyFactory;
+import com.thompson.spectrumshooter.spawning.SpawningAlgorithm;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class MainScreen implements Screen {
@@ -23,9 +24,9 @@ public class MainScreen implements Screen {
 
 	private OrthographicCamera camera;
 
-	private EnemyFactory enemyFactory;
-
 	private World world;
+
+	private SpawningAlgorithm spawningAlgorithm;
 
 	public MainScreen() {
 		init();
@@ -40,22 +41,10 @@ public class MainScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		updateBackgroundColor();
+
+		spawningAlgorithm.update(enemyHorde);
+
 		world.step(1 / 30f, 9, 2);
-
-		for (Enemy enemy : enemyHorde)
-		{
-			enemy.update();
-		}
-
-		for (Enemy enemy : enemyHorde)
-		{
-			if (!enemy.isAlive)
-			{
-				world.destroyBody(enemy.getFixture().getBody());
-				enemy.dispose();
-				enemyHorde.removeValue(enemy, false);
-			}
-		}
 
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
@@ -120,9 +109,6 @@ public class MainScreen implements Screen {
 		currentColorCode = 0;
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
-		enemyFactory = new EnemyFactory();
-
-		enemyHorde.add(enemyFactory.makeBasicEnemy(world));
 
 	}
 

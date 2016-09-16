@@ -7,7 +7,7 @@ import com.thompson.spectrumshooter.enemy.Enemy;
  * The way in which Enemies spawn into the world
  * @author Christopher Boyer
  */
-public interface SpawningAlgorithim
+public interface SpawningAlgorithm
 {
 	/**
 	 * Update the given array with the given implementation of the algorithm.
@@ -15,5 +15,5 @@ public interface SpawningAlgorithim
 	 * @param deltaTime		the amount of time since the last update
 	 * @return				the new array of enemies
 	 */
-	public Array<Enemy> update(Array<Enemy> enemies, float deltaTime);
+	public Array<Enemy> update(Array<Enemy> enemies);
 }
