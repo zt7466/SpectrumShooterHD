@@ -4,14 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.enemy.Enemy;
-import com.thompson.spectrumshooter.enemy.EnemyFactory;
+import com.thompson.spectrumshooter.spawning.NormalSpawn;
 import com.thompson.spectrumshooter.spawning.SpawningAlgorithm;
 import com.thompson.spectrumshooter.util.Constants;
 
@@ -42,9 +41,14 @@ public class MainScreen implements Screen {
 	public void render(float delta) {
 		updateBackgroundColor();
 
-		spawningAlgorithm.update(enemyHorde);
+		spawningAlgorithm.update(enemyHorde, world);
 
 		world.step(1 / 30f, 9, 2);
+		
+		for (Enemy enemy : enemyHorde)
+		{
+			enemy.update();
+		}
 
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
@@ -109,6 +113,8 @@ public class MainScreen implements Screen {
 		currentColorCode = 0;
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
+		
+		spawningAlgorithm = new NormalSpawn();
 
 	}
 

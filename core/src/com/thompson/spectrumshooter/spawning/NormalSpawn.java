@@ -1,5 +1,6 @@
 package com.thompson.spectrumshooter.spawning;
 
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.enemy.Enemy;
 import com.thompson.spectrumshooter.enemy.EnemyFactory;
@@ -28,16 +29,27 @@ public class NormalSpawn implements SpawningAlgorithm
 	}
 
 	@Override
-	public Array<Enemy> update(Array<Enemy> enemies)
+	public Array<Enemy> update(Array<Enemy> enemies, World world)
 	{
 		if (enemies.size < previousEnemyCount)
 		{
-//			enemies.add(enemyFactory.makeBasicEnemy(world));
+			enemies.add(enemyFactory.makeBasicEnemy(world));
 		}
 
 		if (enemies.size == 0)
 		{
-//			enemies.add();
+			enemies.add(enemyFactory.makeBasicEnemy(world));
+		}
+		
+		for (Enemy enemy : enemies)
+		{
+			if (!enemy.isAlive)
+			{
+				world.destroyBody(enemy.getFixture().getBody());
+				enemy.dispose();
+				// false indicates using .equals; true indicated using ==
+				enemies.removeValue(enemy, false);
+			}
 		}
 
 		return enemies;
