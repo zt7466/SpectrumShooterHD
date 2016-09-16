@@ -12,4 +12,6 @@ public class Constants
 
 	public static final float VIEWPORT_WIDTH = 5.0f;
 	public static final float VIEWPORT_HEIGHT = 5.0f;
+	
+	public static final float SPAWN_CIRCLE_RADIUS = 3.0f;
 }
