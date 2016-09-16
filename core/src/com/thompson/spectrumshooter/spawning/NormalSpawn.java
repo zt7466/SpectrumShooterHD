@@ -6,7 +6,7 @@ import com.thompson.spectrumshooter.enemy.Enemy;
 /**
  * A normal spawning algorithm where every time an enemy dies, a new enemy is
  * is spawned. Additionally every given so often another enemy spawns.
- * 
+ *
  * @author Christopher Boyer
  */
 public class NormalSpawn implements SpawningAlgorithim
@@ -23,17 +23,12 @@ public class NormalSpawn implements SpawningAlgorithim
 	{
 		spawnTime = 10;
 	}
-	
+
 	@Override
 	public Array<Enemy> update(Array<Enemy> enemies, float deltaTime)
 	{
-		
-		for (Enemy enemy : enemies)
-		{
-			
-		}
-		
-		return enemies;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
