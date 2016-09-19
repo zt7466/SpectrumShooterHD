@@ -1,5 +1,6 @@
-package com.thompson.spectrumshooter.enemy;
+package com.thompson.spectrumshooter.gameobject;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.math.MathUtils;
@@ -80,10 +81,12 @@ public class EnemyFactory
 		
 		Vector2 spawnPosition = generateRandomSpawnLocation();
 		
+		Gdx.app.log("HERE: ", "spawnPosition: " + spawnPosition.x + "," + spawnPosition.y);
+		
 		bodyDef.position.set(spawnPosition);
 		
 		Body body = world.createBody(bodyDef);
-		body.setLinearVelocity(.5f, .5f);
+		body.setLinearVelocity(-spawnPosition.x * 0.1f, -spawnPosition.y * 0.1f);
 
 		CircleShape circle = new CircleShape();
 		circle.setRadius(PIXMAP_RADIUS);
@@ -97,6 +100,10 @@ public class EnemyFactory
 		return fixture;
 	}
 	
+	/**
+	 * Generate a random spawn location for an Enemy.
+	 * @return	a random spawn location for an Enemy
+	 */
 	private Vector2 generateRandomSpawnLocation()
 	{
 		float x = 0;

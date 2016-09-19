@@ -2,7 +2,7 @@ package com.thompson.spectrumshooter.spawning;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.thompson.spectrumshooter.enemy.Enemy;
+import com.thompson.spectrumshooter.gameobject.Enemy;
 
 /**
  * The way in which Enemies spawn into the world

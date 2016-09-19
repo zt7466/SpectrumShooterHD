@@ -2,8 +2,8 @@ package com.thompson.spectrumshooter.spawning;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.thompson.spectrumshooter.enemy.Enemy;
-import com.thompson.spectrumshooter.enemy.EnemyFactory;
+import com.thompson.spectrumshooter.gameobject.Enemy;
+import com.thompson.spectrumshooter.gameobject.EnemyFactory;
 
 /**
  * A normal spawning algorithm where every time an enemy dies, a new enemy is

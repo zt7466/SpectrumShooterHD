@@ -1,4 +1,4 @@
-package com.thompson.spectrumshooter.enemy;
+package com.thompson.spectrumshooter.gameobject;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,7 +34,7 @@ public class Enemy extends Sprite
 	{
 		this.setPosition(fixture.getBody().getPosition().x,
 						 fixture.getBody().getPosition().y);
-		if (this.getX() > 2.0f)
+		if (inCenter(this.getX(), this.getY()))
 		{
 			isAlive = false;
 		}
@@ -57,5 +57,10 @@ public class Enemy extends Sprite
 	public Fixture getFixture()
 	{
 		return this.fixture;
+	}
+	
+	private boolean inCenter(float x, float y)
+	{
+		return x > -0.1f && x < 0.1f && y >-0.1f && y < 0.1f;
 	}
 }
