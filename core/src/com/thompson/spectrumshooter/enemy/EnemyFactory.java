@@ -3,6 +3,7 @@ package com.thompson.spectrumshooter.enemy;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.graphics.Texture;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.util.Constants;
 
 
 /**
@@ -21,6 +23,12 @@ import com.thompson.spectrumshooter.color.ColorWheel;
  */
 public class EnemyFactory
 {
+	
+	private static final int QUAD_I_START = 0;
+	private static final int QUAD_II_START = 90;
+	private static final int QUAD_III_START = 180;
+	private static final int QUAD_IV_START = 270;
+	private static final int QUAD_IV_END = 360;
 
 	private static final int PIXMAP_RADIUS = 150;
 	private ColorWheel colorWheel;
@@ -69,10 +77,13 @@ public class EnemyFactory
 	{
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.position.set(-2.0f, 0f);
+		
+		Vector2 spawnPosition = generateRandomSpawnLocation();
+		
+		bodyDef.position.set(spawnPosition);
 		
 		Body body = world.createBody(bodyDef);
-		body.setLinearVelocity(.5f, 0f);
+		body.setLinearVelocity(.5f, .5f);
 
 		CircleShape circle = new CircleShape();
 		circle.setRadius(PIXMAP_RADIUS);
@@ -85,4 +96,63 @@ public class EnemyFactory
 		circle.dispose();
 		return fixture;
 	}
+	
+	private Vector2 generateRandomSpawnLocation()
+	{
+		float x = 0;
+		float y = 0;
+		
+		float theta = MathUtils.random(0f, 360.0f);
+		if (theta > QUAD_I_START && theta < QUAD_II_START) {
+			x =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
+			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
+		} else if (theta > QUAD_II_START && theta < QUAD_III_START) {
+			x = -Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
+			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
+		} else if (theta > QUAD_III_START && theta < QUAD_IV_START) {
+			x = -Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
+			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
+		} else if (theta > QUAD_IV_START && theta < QUAD_IV_END) {
+			x = -Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
+			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
+		} else if (theta == QUAD_I_START) {
+			x = Constants.SPAWN_CIRCLE_RADIUS;
+			y = 0;
+		} else if (theta == QUAD_II_START) {
+			x = 0;
+			y = -Constants.SPAWN_CIRCLE_RADIUS;
+		} else if (theta == QUAD_III_START) {
+			x = -Constants.SPAWN_CIRCLE_RADIUS;
+			y = 0;
+		} else if (theta == QUAD_IV_START) {
+			x = 0;
+			y = -Constants.SPAWN_CIRCLE_RADIUS;
+		} else if (theta == QUAD_IV_END) {
+			x = Constants.SPAWN_CIRCLE_RADIUS;
+			y = 0;
+		}
+		
+		Vector2 randomLocation = new Vector2(x, y);
+		
+		return randomLocation;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
