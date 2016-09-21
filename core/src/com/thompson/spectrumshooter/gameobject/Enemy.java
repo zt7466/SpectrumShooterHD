@@ -9,12 +9,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  *
  * @author Christopher Boyer
  */
-public class Enemy extends Sprite
+public class Enemy extends GameObject
 {
-
-	private int colorCode;	// The color code of this Enemy
-	private Fixture fixture;
-	public boolean isAlive;
 
 	/**
 	 * Create a new Enemy with the given texture and the given color code.
@@ -24,12 +20,17 @@ public class Enemy extends Sprite
 	 */
 	public Enemy(int colorCode, Fixture fixture, Texture texture)
 	{
-		super(texture);
+		super(colorCode, fixture, texture);
 		this.fixture = fixture;
 		this.colorCode = colorCode;
 		this.isAlive = true;
 	}
 
+	/**
+	 * Update the location of this sprite to represent the fixture of this
+	 * GameObject
+	 */
+	@Override
 	public void update()
 	{
 		this.setPosition(fixture.getBody().getPosition().x,
@@ -40,25 +41,6 @@ public class Enemy extends Sprite
 		}
 	}
 
-	public void dispose()
-	{
-		this.getTexture().dispose();
-	}
-
-	/**
-	 * Get the color code of this Enemy
-	 * @return color code of this Enemy
-	 */
-	public int getColorCode()
-	{
-		return this.colorCode;
-	}
-
-	public Fixture getFixture()
-	{
-		return this.fixture;
-	}
-	
 	private boolean inCenter(float x, float y)
 	{
 		return x > -0.1f && x < 0.1f && y >-0.1f && y < 0.1f;

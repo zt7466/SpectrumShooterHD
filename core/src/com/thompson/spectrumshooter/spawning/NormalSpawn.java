@@ -2,8 +2,8 @@ package com.thompson.spectrumshooter.spawning;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.thompson.spectrumshooter.gameobject.Enemy;
-import com.thompson.spectrumshooter.gameobject.EnemyFactory;
+import com.thompson.spectrumshooter.gameobject.GameObject;
+import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 
 /**
  * A normal spawning algorithm where every time an enemy dies, a new enemy is
@@ -16,7 +16,7 @@ public class NormalSpawn implements SpawningAlgorithm
 	// the number of seconds between spawning a new enemy
 	private int spawnTime;
 	private int previousEnemyCount;
-	private EnemyFactory enemyFactory;
+	private GameObjectFactory gameObjectFactory;
 	private float previousTime;
 
 	/**
@@ -27,29 +27,29 @@ public class NormalSpawn implements SpawningAlgorithm
 	{
 		this(10);
 	}
-	
+
 	public NormalSpawn(int spawnTime)
 	{
 		this.spawnTime = spawnTime;
-		this.enemyFactory = new EnemyFactory();
+		this.gameObjectFactory = new GameObjectFactory();
 		this.previousTime = 0f;
 	}
 
 	@Override
-	public Array<Enemy> update(Array<Enemy> enemies, World world, float deltaTime)
+	public Array<GameObject> update(Array<GameObject> enemies, World world, float deltaTime)
 	{
-		
+
 		if (enemies.size < previousEnemyCount)
 		{
-			enemies.add(enemyFactory.makeBasicEnemy(world));
+			enemies.add(gameObjectFactory.makeBasicEnemy(world));
 		}
 
 		if (enemies.size == 0)
 		{
-			enemies.add(enemyFactory.makeBasicEnemy(world));
+			enemies.add(gameObjectFactory.makeBasicEnemy(world));
 		}
-		
-		for (Enemy enemy : enemies)
+
+		for (GameObject enemy : enemies)
 		{
 			if (!enemy.isAlive)
 			{

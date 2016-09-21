@@ -10,8 +10,8 @@ public class Constants
 	public static final int GAME_WIDTH = 1280;
 	public static final int GAME_HEIGHT = 720;
 
-	public static final float VIEWPORT_WIDTH = 5.0f;
-	public static final float VIEWPORT_HEIGHT = 5.0f;
-	
-	public static final float SPAWN_CIRCLE_RADIUS = 1.0f;
+	public static final float VIEWPORT_WIDTH = 6.0f;
+	public static final float VIEWPORT_HEIGHT = 6.0f;
+
+	public static final float SPAWN_CIRCLE_RADIUS = 2.75f;
 }

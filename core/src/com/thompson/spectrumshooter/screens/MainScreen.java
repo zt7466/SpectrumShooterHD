@@ -9,13 +9,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.color.ColorWheel;
-import com.thompson.spectrumshooter.gameobject.Enemy;
+import com.thompson.spectrumshooter.gameobject.GameObject;
+import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 import com.thompson.spectrumshooter.spawning.NormalSpawn;
 import com.thompson.spectrumshooter.spawning.SpawningAlgorithm;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class MainScreen implements Screen {
-	private Array<Enemy> enemyHorde;
+	private Array<GameObject> enemyHorde;
+	private GameObject hero;
 
 	private int currentColorCode;
 	private ColorWheel colorWheel;
@@ -44,15 +46,16 @@ public class MainScreen implements Screen {
 		spawningAlgorithm.update(enemyHorde, world, deltaTime);
 
 		world.step(1 / 30f, 9, 2);
-		
-		for (Enemy enemy : enemyHorde)
+
+		for (GameObject enemy : enemyHorde)
 		{
 			enemy.update();
 		}
 
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
-		for (Enemy enemy : enemyHorde)
+//		hero.draw(spriteBatch);
+		for (GameObject enemy : enemyHorde)
 		{
 			enemy.draw(spriteBatch);
 		}
@@ -103,7 +106,11 @@ public class MainScreen implements Screen {
 	{
 		world = new World(new Vector2(0,0), true);
 
-		enemyHorde = new Array<Enemy>();
+		// TODO remove
+		GameObjectFactory gameObjectFactory = new GameObjectFactory();
+
+		enemyHorde = new Array<GameObject>();
+//		hero = gameObjectFactory.makeHero(world);
 
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
 										Constants.VIEWPORT_HEIGHT);
@@ -113,7 +120,7 @@ public class MainScreen implements Screen {
 		currentColorCode = 0;
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
-		
+
 		spawningAlgorithm = new NormalSpawn();
 
 	}

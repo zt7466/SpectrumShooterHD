@@ -22,19 +22,13 @@ import com.thompson.spectrumshooter.util.Constants;
  *
  * @author cb9619
  */
-public class EnemyFactory
+public class GameObjectFactory
 {
-	
-	private static final int QUAD_I_START = 0;
-	private static final int QUAD_II_START = 90;
-	private static final int QUAD_III_START = 180;
-	private static final int QUAD_IV_START = 270;
-	private static final int QUAD_IV_END = 360;
 
 	private static final int PIXMAP_RADIUS = 150;
 	private ColorWheel colorWheel;
 
-	public EnemyFactory()
+	public GameObjectFactory()
 	{
 		this.colorWheel = new ColorWheel();
 	}
@@ -48,15 +42,9 @@ public class EnemyFactory
 	public Enemy makeBasicEnemy(World world)
 	{
 		int colorCode = colorWheel.random();
-		Pixmap pixmap = new Pixmap(300, 300, Format.RGBA8888);
-		pixmap.setColor(colorWheel.getRedValue(colorCode),
-						colorWheel.getGreenValue(colorCode),
-						colorWheel.getBlueValue(colorCode),
-						1);
-		pixmap.fillCircle(150, 150, PIXMAP_RADIUS);
-		Texture texture = new Texture(pixmap);
+		Texture texture = new Texture(createPixmap(colorCode));
 
-		Fixture fixture = createFixture(world);
+		Fixture fixture = createFixture(world, generateRandomSpawnLocation());
 
 		Enemy enemy = new Enemy(colorCode, fixture, texture);
 
@@ -69,22 +57,53 @@ public class EnemyFactory
 		return enemy;
 	}
 
+	public Hero makeHero(World world)
+	{
+		int colorCode = 0;
+
+		Texture texture = new Texture(createPixmap(colorCode));
+
+		Fixture fixture = createFixture(world, new Vector2(0, 0));
+
+		Hero hero = new Hero(colorCode, fixture, texture);
+
+		hero.setOrigin(hero.getWidth() / 2.0f, hero.getHeight() / 2.0f);
+		float spriteSize = 0.75f;
+		hero.setSize(spriteSize, spriteSize);
+		hero.setPosition(fixture.getBody().getPosition().x,
+				  		 fixture.getBody().getPosition().y);
+
+		return hero;
+	}
+
+	/**
+	 * Create the pixmaps used for our GameObjects.
+	 * @param colorCode the color code from the color wheel of this Pixmap
+	 * @return a new pixmap
+	 */
+	private Pixmap createPixmap(int colorCode)
+	{
+		Pixmap pixmap = new Pixmap(300, 300, Format.RGBA8888);
+		pixmap.setColor(colorWheel.getRedValue(colorCode),
+						colorWheel.getGreenValue(colorCode),
+						colorWheel.getBlueValue(colorCode),
+						1);
+		pixmap.fillCircle(150, 150, PIXMAP_RADIUS);
+		return pixmap;
+	}
+
 	/**
 	 * Create a new Fixture for an Enemy. Add that fixture to the game world.
 	 * @param world		game world where the Enemy exists
 	 * @return			new Fixture
 	 */
-	private Fixture createFixture(World world)
+	private Fixture createFixture(World world, Vector2 spawnPosition)
 	{
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
-		
-		Vector2 spawnPosition = generateRandomSpawnLocation();
-		
-		Gdx.app.log("HERE: ", "spawnPosition: " + spawnPosition.x + "," + spawnPosition.y);
-		
+
 		bodyDef.position.set(spawnPosition);
-		
+
 		Body body = world.createBody(bodyDef);
 		body.setLinearVelocity(-spawnPosition.x * 0.1f, -spawnPosition.y * 0.1f);
 
@@ -99,16 +118,22 @@ public class EnemyFactory
 		circle.dispose();
 		return fixture;
 	}
-	
+
 	/**
 	 * Generate a random spawn location for an Enemy.
 	 * @return	a random spawn location for an Enemy
 	 */
 	private Vector2 generateRandomSpawnLocation()
 	{
+		int QUAD_I_START = 0;
+		int QUAD_II_START = 90;
+		int QUAD_III_START = 180;
+		int QUAD_IV_START = 270;
+		int QUAD_IV_END = 360;
+
 		float x = 0;
 		float y = 0;
-		
+
 		float theta = MathUtils.random(0f, 360.0f);
 		if (theta > QUAD_I_START && theta < QUAD_II_START) {
 			x =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
@@ -138,9 +163,9 @@ public class EnemyFactory
 			x = Constants.SPAWN_CIRCLE_RADIUS;
 			y = 0;
 		}
-		
+
 		Vector2 randomLocation = new Vector2(x, y);
-		
+
 		return randomLocation;
 	}
 }
