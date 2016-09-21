@@ -33,41 +33,6 @@ public class GameObjectFactory
 		this.colorWheel = new ColorWheel();
 	}
 
-
-	// TODO remove
-	public Enemy makeTestEnemy1(World world)
-	{
-		int colorCode = colorWheel.random();
-		Texture texture = new Texture(createPixmap(colorCode));
-		Fixture fixture = createFixture(world, new Vector2(-2, 0));
-		Enemy enemy = new Enemy(colorCode, fixture, texture);
-
-		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
-		float spriteSize = 0.75f;
-		enemy.setSize(spriteSize, spriteSize);
-		enemy.setPosition(fixture.getBody().getPosition().x,
-						  fixture.getBody().getPosition().y);
-
-		return enemy;
-	}
-
-	// TODO remove
-	public Enemy makeTestEnemy2(World world)
-	{
-		int colorCode = colorWheel.random();
-		Texture texture = new Texture(createPixmap(colorCode));
-		Fixture fixture = createFixture(world, new Vector2(2, 0));
-		Enemy enemy = new Enemy(colorCode, fixture, texture);
-
-		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
-		float spriteSize = 0.75f;
-		enemy.setSize(spriteSize, spriteSize);
-		enemy.setPosition(fixture.getBody().getPosition().x,
-						  fixture.getBody().getPosition().y);
-
-		return enemy;
-	}
-
 	/**
 	 * Make a new Enemy that moves linearly from it's spawn location towards
 	 * the center of the screen.
@@ -79,15 +44,13 @@ public class GameObjectFactory
 		int colorCode = colorWheel.random();
 		Texture texture = new Texture(createPixmap(colorCode));
 
-		Fixture fixture = createFixture(world, generateRandomSpawnLocation());
+		float spriteSize =  MathUtils.random(0.25f, 0.75f);
 
-		Enemy enemy = new Enemy(colorCode, fixture, texture);
+		Fixture fixture = createFixture(world, generateRandomSpawnLocation(), spriteSize);
+
+		Enemy enemy = new Enemy(colorCode, fixture, texture,spriteSize);
 
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
-		float spriteSize = MathUtils.random(0.25f, 0.5f);
-		enemy.setSize(spriteSize, spriteSize);
-		enemy.setPosition(fixture.getBody().getPosition().x,
-						  fixture.getBody().getPosition().y);
 
 		return enemy;
 	}
@@ -97,13 +60,13 @@ public class GameObjectFactory
 		int colorCode = 0;
 
 		Texture texture = new Texture(createPixmap(colorCode));
+		float spriteSize = 0.75f;
+		Fixture fixture = createFixture(world, new Vector2(0, 0), spriteSize);
 
-		Fixture fixture = createFixture(world, new Vector2(0, 0));
-
-		Hero hero = new Hero(colorCode, fixture, texture);
+		Hero hero = new Hero(colorCode, fixture, texture, 0.0f);
 
 		hero.setOrigin(hero.getWidth() / 2.0f, hero.getHeight() / 2.0f);
-		float spriteSize = 0.75f;
+
 		hero.setSize(spriteSize, spriteSize);
 		hero.setPosition(fixture.getBody().getPosition().x,
 				  		 fixture.getBody().getPosition().y);
@@ -132,7 +95,7 @@ public class GameObjectFactory
 	 * @param world		game world where the Enemy exists
 	 * @return			new Fixture
 	 */
-	private Fixture createFixture(World world, Vector2 spawnPosition)
+	private Fixture createFixture(World world, Vector2 spawnPosition, float spriteSize)
 	{
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -143,7 +106,7 @@ public class GameObjectFactory
 		body.setLinearVelocity(-spawnPosition.x * 0.1f, -spawnPosition.y * 0.1f);
 
 		CircleShape circle = new CircleShape();
-		circle.setRadius(PIXMAP_RADIUS);
+		circle.setRadius(spriteSize * Constants.BOX2D_CONVERSION);
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = circle;

@@ -10,10 +10,17 @@ public abstract class GameObject extends Sprite
 	protected int colorCode;		// the color code of the object
 	protected Fixture fixture;	// the physical body of the object
 	public boolean isAlive;		// deiscerns if the object is still drawn
+	protected float spriteSize;
 
-	public GameObject(int colorCode, Fixture fixture, Texture texture)
+	public GameObject(int colorCode, Fixture fixture, Texture texture, float spriteSize)
 	{
 		super(texture);
+		this.setSize(spriteSize, spriteSize);
+		this.colorCode = colorCode;
+		this.fixture = fixture;
+		this.spriteSize = spriteSize;
+		isAlive = true;
+		this.update();
 	}
 
 	/**

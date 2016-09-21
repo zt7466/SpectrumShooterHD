@@ -18,12 +18,9 @@ public class Enemy extends GameObject
 	 * @param fixture		the fixture corresponding to this Enemy
 	 * @param colorCode		the color code of this Enemy
 	 */
-	public Enemy(int colorCode, Fixture fixture, Texture texture)
+	public Enemy(int colorCode, Fixture fixture, Texture texture, float spriteSize)
 	{
-		super(colorCode, fixture, texture);
-		this.fixture = fixture;
-		this.colorCode = colorCode;
-		this.isAlive = true;
+		super(colorCode, fixture, texture, spriteSize);
 	}
 
 	/**
@@ -33,11 +30,11 @@ public class Enemy extends GameObject
 	@Override
 	public void update()
 	{
-		this.setPosition(fixture.getBody().getPosition().x,
-						 fixture.getBody().getPosition().y);
+		this.setPosition(fixture.getBody().getPosition().x - spriteSize/2.0f,
+		  		  		 fixture.getBody().getPosition().y - spriteSize/2.0f);
 		if (inCenter(this.getX(), this.getY()))
 		{
-			isAlive = false;
+			this.isAlive = false;
 		}
 	}
 
