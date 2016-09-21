@@ -33,6 +33,41 @@ public class GameObjectFactory
 		this.colorWheel = new ColorWheel();
 	}
 
+
+	// TODO remove
+	public Enemy makeTestEnemy1(World world)
+	{
+		int colorCode = colorWheel.random();
+		Texture texture = new Texture(createPixmap(colorCode));
+		Fixture fixture = createFixture(world, new Vector2(-2, 0));
+		Enemy enemy = new Enemy(colorCode, fixture, texture);
+
+		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
+		float spriteSize = 0.75f;
+		enemy.setSize(spriteSize, spriteSize);
+		enemy.setPosition(fixture.getBody().getPosition().x,
+						  fixture.getBody().getPosition().y);
+
+		return enemy;
+	}
+
+	// TODO remove
+	public Enemy makeTestEnemy2(World world)
+	{
+		int colorCode = colorWheel.random();
+		Texture texture = new Texture(createPixmap(colorCode));
+		Fixture fixture = createFixture(world, new Vector2(2, 0));
+		Enemy enemy = new Enemy(colorCode, fixture, texture);
+
+		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
+		float spriteSize = 0.75f;
+		enemy.setSize(spriteSize, spriteSize);
+		enemy.setPosition(fixture.getBody().getPosition().x,
+						  fixture.getBody().getPosition().y);
+
+		return enemy;
+	}
+
 	/**
 	 * Make a new Enemy that moves linearly from it's spawn location towards
 	 * the center of the screen.
