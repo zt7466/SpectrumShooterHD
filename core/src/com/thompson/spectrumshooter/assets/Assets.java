@@ -1,5 +1,7 @@
 package com.thompson.spectrumshooter.assets;
 
+import java.io.File;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
@@ -12,27 +14,43 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	public static final String TAG = Assets.class.getName();
 
-	public static final Assets instance = new Assets();
+	public static final Assets instance = new Assets(); //Assets instance *Singleton*
 
 	private AssetManager assetManager;
 
+	public Sound deathSound;
+
+	/**
+	 * Constructor for Assets
+	 */
 	private Assets(){
 
 	}
 
+	/**
+	 * Initializes the Assets class
+	 */
 	public void init(){
 		this.assetManager = new AssetManager();
+		assetManager.setErrorListener(this);
 		assetManager.load(Constants.SOUND_PATH, Sound.class);
 		assetManager.finishLoading();
+		deathSound = assetManager.get(Constants.SOUND_PATH, Sound.class);
 
 
 	}
 
+	/**
+	 * This throws an error if it finds one
+	 */
 	@Override
 	public void error(AssetDescriptor asset, Throwable throwable) {
 		Gdx.app.debug(TAG, "File load error");
 	}
 
+	/**
+	 * This will free the specified resources
+	 */
 	@Override
 	public void dispose() {
 		assetManager.dispose();

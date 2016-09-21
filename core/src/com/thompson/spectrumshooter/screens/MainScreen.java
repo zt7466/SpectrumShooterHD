@@ -2,18 +2,21 @@ package com.thompson.spectrumshooter.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.enemy.Enemy;
+import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class MainScreen implements Screen
 {
 	private Array<Enemy> enemyHorde;
-	
+
 	private int currentColorCode;
 	private ColorWheel colorWheel;
 	private SpriteBatch spriteBatch;
@@ -91,7 +94,7 @@ public class MainScreen implements Screen
 	private void init()
 	{
 		enemyHorde = new Array<Enemy>();
-		
+
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
 										Constants.VIEWPORT_HEIGHT);
 		camera.position.set(0, 0, 0);
@@ -100,8 +103,9 @@ public class MainScreen implements Screen
 		currentColorCode = 0;
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
+		Assets.instance.init();
+		AudioManager.instance.play(Assets.instance.deathSound);
 	}
-
 }
 
 

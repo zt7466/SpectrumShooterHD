@@ -11,7 +11,7 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class AudioManager {
 
-	private static final AudioManager audioManager = new AudioManager(); //Instance of our AudioManager
+	public static final AudioManager instance = new AudioManager(); //Instance of our AudioManager
 
 	/**
 	 * Constructor for AudioManager
@@ -29,15 +29,8 @@ public class AudioManager {
 	}
 
 	public void play(Music music){
+		music.setLooping(true);
 		music.play();
-
-		while(music.isPlaying()){
-			try {
-				this.wait(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 }
