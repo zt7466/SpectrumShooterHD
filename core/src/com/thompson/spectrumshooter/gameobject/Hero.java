@@ -13,6 +13,7 @@ public class Hero extends GameObject
 	public Hero(int colorCode, Fixture fixture, Texture texture, float spriteSize)
 	{
 		super(colorCode, fixture, texture, spriteSize);
+		fixture.setUserData(this);
 	}
 
 	/**

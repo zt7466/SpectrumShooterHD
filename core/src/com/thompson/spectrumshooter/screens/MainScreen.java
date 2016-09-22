@@ -22,6 +22,7 @@ import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 import com.thompson.spectrumshooter.spawning.NormalSpawn;
 import com.thompson.spectrumshooter.spawning.SpawningAlgorithm;
+import com.thompson.spectrumshooter.util.CollisionThing;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class MainScreen implements Screen {
@@ -29,6 +30,7 @@ public class MainScreen implements Screen {
 	private int currentColorCode;
 
 	Array<GameObject> enemyHorde;
+	private GameObject hero;
 
 	private ColorWheel colorWheel;
 	private SpriteBatch spriteBatch;
@@ -63,13 +65,17 @@ public class MainScreen implements Screen {
 		{
 			enemy.update();
 		}
-
+		hero.update();
+		
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
+		hero.draw(spriteBatch);
+		
 		for (GameObject enemy: enemyHorde)
 		{
 			enemy.draw(spriteBatch);
 		}
+		
 		spriteBatch.end();
 
 		this.debugRendere.render(world, camera.combined);
@@ -120,10 +126,12 @@ public class MainScreen implements Screen {
 		enemyHorde = new Array<GameObject>();
 
 		world = new World(new Vector2(0,0), true);
-
-		// TODO remove
+		world.setContactListener(new CollisionThing());
+		
 		GameObjectFactory gameObjectFactory = new GameObjectFactory();
 
+		hero = gameObjectFactory.makeHero(world);
+		
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
 										Constants.VIEWPORT_HEIGHT);
 		camera.position.set(0, 0, 0);

@@ -21,6 +21,7 @@ public class Enemy extends GameObject
 	public Enemy(int colorCode, Fixture fixture, Texture texture, float spriteSize)
 	{
 		super(colorCode, fixture, texture, spriteSize);
+		fixture.setUserData(this);
 	}
 
 	/**
