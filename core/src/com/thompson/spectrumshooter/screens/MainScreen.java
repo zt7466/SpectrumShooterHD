@@ -1,31 +1,45 @@
 package com.thompson.spectrumshooter.screens;
 
+import java.sql.Blob;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.gameobject.Enemy;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 import com.thompson.spectrumshooter.spawning.NormalSpawn;
 import com.thompson.spectrumshooter.spawning.SpawningAlgorithm;
+import com.thompson.spectrumshooter.util.CollisionThing;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class MainScreen implements Screen {
-	private Array<GameObject> enemyHorde;
-	private GameObject hero;
 
 	private int currentColorCode;
+
+	Array<GameObject> enemyHorde;
+	private GameObject hero;
+
 	private ColorWheel colorWheel;
 	private SpriteBatch spriteBatch;
 
 	private OrthographicCamera camera;
 
 	private World world;
+
+	Box2DDebugRenderer debugRendere = new Box2DDebugRenderer();
 
 	private SpawningAlgorithm spawningAlgorithm;
 
@@ -43,23 +57,28 @@ public class MainScreen implements Screen {
 	public void render(float deltaTime) {
 		updateBackgroundColor();
 
-		spawningAlgorithm.update(enemyHorde, world, deltaTime);
-
 		world.step(1 / 30f, 9, 2);
 
-		for (GameObject enemy : enemyHorde)
+		this.spawningAlgorithm.update(enemyHorde, world, deltaTime);
+
+		for (GameObject enemy: enemyHorde)
 		{
 			enemy.update();
 		}
-
+		hero.update();
+		
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
-//		hero.draw(spriteBatch);
-		for (GameObject enemy : enemyHorde)
+		hero.draw(spriteBatch);
+		
+		for (GameObject enemy: enemyHorde)
 		{
 			enemy.draw(spriteBatch);
 		}
+		
 		spriteBatch.end();
+
+		this.debugRendere.render(world, camera.combined);
 
 	}
 
@@ -104,14 +123,15 @@ public class MainScreen implements Screen {
 
 	private void init()
 	{
-		world = new World(new Vector2(0,0), true);
+		enemyHorde = new Array<GameObject>();
 
-		// TODO remove
+		world = new World(new Vector2(0,0), true);
+		world.setContactListener(new CollisionThing());
+		
 		GameObjectFactory gameObjectFactory = new GameObjectFactory();
 
-		enemyHorde = new Array<GameObject>();
-//		hero = gameObjectFactory.makeHero(world);
-
+		hero = gameObjectFactory.makeHero(world);
+		
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
 										Constants.VIEWPORT_HEIGHT);
 		camera.position.set(0, 0, 0);

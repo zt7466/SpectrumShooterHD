@@ -14,4 +14,6 @@ public class Constants
 	public static final float VIEWPORT_HEIGHT = 6.0f;
 
 	public static final float SPAWN_CIRCLE_RADIUS = 2.75f;
+
+	public static final float BOX2D_CONVERSION = 0.5f;
 }

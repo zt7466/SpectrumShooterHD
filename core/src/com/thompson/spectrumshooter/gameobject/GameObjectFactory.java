@@ -1,6 +1,5 @@
 package com.thompson.spectrumshooter.gameobject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.math.MathUtils;
@@ -44,34 +43,35 @@ public class GameObjectFactory
 		int colorCode = colorWheel.random();
 		Texture texture = new Texture(createPixmap(colorCode));
 
-		Fixture fixture = createFixture(world, generateRandomSpawnLocation());
+		float spriteSize =  MathUtils.random(0.25f, 0.75f);
 
-		Enemy enemy = new Enemy(colorCode, fixture, texture);
+		Fixture fixture = createDynamicFixture(world, generateRandomSpawnLocation(), spriteSize);
+
+		Enemy enemy = new Enemy(colorCode, fixture, texture,spriteSize);
 
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
-		float spriteSize = MathUtils.random(0.25f, 0.5f);
-		enemy.setSize(spriteSize, spriteSize);
-		enemy.setPosition(fixture.getBody().getPosition().x,
-						  fixture.getBody().getPosition().y);
 
 		return enemy;
 	}
 
 	public Hero makeHero(World world)
 	{
-		int colorCode = 0;
+		int colorCode = colorWheel.random();;
 
 		Texture texture = new Texture(createPixmap(colorCode));
+		float spriteSize = 0.75f;
+		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize);
 
-		Fixture fixture = createFixture(world, new Vector2(0, 0));
-
-		Hero hero = new Hero(colorCode, fixture, texture);
+		Hero hero = new Hero(colorCode, fixture, texture, 0.0f);
+		
+		hero.setPosition(fixture.getBody().getPosition().x - 3,
+ 		  		 		 fixture.getBody().getPosition().y - 3);
 
 		hero.setOrigin(hero.getWidth() / 2.0f, hero.getHeight() / 2.0f);
-		float spriteSize = 0.75f;
+
 		hero.setSize(spriteSize, spriteSize);
-		hero.setPosition(fixture.getBody().getPosition().x,
-				  		 fixture.getBody().getPosition().y);
+		hero.setPosition(fixture.getBody().getPosition().x - spriteSize/2.0f,
+ 		  		 		 fixture.getBody().getPosition().y - spriteSize/2.0f);
 
 		return hero;
 	}
@@ -92,23 +92,37 @@ public class GameObjectFactory
 		return pixmap;
 	}
 
-	/**
-	 * Create a new Fixture for an Enemy. Add that fixture to the game world.
-	 * @param world		game world where the Enemy exists
-	 * @return			new Fixture
-	 */
-	private Fixture createFixture(World world, Vector2 spawnPosition)
+
+	private Fixture createDynamicFixture(World world, Vector2 spawnPosition, float spriteSize)
 	{
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 
+		return createFixture(world, spawnPosition, spriteSize, bodyDef);
+	}
+	
+	private Fixture createStaticFixture(World world, Vector2 spawnPosition, float spriteSize)
+	{
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.StaticBody;
+		
+		return createFixture(world, spawnPosition, spriteSize, bodyDef);
+	}
+
+	/**
+	 * Create a new Fixture for a game object based on the given body definition.
+	 * @param world		game world where the Enemy exists
+	 * @return			new Fixture
+	 */
+	private Fixture createFixture(World world, Vector2 spawnPosition, float spriteSize, BodyDef bodyDef)
+	{
 		bodyDef.position.set(spawnPosition);
 
 		Body body = world.createBody(bodyDef);
 		body.setLinearVelocity(-spawnPosition.x * 0.1f, -spawnPosition.y * 0.1f);
 
 		CircleShape circle = new CircleShape();
-		circle.setRadius(PIXMAP_RADIUS);
+		circle.setRadius(spriteSize * Constants.BOX2D_CONVERSION);
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = circle;
