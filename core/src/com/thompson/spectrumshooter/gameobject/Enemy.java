@@ -33,14 +33,5 @@ public class Enemy extends GameObject
 	{
 		this.setPosition(fixture.getBody().getPosition().x - spriteSize/2.0f,
 		  		  		 fixture.getBody().getPosition().y - spriteSize/2.0f);
-		if (inCenter(this.getX(), this.getY()))
-		{
-			this.isAlive = false;
-		}
-	}
-
-	private boolean inCenter(float x, float y)
-	{
-		return x > -0.1f && x < 0.1f && y >-0.1f && y < 0.1f;
 	}
 }

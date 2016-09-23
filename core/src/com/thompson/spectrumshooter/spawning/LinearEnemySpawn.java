@@ -11,10 +11,10 @@ import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
  *
  * @author Christopher Boyer
  */
-public class NormalSpawn implements SpawningAlgorithm
+public class LinearEnemySpawn implements SpawningAlgorithm
 {
 	// the number of seconds between spawning a new enemy
-	private int spawnTime;
+	private float spawnTime;
 	private int previousEnemyCount;
 	private GameObjectFactory gameObjectFactory;
 	private float previousTime;
@@ -23,12 +23,12 @@ public class NormalSpawn implements SpawningAlgorithm
 	 * Construct the spawning algorithm with the default spawn time of ten
 	 * seconds.
 	 */
-	public NormalSpawn()
+	public LinearEnemySpawn()
 	{
 		this(10);
 	}
 
-	public NormalSpawn(int spawnTime)
+	public LinearEnemySpawn(float spawnTime)
 	{
 		this.spawnTime = spawnTime;
 		this.gameObjectFactory = new GameObjectFactory();
@@ -38,9 +38,9 @@ public class NormalSpawn implements SpawningAlgorithm
 	@Override
 	public Array<GameObject> update(Array<GameObject> enemies, World world, float deltaTime)
 	{
-		
+
 		previousTime = previousTime + deltaTime;
-		
+
 		if (previousTime > spawnTime)
 		{
 			enemies.add(gameObjectFactory.makeBasicEnemy(world));
@@ -67,7 +67,7 @@ public class NormalSpawn implements SpawningAlgorithm
 				enemies.removeValue(enemy, false);
 			}
 		}
-		
+
 		previousEnemyCount = enemies.size;
 
 		return enemies;

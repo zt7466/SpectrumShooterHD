@@ -20,7 +20,7 @@ import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.gameobject.Enemy;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
-import com.thompson.spectrumshooter.spawning.NormalSpawn;
+import com.thompson.spectrumshooter.spawning.LinearEnemySpawn;
 import com.thompson.spectrumshooter.spawning.SpawningAlgorithm;
 import com.thompson.spectrumshooter.util.CollisionThing;
 import com.thompson.spectrumshooter.util.Constants;
@@ -39,7 +39,7 @@ public class MainScreen implements Screen {
 
 	private World world;
 
-	Box2DDebugRenderer debugRendere = new Box2DDebugRenderer();
+	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 	private SpawningAlgorithm spawningAlgorithm;
 
@@ -55,8 +55,9 @@ public class MainScreen implements Screen {
 
 	@Override
 	public void render(float deltaTime) {
-		updateBackgroundColor();
 
+		// update information about the game
+		updateBackgroundColor();
 		world.step(1 / 30f, 9, 2);
 
 		this.spawningAlgorithm.update(enemyHorde, world, deltaTime);
@@ -66,19 +67,21 @@ public class MainScreen implements Screen {
 			enemy.update();
 		}
 		hero.update();
-		
+
+		// draw everything in the game
 		spriteBatch.setProjectionMatrix(camera.combined);
+
 		spriteBatch.begin();
 		hero.draw(spriteBatch);
-		
+
 		for (GameObject enemy: enemyHorde)
 		{
 			enemy.draw(spriteBatch);
 		}
-		
+
 		spriteBatch.end();
 
-		this.debugRendere.render(world, camera.combined);
+		debugRenderer.render(world, camera.combined);
 
 	}
 
@@ -127,11 +130,11 @@ public class MainScreen implements Screen {
 
 		world = new World(new Vector2(0,0), true);
 		world.setContactListener(new CollisionThing());
-		
+
 		GameObjectFactory gameObjectFactory = new GameObjectFactory();
 
 		hero = gameObjectFactory.makeHero(world);
-		
+
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,
 										Constants.VIEWPORT_HEIGHT);
 		camera.position.set(0, 0, 0);
@@ -141,7 +144,7 @@ public class MainScreen implements Screen {
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		spawningAlgorithm = new NormalSpawn(1);
+		spawningAlgorithm = new LinearEnemySpawn(1.0f);
 
 	}
 

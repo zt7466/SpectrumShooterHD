@@ -2,16 +2,17 @@ package com.thompson.spectrumshooter.gameobject;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.graphics.Texture;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.util.Constants;
 
@@ -26,6 +27,9 @@ public class GameObjectFactory
 
 	private static final int PIXMAP_RADIUS = 150;
 	private ColorWheel colorWheel;
+
+	private final short CATEGORY_ENEMY = 0x0002;
+	private final short CATEGORY_HERO = 0x0003;
 
 	public GameObjectFactory()
 	{
@@ -46,6 +50,10 @@ public class GameObjectFactory
 		float spriteSize =  MathUtils.random(0.25f, 0.75f);
 
 		Fixture fixture = createDynamicFixture(world, generateRandomSpawnLocation(), spriteSize);
+		Filter filter = new Filter();
+		filter.categoryBits = CATEGORY_ENEMY;
+		filter.maskBits = ~CATEGORY_ENEMY;
+		fixture.setFilterData(filter);
 
 		Enemy enemy = new Enemy(colorCode, fixture, texture,spriteSize);
 
@@ -56,14 +64,14 @@ public class GameObjectFactory
 
 	public Hero makeHero(World world)
 	{
-		int colorCode = colorWheel.random();;
+		int colorCode = colorWheel.random();
 
 		Texture texture = new Texture(createPixmap(colorCode));
 		float spriteSize = 0.75f;
 		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize);
 
 		Hero hero = new Hero(colorCode, fixture, texture, 0.0f);
-		
+
 		hero.setPosition(fixture.getBody().getPosition().x - 3,
  		  		 		 fixture.getBody().getPosition().y - 3);
 
@@ -100,12 +108,12 @@ public class GameObjectFactory
 
 		return createFixture(world, spawnPosition, spriteSize, bodyDef);
 	}
-	
+
 	private Fixture createStaticFixture(World world, Vector2 spawnPosition, float spriteSize)
 	{
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.StaticBody;
-		
+
 		return createFixture(world, spawnPosition, spriteSize, bodyDef);
 	}
 
