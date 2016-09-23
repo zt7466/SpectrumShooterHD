@@ -38,6 +38,14 @@ public class NormalSpawn implements SpawningAlgorithm
 	@Override
 	public Array<GameObject> update(Array<GameObject> enemies, World world, float deltaTime)
 	{
+		
+		previousTime = previousTime + deltaTime;
+		
+		if (previousTime > spawnTime)
+		{
+			enemies.add(gameObjectFactory.makeBasicEnemy(world));
+			previousTime = previousTime - spawnTime;
+		}
 
 		if (enemies.size < previousEnemyCount)
 		{
@@ -59,6 +67,8 @@ public class NormalSpawn implements SpawningAlgorithm
 				enemies.removeValue(enemy, false);
 			}
 		}
+		
+		previousEnemyCount = enemies.size;
 
 		return enemies;
 	}

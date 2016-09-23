@@ -141,7 +141,7 @@ public class MainScreen implements Screen {
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		spawningAlgorithm = new NormalSpawn();
+		spawningAlgorithm = new NormalSpawn(1);
 
 	}
 
