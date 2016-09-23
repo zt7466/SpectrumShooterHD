@@ -1,27 +1,22 @@
 package com.thompson.spectrumshooter.screens;
 
-import java.sql.Blob;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.color.ColorWheel;
-import com.thompson.spectrumshooter.gameobject.Enemy;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
+import com.thompson.spectrumshooter.spawning.EnemySpawning;
 import com.thompson.spectrumshooter.spawning.LinearEnemySpawn;
-import com.thompson.spectrumshooter.spawning.SpawningAlgorithm;
+import com.thompson.spectrumshooter.spawning.NormalProjectileSpawn;
+import com.thompson.spectrumshooter.spawning.ProjectileSpawn;
 import com.thompson.spectrumshooter.util.CollisionThing;
 import com.thompson.spectrumshooter.util.Constants;
 
@@ -30,6 +25,7 @@ public class MainScreen implements Screen {
 	private int currentColorCode;
 
 	Array<GameObject> enemyHorde;
+	Array<GameObject> projectiles;
 	private GameObject hero;
 
 	private ColorWheel colorWheel;
@@ -41,7 +37,8 @@ public class MainScreen implements Screen {
 
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
-	private SpawningAlgorithm spawningAlgorithm;
+	private EnemySpawning enemySpawning;
+	private ProjectileSpawn projectileSpawning;
 
 	public MainScreen() {
 		init();
@@ -60,7 +57,13 @@ public class MainScreen implements Screen {
 		updateBackgroundColor();
 		world.step(1 / 30f, 9, 2);
 
-		this.spawningAlgorithm.update(enemyHorde, world, deltaTime);
+		this.enemySpawning.update(enemyHorde, world, deltaTime);
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+		{
+			projectileSpawning.update(projectiles, world,
+									  Gdx.input.getX(),
+									  Gdx.input.getY());
+		}
 
 		for (GameObject enemy: enemyHorde)
 		{
@@ -127,6 +130,7 @@ public class MainScreen implements Screen {
 	private void init()
 	{
 		enemyHorde = new Array<GameObject>();
+		projectiles = new Array<GameObject>();
 
 		world = new World(new Vector2(0,0), true);
 		world.setContactListener(new CollisionThing());
@@ -144,7 +148,8 @@ public class MainScreen implements Screen {
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		spawningAlgorithm = new LinearEnemySpawn(1.0f);
+		enemySpawning = new LinearEnemySpawn(1.0f);
+		projectileSpawning = new NormalProjectileSpawn();
 
 	}
 

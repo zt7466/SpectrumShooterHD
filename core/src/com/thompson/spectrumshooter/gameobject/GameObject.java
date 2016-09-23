@@ -7,20 +7,23 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public abstract class GameObject extends Sprite
 {
 
-	protected int colorCode;		// the color code of the object
-	protected Fixture fixture;	// the physical body of the object
-	public boolean isAlive;		// deiscerns if the object is still drawn
+	protected int colorCode;
+	protected Fixture fixture;
+	public boolean isAlive;
+	protected int health;
 	protected float spriteSize;
 
-	public GameObject(int colorCode, Fixture fixture, Texture texture, float spriteSize)
+	public GameObject(int colorCode, int health, Fixture fixture, Texture texture, float spriteSize)
 	{
 		super(texture);
-		this.setSize(spriteSize, spriteSize);
 		this.colorCode = colorCode;
+		this.health = health;
 		this.fixture = fixture;
 		this.spriteSize = spriteSize;
+		this.setSize(spriteSize, spriteSize);
 		isAlive = true;
 		this.update();
+
 	}
 
 	/**
