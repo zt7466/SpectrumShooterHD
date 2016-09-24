@@ -56,10 +56,7 @@ public class GameObjectFactory
 		float spriteSize =  MathUtils.random(0.25f, 0.75f);
 
 		Fixture fixture = createDynamicFixture(world,
-											   generateRandomSpawnLocation(Constants.ENEMY_RADIUS),
-											   spriteSize,
-											   INWARDS,
-											   0.1f);
+				generateRandomSpawnLocation(Constants.ENEMY_RADIUS), spriteSize, INWARDS, 0.1f);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_ENEMY;
 		filter.maskBits = ~CATEGORY_ENEMY;

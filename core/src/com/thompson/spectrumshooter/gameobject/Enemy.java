@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public class Enemy extends GameObject
 {
 
-	private static final float KNOCKBACK = 25f;
+	private static final float KNOCKBACK = 17f;
 	
 	private Vector2 linearVelocity;
 	
