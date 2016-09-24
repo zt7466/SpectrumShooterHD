@@ -14,9 +14,10 @@ public class Constants
 	public static final float VIEWPORT_WIDTH = 6.0f;
 	public static final float VIEWPORT_HEIGHT = 6.0f;
 
-
 	public static final float BOX2D_CONVERSION = 0.5f;
-	public static final float ENEMY_SPAWN_CIRCLE_RADIUS = 3;
 
-	public static final float PROJECTILE_SPAWN_CIRCLE_REDIUS = 0.5f;
+	// the distance in meters from the center that the Enemies spawn at.
+	public static final float ENEMY_RADIUS = 3;
+	// the distance in meters from the center that the Enemies spawn at.
+	public static final float PROJECTILE_REDIUS = 0.5f;
 }

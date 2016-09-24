@@ -35,10 +35,14 @@ public class MainScreen implements Screen {
 
 	private World world;
 
+	// TODO remove
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
+	
+	private float shootDelay = 0.5f;
+	private float currentDelay;
 
 	public MainScreen() {
 		init();
@@ -53,16 +57,21 @@ public class MainScreen implements Screen {
 	@Override
 	public void render(float deltaTime) {
 
+		currentDelay = currentDelay + deltaTime;
+		
 		// update information about the game
 		updateBackgroundColor();
 		world.step(1 / 30f, 9, 2);
 
 		this.enemySpawning.update(enemyHorde, world, deltaTime);
-		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && currentDelay >= shootDelay)
 		{
+		// TODO remove
+			System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
 			projectileSpawning.update(projectiles, world,
-									  Gdx.input.getX(),
-									  Gdx.input.getY());
+									  (Gdx.input.getX() - Gdx.graphics.getWidth() / 2),
+									   (Gdx.input.getY() - Gdx.graphics.getHeight() / 2) * -1);
+			currentDelay = 0;
 		}
 
 		for (GameObject enemy: enemyHorde)
@@ -129,6 +138,8 @@ public class MainScreen implements Screen {
 
 	private void init()
 	{
+		currentDelay = 0;
+		
 		enemyHorde = new Array<GameObject>();
 		projectiles = new Array<GameObject>();
 
