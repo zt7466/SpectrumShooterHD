@@ -23,7 +23,7 @@ public class SpectrumShooter extends Game
 	public void create()
 	{
 		instance = this;	
-		instance.setScreen(new MenuScreen());
+		instance.setScreen(new MainScreen());
 	}
 
 	/**

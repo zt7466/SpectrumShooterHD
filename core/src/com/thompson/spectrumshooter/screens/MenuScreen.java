@@ -17,6 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
+import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
+import com.thompson.spectrumshooter.overlayScreen.RGBBarSelectorControlable;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class MenuScreen implements Screen 
@@ -31,6 +34,8 @@ public class MenuScreen implements Screen
 	LabelStyle titleLabelStyle;
 	private ColorWheel colorWheel;
 	private int currentColorCode;
+	
+	ColorSelector selector;
 	
 	public MenuScreen()
 	{
@@ -62,6 +67,9 @@ public class MenuScreen implements Screen
 		mainTable.row();
 		
 		stage.addActor(mainTable);
+		
+		selector = new ColorWheelSelector(stage);
+		stage.addActor(selector);
 		generator.dispose();
 	}
 	
@@ -69,6 +77,9 @@ public class MenuScreen implements Screen
 	public void render(float delta) 
 	{	
 		updateColors();
+		
+		selector.changeColor();
+		
 		camera.update();
 		stage.draw();
 	}
@@ -115,7 +126,8 @@ public class MenuScreen implements Screen
 	 */
 	public void updateColors()
 	{
-		Color newColor = createColor(currentColorCode);
+		//Color newColor = createColor(currentColorCode);
+		Color newColor = selector.getColor();
 		Gdx.gl.glClearColor(newColor.r, newColor.g, newColor.b, newColor.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
