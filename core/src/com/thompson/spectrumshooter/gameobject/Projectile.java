@@ -24,6 +24,8 @@ public class Projectile extends GameObject
 	{
 		this.setPosition(fixture.getBody().getPosition().x - spriteSize/2.0f,
  		  		 		 fixture.getBody().getPosition().y - spriteSize/2.0f);
+		
+		// TODO set to is dead if the projectile goes off the screen
 	}
 
 }

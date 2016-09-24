@@ -15,9 +15,25 @@ public class NormalProjectileSpawn implements ProjectileSpawn
 	}
 
 	@Override
-	public Array<GameObject> update(Array<GameObject> group, World world, float mouseX, float mouseY)
+	public Array<GameObject> update(Array<GameObject> group, boolean spawn, World world, float mouseX, float mouseY)
 	{
-		group.add(gameObjectFactory.makeProjectile(world, mouseX, mouseY));
+		
+		if (spawn)
+		{
+			group.add(gameObjectFactory.makeProjectile(world, mouseX, mouseY));
+		}
+		
+		
+		for (GameObject projectile: group)
+		{
+			if (!projectile.isAlive)
+			{
+				world.destroyBody(projectile.getFixture().getBody());
+				projectile.dispose();
+				// false indicates using .equals; true indicated using ==
+				group.removeValue(projectile, false);
+			}
+		}
 
 		return group;
 	}
