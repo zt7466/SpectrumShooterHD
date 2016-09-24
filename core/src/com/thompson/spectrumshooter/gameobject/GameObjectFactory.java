@@ -1,5 +1,7 @@
 package com.thompson.spectrumshooter.gameobject;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,8 +30,12 @@ public class GameObjectFactory
 	private static final int PIXMAP_RADIUS = 150;
 	private ColorWheel colorWheel;
 
-	private final short CATEGORY_ENEMY = 0x0002;
-	private final short CATEGORY_HERO = 0x0003;
+	private static final short CATEGORY_ENEMY = 0x0002;
+	private static final short CATEGORY_HERO_PROJECTILE = 0x0001;
+	
+	private static final int OUTWARDS = 1;
+	private static final int INWARDS = -1;
+	private static final int STATIONARY = 1;
 
 	public GameObjectFactory()
 	{
@@ -49,28 +55,41 @@ public class GameObjectFactory
 
 		float spriteSize =  MathUtils.random(0.25f, 0.75f);
 
-		Fixture fixture = createDynamicFixture(world, generateRandomSpawnLocation(), spriteSize);
+		Fixture fixture = createDynamicFixture(world,
+											   generateRandomSpawnLocation(Constants.ENEMY_RADIUS),
+											   spriteSize,
+											   INWARDS,
+											   0.1f);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_ENEMY;
 		filter.maskBits = ~CATEGORY_ENEMY;
 		fixture.setFilterData(filter);
 
-		Enemy enemy = new Enemy(colorCode, fixture, texture,spriteSize);
+		Enemy enemy = new Enemy(colorCode, 3, fixture, texture,spriteSize);
 
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
 
 		return enemy;
 	}
 
+	/**
+	 * Create a new Hero that remains in the center of the game.
+	 * @param world		the World in which the Hero will exist
+	 * @return			a new Hero
+	 */
 	public Hero makeHero(World world)
 	{
 		int colorCode = colorWheel.random();
 
 		Texture texture = new Texture(createPixmap(colorCode));
 		float spriteSize = 0.75f;
-		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize);
+		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize, STATIONARY, 0);
+		Filter filter = new Filter();
+		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
+		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
+		fixture.setFilterData(filter);
 
-		Hero hero = new Hero(colorCode, fixture, texture, 0.0f);
+		Hero hero = new Hero(colorCode, 15, fixture, texture, 0.0f);
 
 		hero.setPosition(fixture.getBody().getPosition().x - 3,
  		  		 		 fixture.getBody().getPosition().y - 3);
@@ -78,6 +97,9 @@ public class GameObjectFactory
 		hero.setOrigin(hero.getWidth() / 2.0f, hero.getHeight() / 2.0f);
 
 		hero.setSize(spriteSize, spriteSize);
+
+		// hero does this when enemy/projectile don't becuase the enemies call their update
+		// method which does this.
 		hero.setPosition(fixture.getBody().getPosition().x - spriteSize/2.0f,
  		  		 		 fixture.getBody().getPosition().y - spriteSize/2.0f);
 
@@ -85,9 +107,36 @@ public class GameObjectFactory
 	}
 
 	/**
+	 * Make a projectile that moves towards the position of the mouse.
+	 * @param world		the World where the projectile will exist
+	 * @param mouseX	the X coordinate of the mouse
+	 * @param mouseY	the Y coordinate of the mouse
+	 * @return			a new Projectile
+	 */
+	public Projectile makeProjectile(World world, float mouseX, float mouseY)
+	{
+		int colorCode = colorWheel.random();
+		Texture texture = new Texture(createPixmap(colorCode));
+		float spriteSize = 0.2f;
+		Fixture fixture = createDynamicFixture(world, generateProjectilePosition( Constants.PROJECTILE_REDIUS,
+											   mouseX, mouseY), spriteSize, OUTWARDS, 1.0f);
+		Filter filter = new Filter();
+		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
+		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
+		fixture.setFilterData(filter);
+
+		Projectile projectile = new Projectile(colorCode, 1, fixture, texture, spriteSize);
+
+		projectile.setOrigin(projectile.getWidth() / 2.0f, projectile.getHeight() / 2.0f);
+
+		return projectile;
+	}
+
+
+	/**
 	 * Create the pixmaps used for our GameObjects.
-	 * @param colorCode the color code from the color wheel of this Pixmap
-	 * @return a new pixmap
+	 * @param colorCode		the color code from the color wheel of this Pixmap
+	 * @return 				a new pixmap
 	 */
 	private Pixmap createPixmap(int colorCode)
 	{
@@ -101,20 +150,36 @@ public class GameObjectFactory
 	}
 
 
-	private Fixture createDynamicFixture(World world, Vector2 spawnPosition, float spriteSize)
+	/**
+	 * Create a Dynamic Fixture at the given position and size.
+	 * @param world				the world the fixture will exist in
+	 * @param spawnPosition		the location the fixture will spawn at
+	 * @param spriteSize		the size of the sprite corresponding to the fixture
+	 * @return					a new dynaic Fixture
+	 */
+	private Fixture createDynamicFixture(World world, Vector2 spawnPosition, float spriteSize, int direction, float speed)
 	{
 		BodyDef bodyDef = new BodyDef();
+		// Dynamic implies that things can move.
 		bodyDef.type = BodyType.DynamicBody;
 
-		return createFixture(world, spawnPosition, spriteSize, bodyDef);
+		return createFixture(world, spawnPosition, spriteSize, bodyDef, direction, speed);
 	}
 
-	private Fixture createStaticFixture(World world, Vector2 spawnPosition, float spriteSize)
+	/**
+	 * Creat a new static Fixture at the given spawn position and sprite size.
+	 * @param world				the world the fixture will exist in
+	 * @param spawnPosition		the location the fixture will spawn at
+	 * @param spriteSize		the size of the sprite corresponding to the fixture
+	 * @return					a new static Fixture
+	 */
+	private Fixture createStaticFixture(World world, Vector2 spawnPosition, float spriteSize, int direction, float speed)
 	{
 		BodyDef bodyDef = new BodyDef();
+		// Static implies that things cannot move
 		bodyDef.type = BodyType.StaticBody;
 
-		return createFixture(world, spawnPosition, spriteSize, bodyDef);
+		return createFixture(world, spawnPosition, spriteSize, bodyDef, direction, speed);
 	}
 
 	/**
@@ -122,12 +187,12 @@ public class GameObjectFactory
 	 * @param world		game world where the Enemy exists
 	 * @return			new Fixture
 	 */
-	private Fixture createFixture(World world, Vector2 spawnPosition, float spriteSize, BodyDef bodyDef)
+	private Fixture createFixture(World world, Vector2 spawnPosition, float spriteSize, BodyDef bodyDef, int direction, float speed)
 	{
 		bodyDef.position.set(spawnPosition);
 
 		Body body = world.createBody(bodyDef);
-		body.setLinearVelocity(-spawnPosition.x * 0.1f, -spawnPosition.y * 0.1f);
+		body.setLinearVelocity((direction *spawnPosition.x) * speed, (direction * spawnPosition.y * speed));
 
 		CircleShape circle = new CircleShape();
 		circle.setRadius(spriteSize * Constants.BOX2D_CONVERSION);
@@ -145,51 +210,44 @@ public class GameObjectFactory
 	 * Generate a random spawn location for an Enemy.
 	 * @return	a random spawn location for an Enemy
 	 */
-	private Vector2 generateRandomSpawnLocation()
+	private Vector2 generateRandomSpawnLocation(float spawnRadius)
 	{
-		int QUAD_I_START = 0;
-		int QUAD_II_START = 90;
-		int QUAD_III_START = 180;
-		int QUAD_IV_START = 270;
-		int QUAD_IV_END = 360;
-
-		float x = 0;
-		float y = 0;
-
 		float theta = MathUtils.random(0f, 360.0f);
-		if (theta > QUAD_I_START && theta < QUAD_II_START) {
-			x =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
-			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
-		} else if (theta > QUAD_II_START && theta < QUAD_III_START) {
-			x = -Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
-			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
-		} else if (theta > QUAD_III_START && theta < QUAD_IV_START) {
-			x = -Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
-			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
-		} else if (theta > QUAD_IV_START && theta < QUAD_IV_END) {
-			x = -Constants.SPAWN_CIRCLE_RADIUS * MathUtils.cosDeg(theta);
-			y =  Constants.SPAWN_CIRCLE_RADIUS * MathUtils.sinDeg(theta);
-		} else if (theta == QUAD_I_START) {
-			x = Constants.SPAWN_CIRCLE_RADIUS;
-			y = 0;
-		} else if (theta == QUAD_II_START) {
-			x = 0;
-			y = -Constants.SPAWN_CIRCLE_RADIUS;
-		} else if (theta == QUAD_III_START) {
-			x = -Constants.SPAWN_CIRCLE_RADIUS;
-			y = 0;
-		} else if (theta == QUAD_IV_START) {
-			x = 0;
-			y = -Constants.SPAWN_CIRCLE_RADIUS;
-		} else if (theta == QUAD_IV_END) {
-			x = Constants.SPAWN_CIRCLE_RADIUS;
-			y = 0;
-		}
 
-		Vector2 randomLocation = new Vector2(x, y);
+		Vector2 randomLocation = createPosition(spawnRadius, theta);
 
 		return randomLocation;
 	}
+
+	/**
+	 * Create a position for a projectile.
+	 * @param spawnRadius	the distance the projectile should be from the origin
+	 * @param mouseX		the x location of the mouse when pressed
+	 * @param mouseY		the y location of the mouse when pressed
+	 * @return				the Vector2 location of the projectile
+	 */
+	private Vector2 generateProjectilePosition(float spawnRadius, float mouseX, float mouseY)
+	{
+		float theta = MathUtils.radiansToDegrees * MathUtils.atan2(mouseY, mouseX);
+		if (mouseY < 0)
+		{
+			theta = 180 + (180 - (theta * -1));
+		}
+		return createPosition(spawnRadius, theta);
+	}
+
+	/**
+	 * Create a Vector2 position at the given radius and given degree around the origin.
+	 * @param spawnRadius	the distance from the center the position will be at
+	 * @param theta			the rotation around the origin the position will be at
+	 * @return				a Vector2 for the given position
+	 */
+	private Vector2 createPosition(float spawnRadius, float theta)
+	{
+		return new Vector2(spawnRadius * MathUtils.cosDeg(theta), 
+						   spawnRadius * MathUtils.sinDeg(theta));
+	}
+
 }
 
 

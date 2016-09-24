@@ -18,9 +18,10 @@ public class Enemy extends GameObject
 	 * @param fixture		the fixture corresponding to this Enemy
 	 * @param colorCode		the color code of this Enemy
 	 */
-	public Enemy(int colorCode, Fixture fixture, Texture texture, float spriteSize)
+	public Enemy(int colorCode, int health, Fixture fixture, Texture texture, float spriteSize)
 	{
-		super(colorCode, fixture, texture, spriteSize);
+		super(colorCode, health, fixture, texture, spriteSize);
+		// this is done inside of this class so that it saves as a Enemy.class
 		fixture.setUserData(this);
 	}
 

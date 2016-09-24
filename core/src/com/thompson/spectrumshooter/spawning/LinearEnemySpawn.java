@@ -11,7 +11,7 @@ import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
  *
  * @author Christopher Boyer
  */
-public class LinearEnemySpawn implements SpawningAlgorithm
+public class LinearEnemySpawn implements EnemySpawning
 {
 	// the number of seconds between spawning a new enemy
 	private float spawnTime;

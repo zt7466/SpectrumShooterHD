@@ -8,7 +8,7 @@ import com.thompson.spectrumshooter.gameobject.GameObject;
  * The way in which Enemies spawn into the world
  * @author Christopher Boyer
  */
-public interface SpawningAlgorithm
+public interface EnemySpawning
 {
 	/**
 	 * Update the given array with the given implementation of the algorithm.

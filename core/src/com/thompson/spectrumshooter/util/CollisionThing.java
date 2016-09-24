@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.thompson.spectrumshooter.gameobject.Enemy;
 import com.thompson.spectrumshooter.gameobject.Hero;
+import com.thompson.spectrumshooter.gameobject.Projectile;
+
 
 public class CollisionThing implements ContactListener
 {
@@ -20,19 +22,63 @@ public class CollisionThing implements ContactListener
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold)
 	{
-		Fixture hero = (contact.getFixtureA().getUserData().getClass() == Hero.class) ? 
-				contact.getFixtureA() : contact.getFixtureB();
-		Fixture enemy = (contact.getFixtureA().getUserData().getClass() == Enemy.class) ?
-				contact.getFixtureA() : contact.getFixtureB();
-				
-		if (hero.getUserData().getClass() == Hero.class && enemy.getUserData().getClass() == Enemy.class)
-		{
-			((Enemy) enemy.getUserData()).isAlive = false;
-		}
-			
+		this.enemyHeroResolve(contact);
+		this.projectileEnemyResolve(contact);
 	}
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {}
 	
+	private void projectileEnemyResolve(Contact contact)
+	{
+		if (contact.getFixtureA().getUserData().getClass() == Projectile.class &&
+			contact.getFixtureB().getUserData().getClass() == Enemy.class)
+		{
+			this.projectileEnemyCollision(contact.getFixtureB(), contact.getFixtureA());
+		}
+		else if (contact.getFixtureA().getUserData().getClass() == Enemy.class &&
+				 contact.getFixtureB().getUserData().getClass() == Projectile.class)
+		{
+			this.projectileEnemyCollision(contact.getFixtureA(), contact.getFixtureB());
+		}
+	}
+	
+	private void projectileEnemyCollision(Fixture enemy, Fixture projectile)
+	{
+		((Enemy) enemy.getUserData()).isAlive = false;
+		((Projectile) projectile.getUserData()).isAlive = false;
+	}
+	
+	
+	/**
+	 * Determine if the collision is the result of a Hero/Enemy collision,
+	 * and take the appropriate action if it is.
+	 * @param contact	the instacne of contact
+	 */
+	private void enemyHeroResolve(Contact contact)
+	{
+		
+		if (contact.getFixtureA().getUserData().getClass() == Hero.class &&
+			contact.getFixtureB().getUserData().getClass() == Enemy.class)
+		{
+			this.enemyHeroCollision(contact.getFixtureB(), contact.getFixtureA());
+		}
+		else if (contact.getFixtureA().getUserData().getClass() == Enemy.class &&
+				 contact.getFixtureB().getUserData().getClass() == Hero.class)
+		{
+			this.enemyHeroCollision(contact.getFixtureA(), contact.getFixtureB());
+		}
+	}
+	
+	/**
+	 * Complete necisary action for an Enemy/Hero collision.
+	 * @param enemy		the Enemy in the collision
+	 * @param hero		the Hero in the collision
+	 */
+	private void enemyHeroCollision(Fixture enemy, Fixture hero)
+	{
+		((Enemy) enemy.getUserData()).isAlive = false;
+	}
+	
+
 }
