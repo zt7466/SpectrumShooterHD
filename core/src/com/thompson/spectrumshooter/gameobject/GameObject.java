@@ -22,7 +22,6 @@ public abstract class GameObject extends Sprite
 		this.spriteSize = spriteSize;
 		this.setSize(spriteSize, spriteSize);
 		isAlive = true;
-		this.update();
 
 	}
 
@@ -30,7 +29,7 @@ public abstract class GameObject extends Sprite
 	 * Update this GameObject.
 	 */
 	abstract public void update();
-
+	
 	/**
 	 * Get the color code of this Enemy
 	 * @return color code of this Enemy
@@ -47,6 +46,11 @@ public abstract class GameObject extends Sprite
 	public Fixture getFixture()
 	{
 		return this.fixture;
+	}
+	
+	public int getHealth()
+	{
+		return this.health;
 	}
 
 	/**

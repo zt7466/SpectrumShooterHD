@@ -14,6 +14,7 @@ public class Projectile extends GameObject
 	{
 		super(colorCode, health, fixture, texture, spriteSize);
 		fixture.setUserData(this);
+		this.update();
 	}
 
 	/**

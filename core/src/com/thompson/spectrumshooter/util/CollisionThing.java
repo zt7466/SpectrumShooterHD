@@ -45,7 +45,7 @@ public class CollisionThing implements ContactListener
 	
 	private void projectileEnemyCollision(Fixture enemy, Fixture projectile)
 	{
-		((Enemy) enemy.getUserData()).isAlive = false;
+		((Enemy) enemy.getUserData()).takeHit();
 		((Projectile) projectile.getUserData()).isAlive = false;
 	}
 	
