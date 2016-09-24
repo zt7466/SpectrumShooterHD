@@ -1,5 +1,6 @@
 package com.thompson.spectrumshooter.sound;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 /**
  * This manages all the playing of sounds in the entire game.
@@ -25,6 +26,18 @@ public class AudioManager {
 	 */
 	public void play(Sound sound){
 		sound.play();
+	}
+
+	public void play(Music music){
+		music.play();
+
+		while(music.isPlaying()){
+			try {
+				this.wait(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
