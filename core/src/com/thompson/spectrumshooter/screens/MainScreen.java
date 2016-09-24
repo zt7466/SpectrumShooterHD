@@ -41,7 +41,7 @@ public class MainScreen implements Screen {
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
 	
-	private float shootDelay = 0.5f;
+	private float shootDelay = 0.2f;
 	private float currentDelay;
 
 	public MainScreen() {
@@ -66,11 +66,9 @@ public class MainScreen implements Screen {
 		this.enemySpawning.update(enemyHorde, world, deltaTime);
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && currentDelay >= shootDelay)
 		{
-		// TODO remove
-			System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
 			projectileSpawning.update(projectiles, world,
 									  (Gdx.input.getX() - Gdx.graphics.getWidth() / 2),
-									   (Gdx.input.getY() - Gdx.graphics.getHeight() / 2) * -1);
+									  (Gdx.input.getY() - Gdx.graphics.getHeight() / 2) * -1);
 			currentDelay = 0;
 		}
 
@@ -78,6 +76,12 @@ public class MainScreen implements Screen {
 		{
 			enemy.update();
 		}
+		
+		for (GameObject projectile: projectiles)
+		{
+			projectile.update();
+		}
+		
 		hero.update();
 
 		// draw everything in the game
@@ -89,6 +93,11 @@ public class MainScreen implements Screen {
 		for (GameObject enemy: enemyHorde)
 		{
 			enemy.draw(spriteBatch);
+		}
+		
+		for (GameObject projectile: projectiles)
+		{
+			projectile.draw(spriteBatch);
 		}
 
 		spriteBatch.end();

@@ -1,6 +1,7 @@
 package com.thompson.spectrumshooter.gameobject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -57,7 +58,8 @@ public class GameObjectFactory
 		Fixture fixture = createDynamicFixture(world,
 											   generateRandomSpawnLocation(Constants.ENEMY_RADIUS),
 											   spriteSize,
-											   INWARDS);
+											   INWARDS,
+											   0.1f);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_ENEMY;
 		filter.maskBits = ~CATEGORY_ENEMY;
@@ -70,13 +72,18 @@ public class GameObjectFactory
 		return enemy;
 	}
 
+	/**
+	 * Create a new Hero that remains in the center of the game.
+	 * @param world		the World in which the Hero will exist
+	 * @return			a new Hero
+	 */
 	public Hero makeHero(World world)
 	{
 		int colorCode = colorWheel.random();
 
 		Texture texture = new Texture(createPixmap(colorCode));
 		float spriteSize = 0.75f;
-		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize, STATIONARY);
+		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize, STATIONARY, 0);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
 		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
@@ -99,13 +106,20 @@ public class GameObjectFactory
 		return hero;
 	}
 
+	/**
+	 * Make a projectile that moves towards the position of the mouse.
+	 * @param world		the World where the projectile will exist
+	 * @param mouseX	the X coordinate of the mouse
+	 * @param mouseY	the Y coordinate of the mouse
+	 * @return			a new Projectile
+	 */
 	public Projectile makeProjectile(World world, float mouseX, float mouseY)
 	{
 		int colorCode = colorWheel.random();
 		Texture texture = new Texture(createPixmap(colorCode));
 		float spriteSize = 0.2f;
 		Fixture fixture = createDynamicFixture(world, generateProjectilePosition( Constants.PROJECTILE_REDIUS,
-											   mouseX, mouseY), spriteSize, OUTWARDS);
+											   mouseX, mouseY), spriteSize, OUTWARDS, 1.0f);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
 		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
@@ -121,8 +135,8 @@ public class GameObjectFactory
 
 	/**
 	 * Create the pixmaps used for our GameObjects.
-	 * @param colorCode the color code from the color wheel of this Pixmap
-	 * @return a new pixmap
+	 * @param colorCode		the color code from the color wheel of this Pixmap
+	 * @return 				a new pixmap
 	 */
 	private Pixmap createPixmap(int colorCode)
 	{
@@ -143,13 +157,13 @@ public class GameObjectFactory
 	 * @param spriteSize		the size of the sprite corresponding to the fixture
 	 * @return					a new dynaic Fixture
 	 */
-	private Fixture createDynamicFixture(World world, Vector2 spawnPosition, float spriteSize, int direction)
+	private Fixture createDynamicFixture(World world, Vector2 spawnPosition, float spriteSize, int direction, float speed)
 	{
 		BodyDef bodyDef = new BodyDef();
 		// Dynamic implies that things can move.
 		bodyDef.type = BodyType.DynamicBody;
 
-		return createFixture(world, spawnPosition, spriteSize, bodyDef, direction);
+		return createFixture(world, spawnPosition, spriteSize, bodyDef, direction, speed);
 	}
 
 	/**
@@ -159,13 +173,13 @@ public class GameObjectFactory
 	 * @param spriteSize		the size of the sprite corresponding to the fixture
 	 * @return					a new static Fixture
 	 */
-	private Fixture createStaticFixture(World world, Vector2 spawnPosition, float spriteSize, int direction)
+	private Fixture createStaticFixture(World world, Vector2 spawnPosition, float spriteSize, int direction, float speed)
 	{
 		BodyDef bodyDef = new BodyDef();
 		// Static implies that things cannot move
 		bodyDef.type = BodyType.StaticBody;
 
-		return createFixture(world, spawnPosition, spriteSize, bodyDef, direction);
+		return createFixture(world, spawnPosition, spriteSize, bodyDef, direction, speed);
 	}
 
 	/**
@@ -173,12 +187,12 @@ public class GameObjectFactory
 	 * @param world		game world where the Enemy exists
 	 * @return			new Fixture
 	 */
-	private Fixture createFixture(World world, Vector2 spawnPosition, float spriteSize, BodyDef bodyDef, int direction)
+	private Fixture createFixture(World world, Vector2 spawnPosition, float spriteSize, BodyDef bodyDef, int direction, float speed)
 	{
 		bodyDef.position.set(spawnPosition);
 
 		Body body = world.createBody(bodyDef);
-		body.setLinearVelocity((direction *spawnPosition.x) * 0.1f, (direction * spawnPosition.y * 0.1f));
+		body.setLinearVelocity((direction *spawnPosition.x) * speed, (direction * spawnPosition.y * speed));
 
 		CircleShape circle = new CircleShape();
 		circle.setRadius(spriteSize * Constants.BOX2D_CONVERSION);
