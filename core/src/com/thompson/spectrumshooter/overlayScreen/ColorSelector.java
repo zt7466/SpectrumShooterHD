@@ -1,7 +1,7 @@
 package com.thompson.spectrumshooter.overlayScreen;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * ColorSelector.java
@@ -11,11 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  */
 public abstract class ColorSelector extends OverlayingScreen
 {
-	Color color = Color.RED;
+	protected Color color = Color.RED;
 	
-	public ColorSelector(Stage stage, float xSize, float ySize) 
+	public ColorSelector(Table table, float xSize, float ySize) 
 	{
-	super(stage, xSize, ySize);
+	super(table, xSize, ySize);
 	
 	}
 

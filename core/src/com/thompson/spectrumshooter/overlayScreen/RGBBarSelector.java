@@ -5,9 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 /**
@@ -24,9 +24,9 @@ public class RGBBarSelector extends ColorSelector
 	
 	private final int MAX_COMBINATION = 120;
 	
-	public RGBBarSelector(Stage stage, Color startColor) 
+	public RGBBarSelector(Table table, Color startColor) 
 	{
-		super(stage, 100, 500);
+		super(table, 100, 500);
 		
 		redBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(1,0,0,1)));
 		greenBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(0,1,0,1)));
