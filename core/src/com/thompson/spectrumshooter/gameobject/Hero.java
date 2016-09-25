@@ -1,6 +1,7 @@
 package com.thompson.spectrumshooter.gameobject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
@@ -11,10 +12,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public class Hero extends GameObject
 {
 
-	public Hero(int colorCode, int health, Fixture fixture, Texture texture, float spriteSize)
+	public Hero(Color color, float health, Fixture fixture, Texture texture, float spriteSize, float damage)
 	{
-		super(colorCode, health, fixture, texture, spriteSize);
-		Gdx.app.debug("HERO", "Color Code: " + this.colorCode);
+		super(color, health, fixture, texture, spriteSize, damage);
 		// this is done inside of this class so that it saves as a Hero.class
 		fixture.setUserData(this);
 	}
@@ -26,6 +26,18 @@ public class Hero extends GameObject
 	public void update()
 	{
 		// TODO do this shit
+	}
+
+	@Override
+	public void takeHit(float damage)
+	{
+		health = health - damage;
+		if (health <= 0)
+		{
+			isAlive = false;
+		}
+		
+		Gdx.app.debug("HERO", "" + health);
 	}
 
 }

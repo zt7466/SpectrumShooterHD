@@ -1,5 +1,7 @@
 package com.thompson.spectrumshooter.gameobject;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -22,9 +24,9 @@ public class Enemy extends GameObject
 	 * @param fixture		the fixture corresponding to this Enemy
 	 * @param colorCode		the color code of this Enemy
 	 */
-	public Enemy(int colorCode, int health, Fixture fixture, Texture texture, float spriteSize)
+	public Enemy(Color color, float health, Fixture fixture, Texture texture, float spriteSize, float damage)
 	{
-		super(colorCode, health, fixture, texture, spriteSize);
+		super(color, health, fixture, texture, spriteSize, damage);
 		// this is done inside of this class so that it saves as a Enemy.class
 		fixture.setUserData(this);
 		this.linearVelocity = fixture.getBody().getLinearVelocity();
@@ -50,10 +52,10 @@ public class Enemy extends GameObject
 	 * false. Additionally, the linear velocity is inverted and increases to move the Enemy
 	 * back upon hit.
 	 */
-	public void takeHit()
+	public void takeHit(float damage)
 	{
-		health--;
-		if (health == 0)
+		health = health - damage;
+		if (health <= 0)
 		{
 			isAlive = false;
 		}

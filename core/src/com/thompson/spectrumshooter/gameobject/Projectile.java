@@ -1,5 +1,6 @@
 package com.thompson.spectrumshooter.gameobject;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
@@ -10,9 +11,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 public class Projectile extends GameObject
 {
 
-	public Projectile(int colorCode,int health, Fixture fixture, Texture texture, float spriteSize)
+	public Projectile(Color color, float health, Fixture fixture, Texture texture, float spriteSize, float damage)
 	{
-		super(colorCode, health, fixture, texture, spriteSize);
+		super(color, health, fixture, texture, spriteSize, damage);
 		fixture.setUserData(this);
 		this.update();
 	}
@@ -28,5 +29,8 @@ public class Projectile extends GameObject
 		
 		// TODO set to is dead if the projectile goes off the screen
 	}
+
+	@Override
+	public void takeHit(float damage) {}
 
 }
