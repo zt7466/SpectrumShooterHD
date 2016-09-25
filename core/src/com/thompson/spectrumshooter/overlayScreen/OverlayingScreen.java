@@ -5,23 +5,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 
 /**
@@ -37,7 +26,7 @@ public abstract class OverlayingScreen extends Group {
 	protected LabelStyle LABELSTYLE;
 	private final static int CORNERSIZE = 10;
 
-	public OverlayingScreen(Stage stage, float xSize, float ySize) 
+	public OverlayingScreen(Table table, float xSize, float ySize) 
 	{
 		setSize(xSize, ySize);
 		totalTable = new Table();
@@ -51,7 +40,7 @@ public abstract class OverlayingScreen extends Group {
 		
 		changeColor(new Color((float) (87.0/255.0),(float)(33.0/255.0), (float)(62.0/255.0),(float)2.0));
 		totalTable.row();
-		stage.addActor(totalTable);
+		table.addActor(totalTable);
 		totalTable.setVisible(true);
 	}
 
@@ -113,7 +102,7 @@ public abstract class OverlayingScreen extends Group {
 		return new Image(new SpriteDrawable(sprite));
 	}
 	
-	private void changeColor(Color c)
+	public void changeColor(Color c)
 	{
 		for(int i = 0; i < sprites.size(); i++)
 		{

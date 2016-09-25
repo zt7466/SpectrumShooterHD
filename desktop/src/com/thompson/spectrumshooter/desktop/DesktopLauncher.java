@@ -15,6 +15,6 @@ public class DesktopLauncher
 		config.height = Constants.GAME_HEIGHT;
 		config.width = Constants.GAME_WIDTH;
 
-		new LwjglApplication(new SpectrumShooter(), config);
+		new LwjglApplication(new SpectrumShooter(false), config);
 	}
 }

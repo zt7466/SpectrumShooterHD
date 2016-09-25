@@ -3,14 +3,14 @@ package com.thompson.spectrumshooter.overlayScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class RGBBarSelectorControlable extends RGBBarSelector
 {
 
-	public RGBBarSelectorControlable(Stage stage, Color startColor) 
+	public RGBBarSelectorControlable(Table table, Color startColor) 
 	{
-		super(stage, startColor);
+		super(table, startColor);
 	}
 	
 	@Override

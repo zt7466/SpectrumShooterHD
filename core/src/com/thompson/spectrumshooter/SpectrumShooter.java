@@ -15,6 +15,12 @@ import com.badlogic.gdx.Gdx;
 public class SpectrumShooter extends Game
 {
 	private static SpectrumShooter instance = null;
+	private boolean testMode;
+	
+	public SpectrumShooter(boolean testMode) 
+	{
+		this.testMode = testMode;
+	}
 
 	/**
 	 * Class run where the game is started
@@ -22,8 +28,15 @@ public class SpectrumShooter extends Game
 	@Override
 	public void create()
 	{
-		instance = this;	
-		instance.setScreen(new MainScreen());
+		instance = this;
+		if(!testMode)
+		{
+			instance.setScreen(new MenuScreen());
+		}
+		else
+		{
+			instance.setScreen(new MainScreen());		
+		}
 	}
 
 	/**
