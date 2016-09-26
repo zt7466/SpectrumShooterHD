@@ -52,6 +52,8 @@ public class MainScreen implements Screen {
 	Label currentHealth;
 	
 	private boolean spawn;
+	
+	private int enemiesKilled;
 
 	public MainScreen() {
 		init();
@@ -160,6 +162,8 @@ public class MainScreen implements Screen {
 
 	private void init()
 	{
+		enemiesKilled = 0;
+		
 		currentDelay = 0;
 		
 		spawn = false;
