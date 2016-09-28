@@ -3,17 +3,20 @@ package com.thompson.spectrumshooter.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
@@ -39,6 +42,9 @@ public class MainScreen implements Screen {
 
 	private World world;
 
+	// TODO this
+	private Stage backgroundStage;
+
 	// TODO remove
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
@@ -48,13 +54,10 @@ public class MainScreen implements Screen {
 	private float shootDelay = 0.075f;
 	private float currentDelay;
 
-	LabelStyle currentHealthStyle;
-	Label currentHealth;
-
 	private boolean spawn;
 	public boolean gameOver = false;
 
-	private int enemiesKilled;
+	public int enemiesKilled;
 
 	public MainScreen() {
 		init();
@@ -73,6 +76,9 @@ public class MainScreen implements Screen {
 
 		// update information about the game
 		updateBackgroundColor();
+
+		backgroundStage.draw();
+
 		world.step(1 / 30f, 9, 2);
 
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && currentDelay >= shootDelay)
@@ -127,7 +133,6 @@ public class MainScreen implements Screen {
 		{
 			projectile.draw(spriteBatch);
 		}
-		currentHealth.draw(spriteBatch, 1);
 		spriteBatch.end();
 
 		debugRenderer.render(world, camera.combined);
@@ -202,8 +207,16 @@ public class MainScreen implements Screen {
 
 		enemySpawning = new LinearEnemySpawn(2.0f);
 		projectileSpawning = new NormalProjectileSpawn();
-		currentHealthStyle = new LabelStyle(new BitmapFont(), new Color(.255f, .255f, .255f, 1f));
-		currentHealth = new Label("Current Health: ", currentHealthStyle);
+
+		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
+
+		// TODO fix this to not be shitty
+		Table backgroundTable = new Table();
+		backgroundTable.setFillParent(true);
+		Sprite circleBackground = new Sprite(new Texture(Gdx.files.local("whiteCircleFaded.png")));
+		circleBackground.setSize(550, 500);
+		backgroundTable.add(new Image(new SpriteDrawable(circleBackground)));
+		backgroundStage.addActor(backgroundTable);
 
 	}
 

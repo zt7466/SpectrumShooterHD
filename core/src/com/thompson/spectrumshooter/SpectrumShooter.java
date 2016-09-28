@@ -11,7 +11,6 @@ import com.thompson.spectrumshooter.screens.MenuScreen;
  * SpectrumShooter.java
  * @author Zach
  * Main class for the game that manages the games screens
- *
  */
 public class SpectrumShooter extends Game
 {
@@ -50,7 +49,7 @@ public class SpectrumShooter extends Game
 		if (instance.getScreen().getClass() == MainScreen.class &&
 				((MainScreen) instance.getScreen()).gameOver)
 		{
-			this.setScreen(new GameOverScreen(0));
+			this.setScreen(new GameOverScreen(((MainScreen) instance.getScreen()).enemiesKilled));
 		}
 		super.render();
 	}
