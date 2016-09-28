@@ -36,6 +36,11 @@ public class GameObjectFactory
 	private static final int OUTWARDS = 1;
 	private static final int INWARDS = -1;
 	private static final int STATIONARY = 1;
+	
+	private static final float SIZE_ENEMY_MIN = 0.25f;
+	private static final float SIZE__ENEMY_MAX = 0.75f;
+	private static final float SIZE_HERO = 0.75f;
+	private static final float SIZE_PROJECTILE = 0.2f;
 
 	public GameObjectFactory()
 	{
@@ -51,22 +56,24 @@ public class GameObjectFactory
 	public Enemy makeBasicEnemy(World world)
 	{
 		int colorCode = colorWheel.random();
-		Texture texture = new Texture(createPixmap(colorCode));
+		Color color = new Color(colorWheel.getRedValue(colorCode)/255.0f,
+				colorWheel.getGreenValue(colorCode)/255.0f,
+				colorWheel.getBlueValue(colorCode)/255.0f,
+				1);
+		
+		Texture texture = new Texture(createPixmap(color));
 
-		float spriteSize =  MathUtils.random(0.25f, 0.75f);
+		float spriteSize =  MathUtils.random(SIZE_ENEMY_MIN, SIZE__ENEMY_MAX);
+		
 
 		Fixture fixture = createDynamicFixture(world,
-											   generateRandomSpawnLocation(Constants.ENEMY_RADIUS),
-											   spriteSize,
-											   INWARDS,
-											   0.1f);
+				generateRandomSpawnLocation(Constants.ENEMY_RADIUS), spriteSize, INWARDS, 0.1f);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_ENEMY;
 		filter.maskBits = ~CATEGORY_ENEMY;
 		fixture.setFilterData(filter);
 
-		Enemy enemy = new Enemy(colorCode, 3, fixture, texture,spriteSize);
-
+		Enemy enemy = new Enemy(color, 3, fixture, texture,spriteSize, 1f);
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
 
 		return enemy;
@@ -80,16 +87,19 @@ public class GameObjectFactory
 	public Hero makeHero(World world)
 	{
 		int colorCode = colorWheel.random();
-
-		Texture texture = new Texture(createPixmap(colorCode));
-		float spriteSize = 0.75f;
+		Color color = new Color(colorWheel.getRedValue(colorCode)/255.0f,
+								colorWheel.getGreenValue(colorCode)/255.0f,
+								colorWheel.getBlueValue(colorCode)/255.0f,
+								1);
+		Texture texture = new Texture(createPixmap(color));
+		float spriteSize = SIZE_HERO;
 		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize, STATIONARY, 0);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
 		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
 		fixture.setFilterData(filter);
 
-		Hero hero = new Hero(colorCode, 15, fixture, texture, 0.0f);
+		Hero hero = new Hero(color, 10, fixture, texture, 0.0f, 0f);
 
 		hero.setPosition(fixture.getBody().getPosition().x - 3,
  		  		 		 fixture.getBody().getPosition().y - 3);
@@ -116,8 +126,12 @@ public class GameObjectFactory
 	public Projectile makeProjectile(World world, float mouseX, float mouseY)
 	{
 		int colorCode = colorWheel.random();
-		Texture texture = new Texture(createPixmap(colorCode));
-		float spriteSize = 0.2f;
+		Color color = new Color(colorWheel.getRedValue(colorCode)/255.0f,
+				colorWheel.getGreenValue(colorCode)/255.0f,
+				colorWheel.getBlueValue(colorCode)/255.0f,
+				1);
+		Texture texture = new Texture(createPixmap(color));
+		float spriteSize = SIZE_PROJECTILE;
 		Fixture fixture = createDynamicFixture(world, generateProjectilePosition( Constants.PROJECTILE_REDIUS,
 											   mouseX, mouseY), spriteSize, OUTWARDS, 1.0f);
 		Filter filter = new Filter();
@@ -125,8 +139,7 @@ public class GameObjectFactory
 		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
 		fixture.setFilterData(filter);
 
-		Projectile projectile = new Projectile(colorCode, 1, fixture, texture, spriteSize);
-
+		Projectile projectile = new Projectile(color, 1, fixture, texture, spriteSize, 1f);
 		projectile.setOrigin(projectile.getWidth() / 2.0f, projectile.getHeight() / 2.0f);
 
 		return projectile;
@@ -138,13 +151,10 @@ public class GameObjectFactory
 	 * @param colorCode		the color code from the color wheel of this Pixmap
 	 * @return 				a new pixmap
 	 */
-	private Pixmap createPixmap(int colorCode)
+	private Pixmap createPixmap(Color color)
 	{
 		Pixmap pixmap = new Pixmap(300, 300, Format.RGBA8888);
-		pixmap.setColor(colorWheel.getRedValue(colorCode),
-						colorWheel.getGreenValue(colorCode),
-						colorWheel.getBlueValue(colorCode),
-						1);
+		pixmap.setColor(color.r, color.g, color.b, 1);
 		pixmap.fillCircle(150, 150, PIXMAP_RADIUS);
 		return pixmap;
 	}

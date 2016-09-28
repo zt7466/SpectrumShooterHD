@@ -1,5 +1,6 @@
 package com.thompson.spectrumshooter;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.thompson.spectrumshooter.screens.MainScreen;
 import com.thompson.spectrumshooter.screens.MenuScreen;
@@ -28,6 +29,7 @@ public class SpectrumShooter extends Game
 	@Override
 	public void create()
 	{
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		instance = this;
 		if(!testMode)
 		{

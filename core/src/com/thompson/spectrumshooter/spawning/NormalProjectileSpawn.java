@@ -23,7 +23,6 @@ public class NormalProjectileSpawn implements ProjectileSpawn
 			group.add(gameObjectFactory.makeProjectile(world, mouseX, mouseY));
 		}
 		
-		
 		for (GameObject projectile: group)
 		{
 			if (!projectile.isAlive)

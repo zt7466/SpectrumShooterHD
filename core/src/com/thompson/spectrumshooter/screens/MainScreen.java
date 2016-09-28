@@ -45,13 +45,14 @@ public class MainScreen implements Screen {
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
 	
-	private float shootDelay = 0.2f;
+	private float shootDelay = 0.075f;
 	private float currentDelay;
 	
 	LabelStyle currentHealthStyle;
 	Label currentHealth;
 	
 	private boolean spawn;
+	private boolean gameOver = false;
 	
 	private int enemiesKilled;
 
@@ -97,14 +98,26 @@ public class MainScreen implements Screen {
 			projectile.update();
 		}
 		
-		hero.update();
+		if (!gameOver)
+		{
+			if (!hero.isAlive)
+			{
+				hero.dispose();
+				world.destroyBody(hero.getFixture().getBody());
+				gameOver = true;
+			}
+		}
 
 		// draw everything in the game
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		spriteBatch.begin();
-		hero.draw(spriteBatch);
-
+		
+		if (!gameOver)
+		{
+			hero.draw(spriteBatch);
+		}
+			
 		for (GameObject enemy: enemyHorde)
 		{
 			enemy.draw(spriteBatch);
@@ -187,7 +200,7 @@ public class MainScreen implements Screen {
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		enemySpawning = new LinearEnemySpawn(1.0f);
+		enemySpawning = new LinearEnemySpawn(2.0f);
 		projectileSpawning = new NormalProjectileSpawn();
 		currentHealthStyle = new LabelStyle(new BitmapFont(), new Color(.255f, .255f, .255f, 1f));
 		currentHealth = new Label("Current Health: ", currentHealthStyle);
