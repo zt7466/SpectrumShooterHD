@@ -124,6 +124,8 @@ public class MainScreen implements Screen
 			}
 		}
 
+		enemiesKilled = collision.enemiesKilled;
+
 		// draw everything in the game
 		spriteBatch.setProjectionMatrix(camera.combined);
 
