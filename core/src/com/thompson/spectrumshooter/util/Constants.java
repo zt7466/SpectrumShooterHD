@@ -11,8 +11,8 @@ public class Constants
 	public static final int GAME_HEIGHT = 720;
 
 	public static final String SOUND_PATH = "../core/assets/sound/ping.wav";
-	public static final float VIEWPORT_WIDTH = 6.0f;
-	public static final float VIEWPORT_HEIGHT = 6.0f;
+	public static final float VIEWPORT_WIDTH = 9.0f;
+	public static final float VIEWPORT_HEIGHT = 9.0f;
 
 	public static final float BOX2D_CONVERSION = 0.5f;
 

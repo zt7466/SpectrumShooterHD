@@ -27,6 +27,11 @@ import com.thompson.spectrumshooter.spawning.ProjectileSpawn;
 import com.thompson.spectrumshooter.util.CollisionThing;
 import com.thompson.spectrumshooter.util.Constants;
 
+/**
+ * MainScreen.java
+ *
+ * @author Christopher Boyer
+ */
 public class MainScreen implements Screen {
 
 	private int currentColorCode;
