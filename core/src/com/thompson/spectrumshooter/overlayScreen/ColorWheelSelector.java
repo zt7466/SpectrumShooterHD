@@ -23,9 +23,9 @@ public class ColorWheelSelector extends ColorSelector
 	protected Image image;
 	private Pixmap pixMap = new Pixmap(Gdx.files.local("colorWheelNew.png"));
 	
-	public ColorWheelSelector(Table table) 
+	public ColorWheelSelector() 
 	{
-		super(table, 350, 300);
+		super(350, 300);
 		Table firstTable = new Table();
 		
 		Texture backgroundTexture = new Texture(Gdx.files.local("colorBar.png"));

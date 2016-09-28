@@ -29,6 +29,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
+import com.thompson.spectrumshooter.overlayScreen.ColorWheelSelector;
 import com.thompson.spectrumshooter.util.Constants;
 
 /**
@@ -116,9 +118,8 @@ public class MenuScreen implements Screen
 		});
 		mainTable.add(newGameButton).size(200, 75).row();;
 		
-		//selector = new RGBBarSelectorControlable(mainTable, Color.WHITE);
-		//colorWheel2 = new Sprite(new Texture(Gdx.files.local("colorWheelNew.png")));
-		//stage.addActor(new Image(new SpriteDrawable(colorWheel2)));
+//		selector = new ColorWheelSelector();
+//		mainTable.add(selector.getTable());
 		
 		stage.addActor(mainTable);
 	}
@@ -129,6 +130,7 @@ public class MenuScreen implements Screen
 		updateColors();
 		camera.update();
 		//selector.changeColor();
+		
 		backgroundStage.draw();
 		for(int i = 0; i < array.size(); i++)
 		{
@@ -175,7 +177,8 @@ public class MenuScreen implements Screen
 	 */
 	public void updateColors()
 	{
-		Color newColor = createColor(currentColorCode);	
+		Color newColor = createColor(currentColorCode);
+		//newColor = selector.selectColor();
 		Gdx.gl.glClearColor(newColor.r, newColor.g, newColor.b, newColor.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		

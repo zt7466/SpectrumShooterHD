@@ -26,7 +26,7 @@ public abstract class OverlayingScreen extends Group {
 	protected LabelStyle LABELSTYLE;
 	private final static int CORNERSIZE = 10;
 
-	public OverlayingScreen(Table table, float xSize, float ySize) 
+	public OverlayingScreen(float xSize, float ySize) 
 	{
 		setSize(xSize, ySize);
 		totalTable = new Table();
@@ -40,8 +40,7 @@ public abstract class OverlayingScreen extends Group {
 		
 		changeColor(new Color((float) (87.0/255.0),(float)(33.0/255.0), (float)(62.0/255.0),(float)2.0));
 		totalTable.row();
-		table.addActor(totalTable);
-		totalTable.setVisible(true);
+		totalTable.setFillParent(true);
 	}
 
 	public void toggleVisibility() {
@@ -109,5 +108,10 @@ public abstract class OverlayingScreen extends Group {
 			sprites.get(i).setColor(c);
 		}
 	
+	}
+	
+	public Table getTable()
+	{
+		return totalTable;
 	}
 }
