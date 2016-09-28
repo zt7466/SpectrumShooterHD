@@ -44,16 +44,16 @@ public class MainScreen implements Screen {
 
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
-	
+
 	private float shootDelay = 0.075f;
 	private float currentDelay;
-	
+
 	LabelStyle currentHealthStyle;
 	Label currentHealth;
-	
+
 	private boolean spawn;
-	private boolean gameOver = false;
-	
+	public boolean gameOver = false;
+
 	private int enemiesKilled;
 
 	public MainScreen() {
@@ -70,11 +70,11 @@ public class MainScreen implements Screen {
 	public void render(float deltaTime) {
 
 		currentDelay = currentDelay + deltaTime;
-		
+
 		// update information about the game
 		updateBackgroundColor();
 		world.step(1 / 30f, 9, 2);
-		
+
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && currentDelay >= shootDelay)
 		{
 			spawn = true;
@@ -87,17 +87,17 @@ public class MainScreen implements Screen {
 				  (Gdx.input.getY() - Gdx.graphics.getHeight() / 2) * -1);
 
 		spawn = false;
-		
+
 		for (GameObject enemy: enemyHorde)
 		{
 			enemy.update();
 		}
-		
+
 		for (GameObject projectile: projectiles)
 		{
 			projectile.update();
 		}
-		
+
 		if (!gameOver)
 		{
 			if (!hero.isAlive)
@@ -112,17 +112,17 @@ public class MainScreen implements Screen {
 		spriteBatch.setProjectionMatrix(camera.combined);
 
 		spriteBatch.begin();
-		
+
 		if (!gameOver)
 		{
 			hero.draw(spriteBatch);
 		}
-			
+
 		for (GameObject enemy: enemyHorde)
 		{
 			enemy.draw(spriteBatch);
 		}
-		
+
 		for (GameObject projectile: projectiles)
 		{
 			projectile.draw(spriteBatch);
@@ -176,11 +176,11 @@ public class MainScreen implements Screen {
 	private void init()
 	{
 		enemiesKilled = 0;
-		
+
 		currentDelay = 0;
-		
+
 		spawn = false;
-		
+
 		enemyHorde = new Array<GameObject>();
 		projectiles = new Array<GameObject>();
 

@@ -2,10 +2,10 @@ package com.thompson.spectrumshooter;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.thompson.spectrumshooter.screens.GameOverScreen;
 import com.thompson.spectrumshooter.screens.MainScreen;
 import com.thompson.spectrumshooter.screens.MenuScreen;
-import com.thompson.spectrumshooter.util.Constants;
-import com.badlogic.gdx.Gdx;
 
 /**
  * SpectrumShooter.java
@@ -17,8 +17,8 @@ public class SpectrumShooter extends Game
 {
 	private static SpectrumShooter instance = null;
 	private boolean testMode;
-	
-	public SpectrumShooter(boolean testMode) 
+
+	public SpectrumShooter(boolean testMode)
 	{
 		this.testMode = testMode;
 	}
@@ -37,7 +37,7 @@ public class SpectrumShooter extends Game
 		}
 		else
 		{
-			instance.setScreen(new MainScreen());		
+			instance.setScreen(new MainScreen());
 		}
 	}
 
@@ -47,9 +47,14 @@ public class SpectrumShooter extends Game
 	@Override
 	public void render()
 	{
+		if (instance.getScreen().getClass() == MainScreen.class &&
+				((MainScreen) instance.getScreen()).gameOver)
+		{
+			this.setScreen(new GameOverScreen(0));
+		}
 		super.render();
 	}
-	
+
 	@Override
 	public void resize(int width, int height)
 	{
