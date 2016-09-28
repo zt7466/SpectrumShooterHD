@@ -12,7 +12,7 @@ import com.thompson.spectrumshooter.gameobject.Hero;
 import com.thompson.spectrumshooter.gameobject.Projectile;
 
 /**
- * Determine what happens when collision occurs.
+ * Determine what happens when collision occurs, and keeps track of the number of enemies killed.
  * @author Christopher Boyer
  *
  */
@@ -20,7 +20,8 @@ public class CollisionThing implements ContactListener
 {
 
 	private Damage collisionDamage;
-	
+	public int enemiesKilled;
+
 	/**
 	 * When provided with no colision assume the BasicDamage format.
 	 */
@@ -28,12 +29,13 @@ public class CollisionThing implements ContactListener
 	{
 		this(new BasicDamage());
 	}
-	
+
 	public CollisionThing(Damage collisionDamage)
 	{
 		this.collisionDamage = collisionDamage;
+		enemiesKilled = 0;
 	}
-	
+
 	@Override
 	public void beginContact(Contact contact) {}
 
@@ -49,7 +51,7 @@ public class CollisionThing implements ContactListener
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {}
-	
+
 	/**
 	 * Determine if the collision was between a projectile and an enemy, and if so take
 	 * the appropriate action.
@@ -68,7 +70,7 @@ public class CollisionThing implements ContactListener
 			this.projectileEnemyCollision(contact.getFixtureA(), contact.getFixtureB());
 		}
 	}
-	
+
 	/**
 	 * Complete necessary action for Projectile/Enemy collision.
 	 * @param enemy
@@ -78,12 +80,17 @@ public class CollisionThing implements ContactListener
 	{
 		Enemy enemyObj = (Enemy) enemy.getUserData();
 		Projectile projectileObj = (Projectile) projectile.getUserData();
-		
+
 		enemyObj.takeHit(collisionDamage.calculateDamge(projectileObj.getDamage(), projectileObj.getColor(), enemyObj.getColor()));
+		// TODO refactor this to something that isn't shit
+		if (!enemyObj.isAlive)
+		{
+			enemiesKilled++;
+		}
 		projectileObj.isAlive = false;
 	}
-	
-	
+
+
 	/**
 	 * Determine if the collision is the result of a Hero/Enemy collision,
 	 * and take the appropriate action if it is.
@@ -91,7 +98,7 @@ public class CollisionThing implements ContactListener
 	 */
 	private void enemyHeroResolve(Contact contact)
 	{
-		
+
 		if (contact.getFixtureA().getUserData().getClass() == Hero.class &&
 			contact.getFixtureB().getUserData().getClass() == Enemy.class)
 		{
@@ -103,7 +110,7 @@ public class CollisionThing implements ContactListener
 			this.enemyHeroCollision(contact.getFixtureA(), contact.getFixtureB());
 		}
 	}
-	
+
 	/**
 	 * Complete necisary action for an Enemy/Hero collision.
 	 * @param enemy		the Enemy in the collision
@@ -117,6 +124,6 @@ public class CollisionThing implements ContactListener
 		enemyObj.isAlive = false;
 		heroObj.takeHit(enemyObj.getDamage());
 	}
-	
+
 
 }
