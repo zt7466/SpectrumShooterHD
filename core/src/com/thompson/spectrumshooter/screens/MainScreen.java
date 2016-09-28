@@ -103,8 +103,6 @@ public class MainScreen implements Screen
 		currentColorCode = 0;
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
-		Assets.instance.init();
-		AudioManager.instance.play(Assets.instance.deathSound);
 	}
 }
 
