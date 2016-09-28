@@ -3,6 +3,7 @@ package com.thompson.spectrumshooter;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.thompson.spectrumshooter.screens.MainScreen;
+import com.thompson.spectrumshooter.screens.MenuScreen;
 import com.thompson.spectrumshooter.util.Constants;
 import com.badlogic.gdx.Gdx;
 
@@ -15,6 +16,12 @@ import com.badlogic.gdx.Gdx;
 public class SpectrumShooter extends Game
 {
 	private static SpectrumShooter instance = null;
+	private boolean testMode;
+	
+	public SpectrumShooter(boolean testMode) 
+	{
+		this.testMode = testMode;
+	}
 
 	/**
 	 * Class run where the game is started
@@ -24,7 +31,14 @@ public class SpectrumShooter extends Game
 	{
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		instance = this;
-		instance.setScreen(new MainScreen());
+		if(!testMode)
+		{
+			instance.setScreen(new MenuScreen());
+		}
+		else
+		{
+			instance.setScreen(new MainScreen());		
+		}
 	}
 
 	/**

@@ -53,6 +53,8 @@ public class MainScreen implements Screen {
 	
 	private boolean spawn;
 	private boolean gameOver = false;
+	
+	private int enemiesKilled;
 
 	public MainScreen() {
 		init();
@@ -173,6 +175,8 @@ public class MainScreen implements Screen {
 
 	private void init()
 	{
+		enemiesKilled = 0;
+		
 		currentDelay = 0;
 		
 		spawn = false;
