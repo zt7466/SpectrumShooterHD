@@ -3,6 +3,7 @@ package com.thompson.spectrumshooter.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.thompson.spectrumshooter.SpectrumShooter;
+import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class DesktopLauncher
@@ -14,7 +15,6 @@ public class DesktopLauncher
 		config.title = Constants.GAME_NAME;
 		config.height = Constants.GAME_HEIGHT;
 		config.width = Constants.GAME_WIDTH;
-
 		new LwjglApplication(new SpectrumShooter(), config);
 	}
 }

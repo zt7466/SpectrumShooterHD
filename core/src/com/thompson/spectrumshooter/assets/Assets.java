@@ -6,7 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.thompson.spectrumshooter.util.Constants;
 
@@ -18,7 +22,8 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	private AssetManager assetManager;
 
-	public Sound deathSound;
+	public Sound randomSound;
+
 
 	/**
 	 * Constructor for Assets
@@ -31,13 +36,12 @@ public class Assets implements Disposable, AssetErrorListener {
 	 * Initializes the Assets class
 	 */
 	public void init(){
-		this.assetManager = new AssetManager();
+		assetManager = new AssetManager();
 		assetManager.setErrorListener(this);
-		assetManager.load(Constants.SOUND_PATH, Sound.class);
+		String s = Constants.SOUND_PATH + "/ping.wav";
+		assetManager.load(s, Sound.class);
 		assetManager.finishLoading();
-		deathSound = assetManager.get(Constants.SOUND_PATH, Sound.class);
-
-
+		randomSound = assetManager.get(s, Sound.class);
 	}
 
 	/**
@@ -55,5 +59,4 @@ public class Assets implements Disposable, AssetErrorListener {
 	public void dispose() {
 		assetManager.dispose();
 	}
-
 }

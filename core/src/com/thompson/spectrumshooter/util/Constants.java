@@ -15,5 +15,5 @@ public class Constants
 
 
 
-	public static final String SOUND_PATH = "../core/assets/sound/ping.wav";
+	public static final String SOUND_PATH = "../core/assets/sound";
 }
