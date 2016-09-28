@@ -226,7 +226,7 @@ public class MainScreen implements Screen
 		Table backgroundTable = new Table();
 		backgroundTable.setFillParent(true);
 		Sprite circleBackground = new Sprite(new Texture(Gdx.files.local("whiteCircleFaded.png")));
-		circleBackground.setSize(550, 500);
+		circleBackground.setSize(550, 550);
 		backgroundTable.add(new Image(new SpriteDrawable(circleBackground)));
 		backgroundStage.addActor(backgroundTable);
 
