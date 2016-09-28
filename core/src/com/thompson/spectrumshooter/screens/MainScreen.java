@@ -37,8 +37,11 @@ import com.thompson.spectrumshooter.util.Constants;
  *
  * @author Christopher Boyer
  */
-public class MainScreen implements Screen {
+public class MainScreen implements Screen
+{
 
+
+	public static final String TAG = MainScreen.class.getName();
 	private int currentColorCode;
 
 	Array<GameObject> enemyHorde;
@@ -71,6 +74,8 @@ public class MainScreen implements Screen {
 	public boolean gameOver = false;
 
 	public int enemiesKilled;
+
+	private CollisionThing collision;
 
 	public MainScreen() {
 		init();
@@ -126,6 +131,8 @@ public class MainScreen implements Screen {
 				gameOver = true;
 			}
 		}
+
+		enemiesKilled = collision.enemiesKilled;
 
 		// draw everything in the game
 		spriteBatch.setProjectionMatrix(camera.combined);
@@ -202,8 +209,10 @@ public class MainScreen implements Screen {
 		enemyHorde = new Array<GameObject>();
 		projectiles = new Array<GameObject>();
 
+		collision = new CollisionThing();
+
 		world = new World(new Vector2(0,0), true);
-		world.setContactListener(new CollisionThing());
+		world.setContactListener(collision);
 
 		GameObjectFactory gameObjectFactory = new GameObjectFactory();
 

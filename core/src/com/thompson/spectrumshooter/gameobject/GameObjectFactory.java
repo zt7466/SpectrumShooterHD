@@ -32,11 +32,11 @@ public class GameObjectFactory
 
 	private static final short CATEGORY_ENEMY = 0x0002;
 	private static final short CATEGORY_HERO_PROJECTILE = 0x0001;
-	
+
 	private static final int OUTWARDS = 1;
 	private static final int INWARDS = -1;
 	private static final int STATIONARY = 1;
-	
+
 	private static final float SIZE_ENEMY_MIN = 0.25f;
 	private static final float SIZE__ENEMY_MAX = 0.75f;
 	private static final float SIZE_HERO = 0.75f;
@@ -60,11 +60,11 @@ public class GameObjectFactory
 				colorWheel.getGreenValue(colorCode)/255.0f,
 				colorWheel.getBlueValue(colorCode)/255.0f,
 				1);
-		
+
 		Texture texture = new Texture(createPixmap(color));
 
 		float spriteSize =  MathUtils.random(SIZE_ENEMY_MIN, SIZE__ENEMY_MAX);
-		
+
 
 		Fixture fixture = createDynamicFixture(world,
 				generateRandomSpawnLocation(Constants.ENEMY_RADIUS), spriteSize, INWARDS, 0.1f);
@@ -101,8 +101,8 @@ public class GameObjectFactory
 
 		Hero hero = new Hero(color, 10, fixture, texture, 0.0f, 0f);
 
-		hero.setPosition(fixture.getBody().getPosition().x - 3,
- 		  		 		 fixture.getBody().getPosition().y - 3);
+		hero.setPosition(fixture.getBody().getPosition().x,
+ 		  		 		 fixture.getBody().getPosition().y);
 
 		hero.setOrigin(hero.getWidth() / 2.0f, hero.getHeight() / 2.0f);
 
@@ -254,7 +254,7 @@ public class GameObjectFactory
 	 */
 	private Vector2 createPosition(float spawnRadius, float theta)
 	{
-		return new Vector2(spawnRadius * MathUtils.cosDeg(theta), 
+		return new Vector2(spawnRadius * MathUtils.cosDeg(theta),
 						   spawnRadius * MathUtils.sinDeg(theta));
 	}
 

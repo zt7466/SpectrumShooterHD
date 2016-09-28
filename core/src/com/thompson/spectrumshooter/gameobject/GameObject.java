@@ -14,6 +14,7 @@ public abstract class GameObject extends Sprite
 	protected float health;
 	protected float spriteSize;
 	protected float damage;
+	private float maxHealth;
 
 	public GameObject(Color color, float health, Fixture fixture, Texture texture, float spriteSize, float damage)
 	{
@@ -24,6 +25,7 @@ public abstract class GameObject extends Sprite
 		this.spriteSize = spriteSize;
 		this.setSize(spriteSize, spriteSize);
 		this.damage = damage;
+		this.maxHealth = health;
 		isAlive = true;
 	}
 
@@ -31,7 +33,7 @@ public abstract class GameObject extends Sprite
 	 * Update this GameObject.
 	 */
 	abstract public void update();
-	
+
 	/**
 	 * Take the given amount of damage.
 	 * @param damage	the damage taken
@@ -46,21 +48,26 @@ public abstract class GameObject extends Sprite
 	{
 		return this.fixture;
 	}
-	
+
 	public float getHealth()
 	{
 		return this.health;
 	}
-	
+
 	@Override
 	public Color getColor()
 	{
 		return this.color;
 	}
-	
+
 	public float getDamage()
 	{
 		return this.damage;
+	}
+
+	public float getMaxHealth()
+	{
+		return this.maxHealth;
 	}
 
 	/**

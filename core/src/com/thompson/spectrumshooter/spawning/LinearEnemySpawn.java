@@ -19,6 +19,8 @@ public class LinearEnemySpawn implements EnemySpawning
 	private GameObjectFactory gameObjectFactory;
 	private float previousTime;
 
+	private int deadEnemies;
+
 	/**
 	 * Construct the spawning algorithm with the default spawn time of ten
 	 * seconds.
@@ -26,6 +28,7 @@ public class LinearEnemySpawn implements EnemySpawning
 	public LinearEnemySpawn()
 	{
 		this(10);
+		deadEnemies = 0;
 	}
 
 	public LinearEnemySpawn(float spawnTime)
@@ -61,6 +64,7 @@ public class LinearEnemySpawn implements EnemySpawning
 		{
 			if (!enemy.isAlive)
 			{
+				deadEnemies++;
 				world.destroyBody(enemy.getFixture().getBody());
 				enemy.dispose();
 				// false indicates using .equals; true indicated using ==
