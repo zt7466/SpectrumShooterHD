@@ -3,7 +3,7 @@ package com.thompson.spectrumshooter.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +21,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
+import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
+import com.thompson.spectrumshooter.overlayScreen.ColorWheelSelector;
+import com.thompson.spectrumshooter.overlayScreen.HealthBar;
+import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
 import com.thompson.spectrumshooter.spawning.EnemySpawning;
 import com.thompson.spectrumshooter.spawning.LinearEnemySpawn;
 import com.thompson.spectrumshooter.spawning.NormalProjectileSpawn;
@@ -53,6 +57,9 @@ public class MainScreen implements Screen
 
 	// TODO this
 	private Stage backgroundStage;
+	
+	private ColorSelector colorSelector;
+	private HealthBar healthBar;
 
 	// TODO remove
 	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
@@ -87,7 +94,7 @@ public class MainScreen implements Screen
 
 		// update information about the game
 		updateBackgroundColor();
-
+		colorSelector.changeColor(); // Tells the colorSelector to act
 		backgroundStage.draw();
 
 		world.step(1 / 30f, 9, 2);
@@ -225,14 +232,33 @@ public class MainScreen implements Screen
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
 
+		healthBar = new HealthBar(100);
+		Table healthBarTable = new Table();
+		healthBarTable.setFillParent(true);
+		healthBarTable.add(healthBar.getTable())
+			.padTop(backgroundStage.getHeight() * 11 / 6)
+			.padRight(backgroundStage.getWidth() / 2);
+		
+		backgroundStage.addActor(healthBarTable);
+		
+		colorSelector = new RGBBarSelector(Color.RED);
+		Table colorSelectorTable = new Table();
+		colorSelectorTable.setFillParent(true);
+		colorSelectorTable.add(colorSelector.getTable())
+			.padTop(backgroundStage.getHeight() - colorSelector.getHeight())
+			.padRight(backgroundStage.getWidth() * 3 / 2);
+	
+		backgroundStage.addActor(colorSelectorTable);
+		
 		// TODO fix this to not be shitty
 		Table backgroundTable = new Table();
 		backgroundTable.setFillParent(true);
 		Sprite circleBackground = new Sprite(new Texture(Gdx.files.local("whiteCircleFaded.png")));
 		circleBackground.setSize(550, 550);
 		backgroundTable.add(new Image(new SpriteDrawable(circleBackground)));
+		
 		backgroundStage.addActor(backgroundTable);
-
+	
 	}
 
 }

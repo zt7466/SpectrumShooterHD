@@ -24,9 +24,9 @@ public class RGBBarSelector extends ColorSelector
 	
 	private final int MAX_COMBINATION = 120;
 	
-	public RGBBarSelector(Table table, Color startColor) 
+	public RGBBarSelector(Color startColor) 
 	{
-		super(table, 100, 500);
+		super(100, 500);
 		
 		redBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(1,0,0,1)));
 		greenBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(0,1,0,1)));

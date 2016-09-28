@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 public class RGBBarSelectorControlable extends RGBBarSelector
 {
 
-	public RGBBarSelectorControlable(Table table, Color startColor) 
+	public RGBBarSelectorControlable(Color startColor) 
 	{
-		super(table, startColor);
+		super(startColor);
 	}
 	
 	@Override

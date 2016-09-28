@@ -19,9 +19,9 @@ public class HealthBar extends OverlayingScreen
 {
 	protected ProgressBar healthBar;
 	protected Sprite fillSprite;
-	public HealthBar(Table table)
+	public HealthBar(int MaxHealthBar)
 	{
-		super(table, 400, 40);
+		super(400, 40);
 		
 		Texture backgroundTexture = new Texture(Gdx.files.local("colorBar.png"));
 		
@@ -37,7 +37,7 @@ public class HealthBar extends OverlayingScreen
 		ProgressBarStyle style = new ProgressBarStyle(background, fill);
 		style.knobBefore = fill;
 		
-		healthBar = new ProgressBar(0,100,1,false,style);
+		healthBar = new ProgressBar(0,MaxHealthBar,1,false,style);
 		
 		healthBar.setValue(100);
 		inerdTable.add(healthBar).minWidth(375);

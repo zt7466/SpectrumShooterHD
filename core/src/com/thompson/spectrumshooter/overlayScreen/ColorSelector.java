@@ -13,10 +13,9 @@ public abstract class ColorSelector extends OverlayingScreen
 {
 	protected Color color = Color.RED;
 	
-	public ColorSelector(Table table, float xSize, float ySize) 
+	public ColorSelector(float xSize, float ySize) 
 	{
-	super(table, xSize, ySize);
-	
+	super(xSize, ySize);
 	}
 
 	public abstract void changeColor();
