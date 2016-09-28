@@ -3,7 +3,6 @@ package com.thompson.spectrumshooter.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.thompson.spectrumshooter.SpectrumShooter;
-import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.util.Constants;
 
 public class DesktopLauncher

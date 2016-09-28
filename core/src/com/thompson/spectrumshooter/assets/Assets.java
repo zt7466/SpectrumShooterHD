@@ -1,16 +1,10 @@
 package com.thompson.spectrumshooter.assets;
 
-import java.io.File;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.thompson.spectrumshooter.util.Constants;
 
@@ -29,7 +23,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	 * Constructor for Assets
 	 */
 	private Assets(){
-
+		init();
 	}
 
 	/**
