@@ -21,8 +21,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
+import com.thompson.spectrumshooter.gameobject.Hero;
 import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
-import com.thompson.spectrumshooter.overlayScreen.ColorWheelSelector;
 import com.thompson.spectrumshooter.overlayScreen.HealthBar;
 import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
 import com.thompson.spectrumshooter.spawning.EnemySpawning;
@@ -46,7 +46,7 @@ public class MainScreen implements Screen
 
 	Array<GameObject> enemyHorde;
 	Array<GameObject> projectiles;
-	private GameObject hero;
+	private Hero hero;
 
 	private ColorWheel colorWheel;
 	private SpriteBatch spriteBatch;
@@ -67,7 +67,7 @@ public class MainScreen implements Screen
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
 
-	private float shootDelay = 0.075f;
+	private float shootDelay = 0.15f;
 	private float currentDelay;
 
 	private boolean spawn;
@@ -104,9 +104,15 @@ public class MainScreen implements Screen
 			spawn = true;
 			currentDelay = 0;
 		}
+		
+		hero.setColor(colorSelector.selectColor().r, 
+					  colorSelector.selectColor().g,
+					  colorSelector.selectColor().b,
+					  1);
+		
 
 		this.enemySpawning.update(enemyHorde, world, deltaTime);
-		projectileSpawning.update(projectiles, spawn, world,
+		projectileSpawning.update(projectiles, spawn, colorSelector.selectColor(), world,
 				  (Gdx.input.getX() - Gdx.graphics.getWidth() / 2),
 				  (Gdx.input.getY() - Gdx.graphics.getHeight() / 2) * -1);
 
@@ -197,6 +203,11 @@ public class MainScreen implements Screen
 		// TODO Auto-generated method stub
 
 	}
+	
+	public Color getColorSelectorColor()
+	{
+		return colorSelector.selectColor();
+	}
 
 	private void init()
 	{
@@ -227,7 +238,7 @@ public class MainScreen implements Screen
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		enemySpawning = new LinearEnemySpawn(2.0f);
+		enemySpawning = new LinearEnemySpawn(1.5f);
 		projectileSpawning = new NormalProjectileSpawn();
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);

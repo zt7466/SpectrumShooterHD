@@ -41,6 +41,14 @@ public class GameObjectFactory
 	private static final float SIZE__ENEMY_MAX = 0.75f;
 	private static final float SIZE_HERO = 0.75f;
 	private static final float SIZE_PROJECTILE = 0.2f;
+	
+	private static final float HEALTH_ENEMY = 6.0f;
+	private static final float HEALTH_HERO = 10.0f;
+	private static final float HEALTH_PROJECTILE = 1.0f;
+	
+	private static final float DAMAGE_ENEMY = 1.0f;
+	private static final float DAMAGE_HERO = 0.0f;
+	private static final float DAMAGE_PROJECTILE = 1.0f;
 
 	public GameObjectFactory()
 	{
@@ -73,7 +81,7 @@ public class GameObjectFactory
 		filter.maskBits = ~CATEGORY_ENEMY;
 		fixture.setFilterData(filter);
 
-		Enemy enemy = new Enemy(color, 3, fixture, texture,spriteSize, 1f);
+		Enemy enemy = new Enemy(color, HEALTH_ENEMY, fixture, texture,spriteSize, DAMAGE_ENEMY);
 		enemy.setOrigin(enemy.getWidth() / 2.0f, enemy.getHeight() / 2.0f);
 
 		return enemy;
@@ -87,19 +95,16 @@ public class GameObjectFactory
 	public Hero makeHero(World world)
 	{
 		int colorCode = colorWheel.random();
-		Color color = new Color(colorWheel.getRedValue(colorCode)/255.0f,
-								colorWheel.getGreenValue(colorCode)/255.0f,
-								colorWheel.getBlueValue(colorCode)/255.0f,
-								1);
+		Color color = new Color(Color.WHITE);
 		Texture texture = new Texture(createPixmap(color));
 		float spriteSize = SIZE_HERO;
-		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize, STATIONARY, 0);
+		Fixture fixture = createStaticFixture(world, new Vector2(0, 0), spriteSize, STATIONARY, DAMAGE_HERO);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
 		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
 		fixture.setFilterData(filter);
 
-		Hero hero = new Hero(color, 10, fixture, texture, 0.0f, 0f);
+		Hero hero = new Hero(color, HEALTH_HERO, fixture, texture, 0.0f, 0f);
 
 		hero.setPosition(fixture.getBody().getPosition().x,
  		  		 		 fixture.getBody().getPosition().y);
@@ -123,23 +128,18 @@ public class GameObjectFactory
 	 * @param mouseY	the Y coordinate of the mouse
 	 * @return			a new Projectile
 	 */
-	public Projectile makeProjectile(World world, float mouseX, float mouseY)
+	public Projectile makeProjectile(World world, Color color, float mouseX, float mouseY)
 	{
-		int colorCode = colorWheel.random();
-		Color color = new Color(colorWheel.getRedValue(colorCode)/255.0f,
-				colorWheel.getGreenValue(colorCode)/255.0f,
-				colorWheel.getBlueValue(colorCode)/255.0f,
-				1);
 		Texture texture = new Texture(createPixmap(color));
 		float spriteSize = SIZE_PROJECTILE;
-		Fixture fixture = createDynamicFixture(world, generateProjectilePosition( Constants.PROJECTILE_REDIUS,
-											   mouseX, mouseY), spriteSize, OUTWARDS, 1.0f);
+		Fixture fixture = createDynamicFixture(world, generateProjectilePosition(Constants.PROJECTILE_REDIUS,
+											   mouseX, mouseY), spriteSize, OUTWARDS, DAMAGE_PROJECTILE);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
 		filter.maskBits = ~CATEGORY_HERO_PROJECTILE;
 		fixture.setFilterData(filter);
 
-		Projectile projectile = new Projectile(color, 1, fixture, texture, spriteSize, 1f);
+		Projectile projectile = new Projectile(color, HEALTH_PROJECTILE, fixture, texture, spriteSize, 1f);
 		projectile.setOrigin(projectile.getWidth() / 2.0f, projectile.getHeight() / 2.0f);
 
 		return projectile;

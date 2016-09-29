@@ -1,5 +1,6 @@
 package com.thompson.spectrumshooter.util;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -19,6 +20,8 @@ import com.thompson.spectrumshooter.gameobject.Projectile;
 public class CollisionThing implements ContactListener
 {
 
+	public static final String TAG = CollisionThing.class.getName();
+	
 	private Damage collisionDamage;
 	public int enemiesKilled;
 
@@ -80,8 +83,9 @@ public class CollisionThing implements ContactListener
 	{
 		Enemy enemyObj = (Enemy) enemy.getUserData();
 		Projectile projectileObj = (Projectile) projectile.getUserData();
-
+		
 		enemyObj.takeHit(collisionDamage.calculateDamge(projectileObj.getDamage(), projectileObj.getColor(), enemyObj.getColor()));
+		
 		// TODO refactor this to something that isn't shit
 		if (!enemyObj.isAlive)
 		{
