@@ -20,27 +20,23 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
  *
  */
 public abstract class OverlayingScreen extends Group {
-	protected static Table totalTable;
-	protected static Table inerdTable;
-	protected static ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+	protected Table totalTable;
+	protected Table inerdTable;
+	protected ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 	protected LabelStyle LABELSTYLE;
-	private final static int CORNERSIZE = 10;
+	private final int CORNERSIZE = 10;
 
 	public OverlayingScreen(float xSize, float ySize) 
 	{
 		setSize(xSize, ySize);
 		totalTable = new Table();
-		totalTable.setFillParent(true);
-		totalTable.center();
 		
 		inerdTable = new Table();
-		inerdTable.center();
 		
 		totalTable.add(createBorder(xSize, ySize));
 		
 		changeColor(new Color((float) (87.0/255.0),(float)(33.0/255.0), (float)(62.0/255.0),(float)2.0));
 		totalTable.row();
-		totalTable.setFillParent(true);
 	}
 
 	public void toggleVisibility() {
@@ -51,17 +47,10 @@ public abstract class OverlayingScreen extends Group {
 		}
 	}
 
-	public static void toggleVisibilityStatic() {
-		if (totalTable.isVisible()) {
-			totalTable.setVisible(false);
-		} else {
-			totalTable.setVisible(true);
-		}
-	}
-
 	
-	public static Table createBorder(float xSize, float ySize) {
+	public Table createBorder(float xSize, float ySize) {
 		Table windowBarTable = new Table();
+		windowBarTable.setFillParent(true);
 		
 		Texture cornerTexture = new Texture(Gdx.files.local("CornerPiece.png"));
 		Texture edgeTexture = new Texture(Gdx.files.local("EdgePiece.png"));
@@ -84,7 +73,7 @@ public abstract class OverlayingScreen extends Group {
 		return windowBarTable;
 	}
 
-	private static Image createImage(Texture texture, boolean flipX, boolean flipY)
+	private Image createImage(Texture texture, boolean flipX, boolean flipY)
 	{
 		Sprite sprite = new Sprite(texture);
 		sprite.setFlip(flipX, flipY);
@@ -93,7 +82,7 @@ public abstract class OverlayingScreen extends Group {
 		return new Image(new SpriteDrawable(sprite));
 	}
 	
-	private static Image createImage(Texture texture, float sizeX, float sizeY)
+	private Image createImage(Texture texture, float sizeX, float sizeY)
 	{
 		Sprite sprite = new Sprite(texture);
 		sprite.setSize(sizeX, sizeY);
@@ -105,9 +94,8 @@ public abstract class OverlayingScreen extends Group {
 	{
 		for(int i = 0; i < sprites.size(); i++)
 		{
-			sprites.get(i).setColor(c);
+			sprites.get(i).setColor(new Color(.5f - c.r, .5f - c.g, .5f - c.b, 1));
 		}
-	
 	}
 	
 	public Table getTable()

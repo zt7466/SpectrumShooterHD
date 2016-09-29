@@ -14,7 +14,7 @@ public class RGBBarSelectorControlable extends RGBBarSelector
 	}
 	
 	@Override
-	public void changeColor() 
+	public void updateColor() 
 	{
 		boolean aPressed = Gdx.input.isKeyPressed(Input.Keys.A);
 		boolean zPressed = Gdx.input.isKeyPressed(Input.Keys.Z);

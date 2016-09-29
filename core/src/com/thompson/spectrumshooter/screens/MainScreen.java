@@ -96,7 +96,7 @@ public class MainScreen implements Screen
 
 		// update information about the game
 		updateBackgroundColor();
-		colorSelector.changeColor(); // Tells the colorSelector to act
+		colorSelector.updateColor(); // Tells the colorSelector to updateItSelf
 		backgroundStage.draw();
 
 		world.step(1 / 30f, 9, 2);
@@ -168,12 +168,18 @@ public class MainScreen implements Screen
 	}
 
 	private void updateBackgroundColor() {
-		Gdx.gl.glClearColor(colorWheel.getRedValue(currentColorCode) / 255.0f,
+		Color backgroundColor = new Color(colorWheel.getRedValue(currentColorCode) / 255.0f,
 				colorWheel.getBlueValue(currentColorCode) / 255.0f, colorWheel.getGreenValue(currentColorCode) / 255.0f,
 				1);
+		
+		Gdx.gl.glClearColor(backgroundColor.r,backgroundColor.g,backgroundColor.b,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
+		
+		Color inverse = new Color(1 - backgroundColor.r, 1 - backgroundColor.g, 1 - backgroundColor.b, 1);
+		healthBar.changeColor(inverse);
+		colorSelector.changeColor(inverse);
 	}
 
 	@Override
@@ -244,24 +250,6 @@ public class MainScreen implements Screen
 		projectileSpawning = new NormalProjectileSpawn();
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
-
-		healthBar = new HealthBar(100);
-		Table healthBarTable = new Table();
-		healthBarTable.setFillParent(true);
-		healthBarTable.add(healthBar.getTable())
-			.padTop(backgroundStage.getHeight() * 11 / 6)
-			.padRight(backgroundStage.getWidth() / 2);
-		
-		backgroundStage.addActor(healthBarTable);
-		
-		colorSelector = new RGBBarSelector(Color.RED);
-		Table colorSelectorTable = new Table();
-		colorSelectorTable.setFillParent(true);
-		colorSelectorTable.add(colorSelector.getTable())
-			.padTop(backgroundStage.getHeight() - colorSelector.getHeight())
-			.padRight(backgroundStage.getWidth() * 3 / 2);
-	
-		backgroundStage.addActor(colorSelectorTable);
 		
 		// TODO fix this to not be shitty
 		Table backgroundTable = new Table();
@@ -269,9 +257,19 @@ public class MainScreen implements Screen
 		Sprite circleBackground = new Sprite(new Texture(Gdx.files.local("whiteCircleFaded.png")));
 		circleBackground.setSize(550, 550);
 		backgroundTable.add(new Image(new SpriteDrawable(circleBackground)));
-		
 		backgroundStage.addActor(backgroundTable);
-	
+		
+		healthBar = new HealthBar(100);
+		Table healthBarTable = new Table();
+		healthBarTable.setFillParent(true);
+		healthBarTable.add(healthBar.getTable()).padTop(Constants.GAME_HEIGHT *.85f);
+		backgroundStage.addActor(healthBarTable);
+		
+		colorSelector = new RGBBarSelector(Color.RED);
+		Table colorSelectorTable = new Table();
+		colorSelectorTable.setFillParent(true);
+		colorSelectorTable.add(colorSelector.getTable()).padRight(Constants.GAME_WIDTH * .75f);
+		backgroundStage.addActor(colorSelectorTable);
 	}
 
 }

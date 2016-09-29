@@ -74,7 +74,7 @@ public class ColorWheelSelector extends ColorSelector
 	}
 
 	@Override
-	public void changeColor() 
+	public void updateColor() 
 	{
 		boolean aPressed = Gdx.input.isKeyPressed(Input.Keys.A);
 		boolean dPressed = Gdx.input.isKeyPressed(Input.Keys.D);

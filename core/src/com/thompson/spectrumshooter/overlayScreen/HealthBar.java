@@ -53,12 +53,12 @@ public class HealthBar extends OverlayingScreen
 	{
 		for(int i = 0; i < sprites.size(); i++)
 		{
-			sprites.get(i).setColor(new Color(1 - c.r,1 - c.g,1 - c.b, 1));
+			sprites.get(i).setColor(new Color(.5f - c.r, .5f - c.g, .5f - c.b, 1));
 		}
 		
 		if(fillSprite != null)
 		{
-			fillSprite.setColor(c);
+			fillSprite.setColor(new Color(c.r, c.g, c.b, 1));
 		}
 	}
 }

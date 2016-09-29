@@ -18,7 +18,7 @@ public abstract class ColorSelector extends OverlayingScreen
 	super(xSize, ySize);
 	}
 
-	public abstract void changeColor();
+	public abstract void updateColor();
 	
 	public abstract Color selectColor();
 }
