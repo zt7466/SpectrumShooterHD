@@ -150,6 +150,7 @@ public class MainScreen implements Screen
 		if (!gameOver)
 		{
 			hero.draw(spriteBatch);
+			healthBar.setValue((int)hero.getHealth());
 		}
 
 		for (GameObject enemy: enemyHorde)
@@ -259,7 +260,7 @@ public class MainScreen implements Screen
 		backgroundTable.add(new Image(new SpriteDrawable(circleBackground)));
 		backgroundStage.addActor(backgroundTable);
 		
-		healthBar = new HealthBar(100);
+		healthBar = new HealthBar((int)hero.getHealth());
 		Table healthBarTable = new Table();
 		healthBarTable.setFillParent(true);
 		healthBarTable.add(healthBar.getTable()).padTop(Constants.GAME_HEIGHT *.85f);
