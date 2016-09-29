@@ -76,6 +76,8 @@ public class MainScreen implements Screen
 	public int enemiesKilled;
 
 	private CollisionThing collision;
+	
+	private static final float SPAWN_SPEED = 1.5f;
 
 	public MainScreen() {
 		init();
@@ -238,7 +240,7 @@ public class MainScreen implements Screen
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		enemySpawning = new LinearEnemySpawn(1.5f);
+		enemySpawning = new LinearEnemySpawn(SPAWN_SPEED);
 		projectileSpawning = new NormalProjectileSpawn();
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
