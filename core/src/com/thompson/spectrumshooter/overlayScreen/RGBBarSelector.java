@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * RGBBarSelector.java
@@ -22,19 +23,19 @@ public class RGBBarSelector extends ColorSelector
 	protected ProgressBar greenBar;
 	protected ProgressBar blueBar;
 	
-	private final int MAX_COMBINATION = 120;
 	
-	public RGBBarSelector(Color startColor) 
+	
+	public RGBBarSelector() 
 	{
-		super(100, 500);
+		super(160, 500);
 		
 		redBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(1,0,0,1)));
 		greenBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(0,1,0,1)));
 		blueBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(0,0,1,1)));
 		
-		redBar.setValue(startColor.r);
-		greenBar.setValue(startColor.g);
-		blueBar.setValue(startColor.b);
+		redBar.setValue(Constants.MAX_COMBINATION / 300f);
+		greenBar.setValue(Constants.MAX_COMBINATION / 300f);
+		blueBar.setValue(Constants.MAX_COMBINATION / 300f);
 		
 		inerdTable.add(redBar).padRight(5).padLeft(5).minHeight(450);
 		inerdTable.add(greenBar).padRight(5).padLeft(5).minHeight(450);
@@ -46,12 +47,12 @@ public class RGBBarSelector extends ColorSelector
 		Texture progressFill = new Texture(Gdx.files.local("colorBar.png"));
 		
 		Sprite backgroundSprite = new Sprite(backgroundTexture);
-		backgroundSprite.setSize(20, 300);
+		backgroundSprite.setSize(36, 350);
 		SpriteDrawable background = new SpriteDrawable(backgroundSprite);
 		
 		Sprite fillSprite = new Sprite(progressFill);
 		fillSprite.setColor(color);
-		fillSprite.setSize(20, 20);
+		fillSprite.setSize(30, 30);
 		SpriteDrawable fill = new SpriteDrawable(fillSprite);
 		
 		ProgressBarStyle style = new ProgressBarStyle(background, fill);
@@ -81,7 +82,7 @@ public class RGBBarSelector extends ColorSelector
 				count++;
 			if (dPressed)
 				count++;
-			double maxValue = MAX_COMBINATION / count;
+			double maxValue = Constants.MAX_COMBINATION / count;
 
 			int red = (int) (redBar.getValue() * 100);
 			int green = (int) (greenBar.getValue() * 100);

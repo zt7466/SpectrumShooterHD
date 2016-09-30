@@ -4,10 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Disposable;
 import com.thompson.spectrumshooter.util.Constants;
-
+/**
+ * Assets class, where we load the assets
+ * @author Abraham Loscher
+ *
+ */
 public class Assets implements Disposable, AssetErrorListener {
 
 	public static final String TAG = Assets.class.getName();
@@ -16,7 +21,8 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	private AssetManager assetManager;
 
-	public Sound randomSound;
+	public Sound enemyDeathSound;
+	public Music gameMusic;
 
 
 	/**
@@ -32,10 +38,13 @@ public class Assets implements Disposable, AssetErrorListener {
 	public void init(){
 		assetManager = new AssetManager();
 		assetManager.setErrorListener(this);
-		String s = Constants.SOUND_PATH + "/ping.wav";
+		String s = Constants.SOUND_PATH + "/bubbles.wav";
+		String m = Constants.MUSIC_PATH + "/evan_music1.mp3";
 		assetManager.load(s, Sound.class);
+		assetManager.load(m, Music.class);
 		assetManager.finishLoading();
-		randomSound = assetManager.get(s, Sound.class);
+		enemyDeathSound = assetManager.get(s, Sound.class);
+		gameMusic = assetManager.get(m, Music.class);
 	}
 
 	/**

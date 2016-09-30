@@ -37,6 +37,7 @@ public abstract class OverlayingScreen extends Group {
 		
 		changeColor(new Color((float) (87.0/255.0),(float)(33.0/255.0), (float)(62.0/255.0),(float)2.0));
 		totalTable.row();
+		totalTable.setColor(Color.BLACK);
 	}
 
 	public void toggleVisibility() {
@@ -94,7 +95,7 @@ public abstract class OverlayingScreen extends Group {
 	{
 		for(int i = 0; i < sprites.size(); i++)
 		{
-			sprites.get(i).setColor(new Color(.5f - c.r, .5f - c.g, .5f - c.b, 1));
+			sprites.get(i).setColor(new Color(.5f + c.r, .5f + c.g, .5f + c.b, 1));
 		}
 	}
 	

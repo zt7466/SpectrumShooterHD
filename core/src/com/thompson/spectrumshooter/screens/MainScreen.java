@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.gameobject.Enemy;
 import com.thompson.spectrumshooter.gameobject.GameObject;
@@ -26,7 +27,9 @@ import com.thompson.spectrumshooter.gameobject.Hero;
 import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
 import com.thompson.spectrumshooter.overlayScreen.HealthBar;
 import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
+import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.spawning.EnemySpawning;
+import com.thompson.spectrumshooter.spawning.ExponentialEnemySpawn;
 import com.thompson.spectrumshooter.spawning.LinearEnemySpawn;
 import com.thompson.spectrumshooter.spawning.NormalProjectileSpawn;
 import com.thompson.spectrumshooter.spawning.ProjectileSpawn;
@@ -63,12 +66,12 @@ public class MainScreen implements Screen
 	private HealthBar healthBar;
 
 	// TODO remove
-	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+	//Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
 
-	private float shootDelay = 0.15f;
+	private float shootDelay = 0.2f;
 	private float currentDelay;
 
 	private boolean spawn;
@@ -108,12 +111,13 @@ public class MainScreen implements Screen
 			currentDelay = 0;
 		}
 
-		Color c = colorSelector.selectColor();
+		hero.setColor(colorSelector.selectColor().r,
+					  colorSelector.selectColor().g,
+					  colorSelector.selectColor().b,
+					  1);
+		
+		Gdx.app.debug(TAG, "hero color: " + hero.getColor().toString());
 
-	    hero.setColor(colorSelector.selectColor().r,
-	            colorSelector.selectColor().g,
-	            colorSelector.selectColor().b,
-	            1);
 
 		this.enemySpawning.update(enemyHorde, world, deltaTime);
 		projectileSpawning.update(projectiles, spawn, colorSelector.selectColor(), world,
@@ -167,7 +171,7 @@ public class MainScreen implements Screen
 		}
 		spriteBatch.end();
 
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 
 	}
 
@@ -180,10 +184,9 @@ public class MainScreen implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-
-		Color inverse = new Color(1 - backgroundColor.r, 1 - backgroundColor.g, 1 - backgroundColor.b, 1);
-		healthBar.changeColor(inverse);
-		colorSelector.changeColor(inverse);
+		
+		healthBar.changeColor(backgroundColor);
+		colorSelector.changeColor(backgroundColor);
 	}
 
 	@Override
@@ -223,6 +226,9 @@ public class MainScreen implements Screen
 
 	private void init()
 	{
+		AudioManager.instance.play(Assets.instance.gameMusic);
+
+
 		enemiesKilled = 0;
 
 		currentDelay = 0;
@@ -250,7 +256,7 @@ public class MainScreen implements Screen
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		enemySpawning = new LinearEnemySpawn(SPAWN_SPEED);
+		enemySpawning = new LinearEnemySpawn();
 		projectileSpawning = new NormalProjectileSpawn();
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
@@ -269,7 +275,7 @@ public class MainScreen implements Screen
 		healthBarTable.add(healthBar.getTable()).padTop(Constants.GAME_HEIGHT *.85f);
 		backgroundStage.addActor(healthBarTable);
 
-		colorSelector = new RGBBarSelector(Color.RED);
+		colorSelector = new RGBBarSelector();
 		Table colorSelectorTable = new Table();
 		colorSelectorTable.setFillParent(true);
 		colorSelectorTable.add(colorSelector.getTable()).padRight(Constants.GAME_WIDTH * .75f);

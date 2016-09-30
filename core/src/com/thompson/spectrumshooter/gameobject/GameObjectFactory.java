@@ -39,7 +39,7 @@ public class GameObjectFactory
 
 	private static final float SIZE_ENEMY_MIN = 0.25f;
 	private static final float SIZE__ENEMY_MAX = 0.75f;
-	private static final float SIZE_HERO = 0.75f;
+	private static final float SIZE_HERO = 0.5f;
 	private static final float SIZE_PROJECTILE = 0.2f;
 
 	private static final float HEALTH_ENEMY = 6.0f;
@@ -48,7 +48,7 @@ public class GameObjectFactory
 
 	private static final float DAMAGE_ENEMY = 1.0f;
 	private static final float DAMAGE_HERO = 0.0f;
-	private static final float DAMAGE_PROJECTILE = 1.0f;
+	private static final float DAMAGE_PROJECTILE = 3.0f;
 
 	public GameObjectFactory()
 	{
@@ -63,11 +63,7 @@ public class GameObjectFactory
 	 */
 	public Enemy makeBasicEnemy(World world)
 	{
-		int colorCode = colorWheel.random();
-		Color color = new Color(colorWheel.getRedValue(colorCode)/255.0f,
-				colorWheel.getGreenValue(colorCode)/255.0f,
-				colorWheel.getBlueValue(colorCode)/255.0f,
-				1);
+		Color color = createCreatableColor();
 
 		Texture texture = new Texture(createPixmap(color));
 
@@ -250,6 +246,41 @@ public class GameObjectFactory
 	{
 		return new Vector2(spawnRadius * MathUtils.cosDeg(theta),
 						   spawnRadius * MathUtils.sinDeg(theta));
+	}
+	
+	/**
+	 * Create a color for a enemy that can be reached by a basic color selector
+	 * @return the Random Color
+	 */
+	private Color createCreatableColor()
+	{
+		float maxValue = Constants.MAX_COMBINATION / 100;
+		
+		float redValue = (float)Math.random();
+		float greenValue;
+		float blueValue;
+		maxValue = maxValue - redValue;
+		
+		if(maxValue > 1)
+		{
+			greenValue = (float)Math.random();
+		}
+		else
+		{
+			greenValue = (float)Math.random() * maxValue;
+		}
+		maxValue = maxValue - greenValue;
+		
+		if(maxValue > 1)
+		{
+			blueValue = (float)Math.random();
+		}
+		else
+		{
+			blueValue = maxValue;
+		}
+		
+		return new Color(redValue, greenValue, blueValue, 1);
 	}
 
 }

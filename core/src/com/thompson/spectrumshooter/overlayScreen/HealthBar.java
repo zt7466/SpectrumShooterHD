@@ -29,13 +29,13 @@ public class HealthBar extends OverlayingScreen
 		SpriteDrawable background = new SpriteDrawable(backgroundSprite);
 		
 		fillSprite = new Sprite(backgroundTexture);
-		fillSprite.setColor(Color.BLACK);
-		fillSprite.setSize(20, 20);
+		fillSprite.setColor(Color.YELLOW);
+		fillSprite.setSize(16, 16);
 		SpriteDrawable fill = new SpriteDrawable(fillSprite);
 		
 		ProgressBarStyle style = new ProgressBarStyle(background, fill);
 		style.knobBefore = fill;
-		
+				
 		healthBar = new ProgressBar(0,MaxHealthBar,1,false,style);
 		
 		healthBar.setValue(100);
@@ -52,12 +52,8 @@ public class HealthBar extends OverlayingScreen
 	{
 		for(int i = 0; i < sprites.size(); i++)
 		{
-			sprites.get(i).setColor(new Color(.5f - c.r, .5f - c.g, .5f - c.b, 1));
+			sprites.get(i).setColor(new Color(.5f + c.r, .5f + c.g, .5f + c.b, 1));
 		}
 		
-		if(fillSprite != null)
-		{
-			fillSprite.setColor(new Color(c.r, c.g, c.b, 1));
-		}
 	}
 }
