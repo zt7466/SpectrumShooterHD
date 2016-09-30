@@ -69,8 +69,8 @@ public class LinearEnemySpawn implements EnemySpawning
 				deadEnemies++;
 				world.destroyBody(enemy.getFixture().getBody());
 				enemy.dispose();
-				// false indicates using .equals; true indicated using ==
 				AudioManager.instance.play(Assets.instance.enemyDeathSound);
+				// false indicates using .equals; true indicated using ==
 				enemies.removeValue(enemy, false);
 			}
 		}

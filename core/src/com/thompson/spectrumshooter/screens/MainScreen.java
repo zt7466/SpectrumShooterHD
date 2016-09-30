@@ -26,6 +26,7 @@ import com.thompson.spectrumshooter.gameobject.Hero;
 import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
 import com.thompson.spectrumshooter.overlayScreen.HealthBar;
 import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
+import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.spawning.EnemySpawning;
 import com.thompson.spectrumshooter.spawning.ExponentialEnemySpawn;
 import com.thompson.spectrumshooter.spawning.LinearEnemySpawn;
@@ -178,7 +179,7 @@ public class MainScreen implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-		
+
 		Color inverse = new Color(1 - backgroundColor.r, 1 - backgroundColor.g, 1 - backgroundColor.b, 1);
 		healthBar.changeColor(inverse);
 		colorSelector.changeColor(inverse);
@@ -221,6 +222,9 @@ public class MainScreen implements Screen
 
 	private void init()
 	{
+		AudioManager.instance.play(Assets.instance.gameMusic);
+
+
 		enemiesKilled = 0;
 
 		currentDelay = 0;
@@ -266,7 +270,7 @@ public class MainScreen implements Screen
 		healthBarTable.setFillParent(true);
 		healthBarTable.add(healthBar.getTable()).padTop(Constants.GAME_HEIGHT *.85f);
 		backgroundStage.addActor(healthBarTable);
-		
+
 		colorSelector = new RGBBarSelector();
 		Table colorSelectorTable = new Table();
 		colorSelectorTable.setFillParent(true);

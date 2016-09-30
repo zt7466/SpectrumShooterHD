@@ -21,6 +21,7 @@ public class Constants
 	public static final float PROJECTILE_REDIUS = 0.5f;
 
 	public static final String SOUND_PATH = "../core/assets/sound";
-	
-	
+	public static final String MUSIC_PATH = "../core/assets/music";
+
+
 }
