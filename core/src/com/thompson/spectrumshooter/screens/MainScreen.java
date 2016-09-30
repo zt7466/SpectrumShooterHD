@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.gameobject.Enemy;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 import com.thompson.spectrumshooter.gameobject.Hero;
@@ -57,7 +58,7 @@ public class MainScreen implements Screen
 
 	// TODO this
 	private Stage backgroundStage;
-	
+
 	private ColorSelector colorSelector;
 	private HealthBar healthBar;
 
@@ -76,7 +77,7 @@ public class MainScreen implements Screen
 	public int enemiesKilled;
 
 	private CollisionThing collision;
-	
+
 	private static final float SPAWN_SPEED = 1.5f;
 
 	public MainScreen() {
@@ -106,12 +107,13 @@ public class MainScreen implements Screen
 			spawn = true;
 			currentDelay = 0;
 		}
-		
-		hero.setColor(colorSelector.selectColor().r, 
-					  colorSelector.selectColor().g,
-					  colorSelector.selectColor().b,
-					  1);
-		
+
+		Color c = colorSelector.selectColor();
+
+	    hero.setColor(colorSelector.selectColor().r,
+	            colorSelector.selectColor().g,
+	            colorSelector.selectColor().b,
+	            1);
 
 		this.enemySpawning.update(enemyHorde, world, deltaTime);
 		projectileSpawning.update(projectiles, spawn, colorSelector.selectColor(), world,
@@ -156,6 +158,7 @@ public class MainScreen implements Screen
 		for (GameObject enemy: enemyHorde)
 		{
 			enemy.draw(spriteBatch);
+			((Enemy) enemy).getCenterSprite().draw(spriteBatch);
 		}
 
 		for (GameObject projectile: projectiles)
@@ -172,12 +175,12 @@ public class MainScreen implements Screen
 		Color backgroundColor = new Color(colorWheel.getRedValue(currentColorCode) / 255.0f,
 				colorWheel.getBlueValue(currentColorCode) / 255.0f, colorWheel.getGreenValue(currentColorCode) / 255.0f,
 				1);
-		
+
 		Gdx.gl.glClearColor(backgroundColor.r,backgroundColor.g,backgroundColor.b,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-		
+
 		Color inverse = new Color(1 - backgroundColor.r, 1 - backgroundColor.g, 1 - backgroundColor.b, 1);
 		healthBar.changeColor(inverse);
 		colorSelector.changeColor(inverse);
@@ -212,7 +215,7 @@ public class MainScreen implements Screen
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public Color getColorSelectorColor()
 	{
 		return colorSelector.selectColor();
@@ -251,7 +254,7 @@ public class MainScreen implements Screen
 		projectileSpawning = new NormalProjectileSpawn();
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
-		
+
 		// TODO fix this to not be shitty
 		Table backgroundTable = new Table();
 		backgroundTable.setFillParent(true);
@@ -259,13 +262,13 @@ public class MainScreen implements Screen
 		circleBackground.setSize(550, 550);
 		backgroundTable.add(new Image(new SpriteDrawable(circleBackground)));
 		backgroundStage.addActor(backgroundTable);
-		
+
 		healthBar = new HealthBar((int)hero.getHealth());
 		Table healthBarTable = new Table();
 		healthBarTable.setFillParent(true);
 		healthBarTable.add(healthBar.getTable()).padTop(Constants.GAME_HEIGHT *.85f);
 		backgroundStage.addActor(healthBarTable);
-		
+
 		colorSelector = new RGBBarSelector(Color.RED);
 		Table colorSelectorTable = new Table();
 		colorSelectorTable.setFillParent(true);

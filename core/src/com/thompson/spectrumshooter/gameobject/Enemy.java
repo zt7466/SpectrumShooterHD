@@ -1,8 +1,10 @@
 package com.thompson.spectrumshooter.gameobject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
@@ -15,9 +17,12 @@ public class Enemy extends GameObject
 {
 
 	private static final float KNOCKBACK = 17f;
-	
+
 	private Vector2 linearVelocity;
-	
+	private Sprite centerSprite;
+
+	private static final float INNER_MULTIPLIER = 0.75f;
+
 	/**
 	 * Create a new Enemy with the given texture and the given color code.
 	 * @param texture		the texture of this Enemy
@@ -30,6 +35,14 @@ public class Enemy extends GameObject
 		// this is done inside of this class so that it saves as a Enemy.class
 		fixture.setUserData(this);
 		this.linearVelocity = fixture.getBody().getLinearVelocity();
+
+		Pixmap pixmap = new Pixmap(300, 300, Format.RGBA8888);
+		pixmap.setColor(Color.WHITE);
+		pixmap.fillCircle(150, 150, 150);
+		centerSprite = new Sprite(new Texture(pixmap));
+		centerSprite.setColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, 0);
+		centerSprite.setSize(spriteSize * INNER_MULTIPLIER, spriteSize * INNER_MULTIPLIER);
+
 		// set the initial position of the Sprite
 		this.update();
 	}
@@ -43,10 +56,24 @@ public class Enemy extends GameObject
 	{
 		// when the block gets hit it starts to move backwards, doing this reverses that
 		fixture.getBody().setLinearVelocity(linearVelocity);
+		// set the position of the main sprite
 		this.setPosition(fixture.getBody().getPosition().x - spriteSize/2.0f,
-		  		  		 fixture.getBody().getPosition().y - spriteSize/2.0f);
+				 fixture.getBody().getPosition().y - spriteSize/2.0f);
+		// set the position of the damage sprite
+		centerSprite.setPosition(fixture.getBody().getPosition().x - (spriteSize * INNER_MULTIPLIER)/2.0f,
+				 fixture.getBody().getPosition().y - (spriteSize * INNER_MULTIPLIER)/2.0f);
+		centerSprite.setColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, (1-(health/maxHealth)));
 	}
-	
+
+	/**
+	 * Get the center Sprite representing damage.
+	 * @return center Sprite representing damage
+	 */
+	public Sprite getCenterSprite()
+	{
+		return centerSprite;
+	}
+
 	/**
 	 * Take a hit. If this hit causes the Enemy to run out of health then isAlive is set to
 	 * false. Additionally, the linear velocity is inverted and increases to move the Enemy
@@ -61,4 +88,11 @@ public class Enemy extends GameObject
 		}
 		fixture.getBody().setLinearVelocity(-linearVelocity.x * KNOCKBACK, -linearVelocity.y * KNOCKBACK);
 	}
+
+	private void setSpritePosition(Sprite sprite, float spriteSize)
+	{
+
+	}
+
+
 }

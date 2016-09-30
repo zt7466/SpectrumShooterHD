@@ -14,7 +14,7 @@ public abstract class GameObject extends Sprite
 	protected float health;
 	protected float spriteSize;
 	protected float damage;
-	private float maxHealth;
+	protected float maxHealth;
 
 	public GameObject(Color color, float health, Fixture fixture, Texture texture, float spriteSize, float damage)
 	{
