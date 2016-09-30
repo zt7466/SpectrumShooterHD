@@ -2,8 +2,10 @@ package com.thompson.spectrumshooter.spawning;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
+import com.thompson.spectrumshooter.sound.AudioManager;
 
 /**
  * A normal spawning algorithm where every time an enemy dies, a new enemy is
@@ -68,6 +70,7 @@ public class LinearEnemySpawn implements EnemySpawning
 				world.destroyBody(enemy.getFixture().getBody());
 				enemy.dispose();
 				// false indicates using .equals; true indicated using ==
+				AudioManager.instance.play(Assets.instance.enemyDeathSound);
 				enemies.removeValue(enemy, false);
 			}
 		}
