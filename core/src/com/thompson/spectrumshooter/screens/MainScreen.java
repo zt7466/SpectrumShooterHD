@@ -179,10 +179,9 @@ public class MainScreen implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-
-		Color inverse = new Color(1 - backgroundColor.r, 1 - backgroundColor.g, 1 - backgroundColor.b, 1);
-		healthBar.changeColor(inverse);
-		colorSelector.changeColor(inverse);
+		
+		healthBar.changeColor(backgroundColor);
+		colorSelector.changeColor(backgroundColor);
 	}
 
 	@Override
