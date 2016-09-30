@@ -170,6 +170,11 @@ public class MenuScreen implements Screen
 
 	@Override
 	public void dispose() {
+		newGameButton.setDisabled(true);
+		stage.dispose();
+		backgroundStage.dispose();
+		shapeRenderer.dispose();
+		Gdx.input.setInputProcessor(backgroundStage);
 	}
 	
 	/**

@@ -27,6 +27,7 @@ import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
 import com.thompson.spectrumshooter.overlayScreen.HealthBar;
 import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
 import com.thompson.spectrumshooter.spawning.EnemySpawning;
+import com.thompson.spectrumshooter.spawning.ExponentialEnemySpawn;
 import com.thompson.spectrumshooter.spawning.LinearEnemySpawn;
 import com.thompson.spectrumshooter.spawning.NormalProjectileSpawn;
 import com.thompson.spectrumshooter.spawning.ProjectileSpawn;
@@ -63,12 +64,12 @@ public class MainScreen implements Screen
 	private HealthBar healthBar;
 
 	// TODO remove
-	Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+	//Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
 
-	private float shootDelay = 0.15f;
+	private float shootDelay = 0.2f;
 	private float currentDelay;
 
 	private boolean spawn;
@@ -77,8 +78,7 @@ public class MainScreen implements Screen
 	public int enemiesKilled;
 
 	private CollisionThing collision;
-
-	private static final float SPAWN_SPEED = 1.5f;
+	private static final float SPAWN_SPEED = .5f;
 
 	public MainScreen() {
 		init();
@@ -165,7 +165,7 @@ public class MainScreen implements Screen
 		}
 		spriteBatch.end();
 
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 
 	}
 
@@ -178,7 +178,7 @@ public class MainScreen implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-
+		
 		Color inverse = new Color(1 - backgroundColor.r, 1 - backgroundColor.g, 1 - backgroundColor.b, 1);
 		healthBar.changeColor(inverse);
 		colorSelector.changeColor(inverse);
@@ -248,7 +248,7 @@ public class MainScreen implements Screen
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		enemySpawning = new LinearEnemySpawn(SPAWN_SPEED);
+		enemySpawning = new LinearEnemySpawn();
 		projectileSpawning = new NormalProjectileSpawn();
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
@@ -266,8 +266,8 @@ public class MainScreen implements Screen
 		healthBarTable.setFillParent(true);
 		healthBarTable.add(healthBar.getTable()).padTop(Constants.GAME_HEIGHT *.85f);
 		backgroundStage.addActor(healthBarTable);
-
-		colorSelector = new RGBBarSelector(Color.RED);
+		
+		colorSelector = new RGBBarSelector();
 		Table colorSelectorTable = new Table();
 		colorSelectorTable.setFillParent(true);
 		colorSelectorTable.add(colorSelector.getTable()).padRight(Constants.GAME_WIDTH * .75f);

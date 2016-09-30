@@ -16,7 +16,7 @@ public class Constants
 	public static final float BOX2D_CONVERSION = 0.5f;
 
 	// the distance in meters from the center that the Enemies spawn at.
-	public static final float ENEMY_RADIUS = 3;
+	public static final float ENEMY_RADIUS = 3.5f;
 	// the distance in meters from the center that the Enemies spawn at.
 	public static final float PROJECTILE_REDIUS = 0.5f;
 
