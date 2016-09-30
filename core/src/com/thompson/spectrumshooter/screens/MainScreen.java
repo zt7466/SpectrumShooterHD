@@ -115,9 +115,6 @@ public class MainScreen implements Screen
 					  colorSelector.selectColor().g,
 					  colorSelector.selectColor().b,
 					  1);
-		
-		Gdx.app.debug(TAG, "hero color: " + hero.getColor().toString());
-
 
 		this.enemySpawning.update(enemyHorde, world, deltaTime);
 		projectileSpawning.update(projectiles, spawn, colorSelector.selectColor(), world,
@@ -184,7 +181,7 @@ public class MainScreen implements Screen
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-		
+
 		healthBar.changeColor(backgroundColor);
 		colorSelector.changeColor(backgroundColor);
 	}
