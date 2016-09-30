@@ -21,7 +21,6 @@ public class Constants
 	public static final float PROJECTILE_REDIUS = 0.5f;
 
 	public static final String SOUND_PATH = "../core/assets/sound";
+	public static float MAX_COMBINATION = 120; //Max total value a color selector can have
 	public static final String MUSIC_PATH = "../core/assets/music";
-
-
 }

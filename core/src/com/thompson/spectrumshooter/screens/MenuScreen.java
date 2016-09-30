@@ -204,11 +204,16 @@ public class MenuScreen implements Screen
 	
 	public backgroundEnemy generateEnemy()
 	{
-		Color Color = new Color((float) Math.random(), (float) Math.random(), (float) Math.random(), 1f);
+		int colorCode = colorWheel.random();
+		Color Color = new Color(colorWheel.getRedValue(colorCode) / 255f, 
+				colorWheel.getGreenValue(colorCode) / 255f, 
+				colorWheel.getBlueValue(colorCode) / 255f,
+				1f);
+		
 		return new backgroundEnemy(
 				(float)Math.random() * 360f, 
 				CIRCLEWIDTH/2, 
-				(float)Math.random() * 40 + 15,
+				(float)Math.random() * 120 + 15,
 				(float)Math.random() * 20 + 15,
 				Color);
 	}

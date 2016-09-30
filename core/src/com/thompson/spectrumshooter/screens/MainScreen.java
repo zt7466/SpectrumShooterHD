@@ -79,7 +79,7 @@ public class MainScreen implements Screen
 	public int enemiesKilled;
 
 	private CollisionThing collision;
-	private static final float SPAWN_SPEED = .5f;
+	private static final float SPAWN_SPEED = .25f;
 
 	public MainScreen() {
 		init();
@@ -113,6 +113,8 @@ public class MainScreen implements Screen
 					  colorSelector.selectColor().g,
 					  colorSelector.selectColor().b,
 					  1);
+		
+		Gdx.app.debug(TAG, "hero color: " + hero.getColor().toString());
 
 
 		this.enemySpawning.update(enemyHorde, world, deltaTime);

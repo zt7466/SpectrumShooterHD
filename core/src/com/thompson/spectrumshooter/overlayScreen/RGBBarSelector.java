@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * RGBBarSelector.java
@@ -22,7 +23,7 @@ public class RGBBarSelector extends ColorSelector
 	protected ProgressBar greenBar;
 	protected ProgressBar blueBar;
 	
-	private final float MAX_COMBINATION = 120;
+	
 	
 	public RGBBarSelector() 
 	{
@@ -32,9 +33,9 @@ public class RGBBarSelector extends ColorSelector
 		greenBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(0,1,0,1)));
 		blueBar = new ProgressBar(0,1,.01f,true,createBarStyle(new Color(0,0,1,1)));
 		
-		redBar.setValue(MAX_COMBINATION / 300f);
-		greenBar.setValue(MAX_COMBINATION / 300f);
-		blueBar.setValue(MAX_COMBINATION / 300f);
+		redBar.setValue(Constants.MAX_COMBINATION / 300f);
+		greenBar.setValue(Constants.MAX_COMBINATION / 300f);
+		blueBar.setValue(Constants.MAX_COMBINATION / 300f);
 		
 		inerdTable.add(redBar).padRight(5).padLeft(5).minHeight(450);
 		inerdTable.add(greenBar).padRight(5).padLeft(5).minHeight(450);
@@ -81,7 +82,7 @@ public class RGBBarSelector extends ColorSelector
 				count++;
 			if (dPressed)
 				count++;
-			double maxValue = MAX_COMBINATION / count;
+			double maxValue = Constants.MAX_COMBINATION / count;
 
 			int red = (int) (redBar.getValue() * 100);
 			int green = (int) (greenBar.getValue() * 100);
