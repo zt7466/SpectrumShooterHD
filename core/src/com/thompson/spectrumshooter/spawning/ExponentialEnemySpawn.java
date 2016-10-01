@@ -8,7 +8,7 @@ import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 /**
  * ExponentialEnemySpawn.java
  * 
- * 
+ * Spawing method that starts slow and builds up difficulty quickly
  * 
  * @author Zachary Thompson
  */
@@ -17,11 +17,18 @@ public class ExponentialEnemySpawn implements EnemySpawning
 	private float spawnTime;
 	private GameObjectFactory gameObjectFactory;
 	private float previousTime;
+	/**
+	 * secondary constructor
+	 */
 	public ExponentialEnemySpawn()
 	{
 		this(15);
 	}
 	
+	/**
+	 * constructor based on input in the constructor
+	 * @param spawnTime
+	 */
 	public ExponentialEnemySpawn(float spawnTime)
 	{
 		this.spawnTime = spawnTime;
@@ -29,6 +36,9 @@ public class ExponentialEnemySpawn implements EnemySpawning
 		this.previousTime = spawnTime;
 	}
 	
+	/**
+	 * Update method called every render to create new enemies if needed
+	 */
 	@Override
 	public Array<GameObject> update(Array<GameObject> enemies, World world, float deltaTime) 
 	{

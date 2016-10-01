@@ -6,16 +6,23 @@ import com.badlogic.gdx.Input;
 /**
  * RGBBarSelectorControlable.java
  * 
+ * A version of the RGB Bar Color Selector that does not use the Auto 
+ * balancing allowing you to increase and decrease all of the color values
  * @author Zachary Thompson
  */
 public class RGBBarSelectorControlable extends RGBBarSelector
 {
-
+	/**
+	 * Constructor calls the RGBBarSelector Constructor as these two share the same table
+	 */
 	public RGBBarSelectorControlable() 
 	{
 		super();
 	}
 	
+	/**
+	 * Updates the color selector based on input
+	 */
 	@Override
 	public void updateColor() 
 	{

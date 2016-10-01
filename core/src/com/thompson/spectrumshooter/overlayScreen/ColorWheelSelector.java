@@ -16,8 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 /**
  * ColorWheelSelector.java
- * 
- * TODO: desctiption
+ * Color Selector that rotates and shades a color wheel to select color
  * 
  * @author Zachary Thompson
  */
@@ -81,7 +80,7 @@ public class ColorWheelSelector extends ColorSelector
 	}
 
 	/**
-	 * TODO: how this ColorSelector updates color
+	 * Rotates the Color Wheel if 'A' or 'D' is pressed 
 	 */
 	@Override
 	public void updateColor() 
@@ -100,9 +99,6 @@ public class ColorWheelSelector extends ColorSelector
 				image.rotateBy(-3.5f);
 			}
 		}
-		float rotation = image.getRotation();
-		int xValue = (int)(MathUtils.cosDeg(rotation - 90) * 100) + pixMap.getWidth() / 2;
-		int yValue = (int)(MathUtils.sinDeg(rotation - 90) * 100) + pixMap.getHeight() / 2;
 		
 		boolean wPressed = Gdx.input.isKeyPressed(Input.Keys.W);
 		boolean sPressed = Gdx.input.isKeyPressed(Input.Keys.S);
@@ -128,16 +124,20 @@ public class ColorWheelSelector extends ColorSelector
 				whiteCircle.setColor(0f, 0f, 0f, Math.abs(barValue));
 			}
 		}
-		
-		Color holdColor = new Color(pixMap.getPixel(xValue,yValue));
-		float barValue = shadeBar.getValue();
-		color = new Color(holdColor.r + barValue, holdColor.g + barValue, holdColor.b + barValue, 1); 
 	}
 
+	/**
+	 * Returns the color that the color wheel slector is currently on
+	 */
 	@Override
 	public Color selectColor() 
 	{
-		return color;
+		float rotation = image.getRotation();
+		int xValue = (int)(MathUtils.cosDeg(rotation - 90) * 100) + pixMap.getWidth() / 2;
+		int yValue = (int)(MathUtils.sinDeg(rotation - 90) * 100) + pixMap.getHeight() / 2;
+		Color holdColor = new Color(pixMap.getPixel(xValue,yValue));
+		float barValue = shadeBar.getValue();
+		return new Color(holdColor.r + barValue, holdColor.g + barValue, holdColor.b + barValue, 1);
 	}
 
 }

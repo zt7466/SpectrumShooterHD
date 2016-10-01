@@ -24,7 +24,7 @@ import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * GameOverScreen.java
- * 
+ * Screen to be placed after the game ends
  * 
  * @author Zachary Thompson
  */
@@ -41,6 +41,10 @@ public class GameOverScreen implements Screen
 	private ColorWheel colorWheel;
 	private int currentColorCode;
 
+	/**
+	 * Constructor, builds the screen
+	 * @param numberKilled the number of enemies killed in a given time span
+	 */
 	public GameOverScreen(int numberKilled)
 	{
 		camera = new OrthographicCamera();
@@ -69,7 +73,7 @@ public class GameOverScreen implements Screen
 		mainTable.setFillParent(true);
 		mainTable.add(new Label("Game Over", titleLabelStyle)).row();
 
-		mainTable.add(new Label( numberKilled + " Beaten", titleLabelStyle)).row();
+		mainTable.add(new Label( numberKilled + " Kills", titleLabelStyle)).row();
 
 		parameter.size = Constants.GAME_HEIGHT/20;
 		TextButtonStyle style = new TextButtonStyle();
@@ -105,6 +109,9 @@ public class GameOverScreen implements Screen
 		stage.addActor(mainTable);
 	}
 
+	/**
+	 * Renders the screen
+	 */
 	@Override
 	public void render(float delta)
 	{
@@ -113,23 +120,21 @@ public class GameOverScreen implements Screen
 		stage.draw();
 	}
 
+	/**
+	 * Updates the background color
+	 */
 	private void updateColors()
 	{
-		Color newColor = createColor(currentColorCode);
+		Color newColor = new Color(
+				colorWheel.getRedValue(currentColorCode)/255.0f,
+				colorWheel.getGreenValue(currentColorCode)/255.0f,
+				colorWheel.getBlueValue(currentColorCode)/255.0f,
+				1);;
 		Gdx.gl.glClearColor(newColor.r, newColor.g, newColor.b, newColor.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		titleLabelStyle.fontColor = new Color(1 - newColor.r,1 - newColor.g,1 - newColor.b, 1);
 		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-	}
-
-	private Color createColor(int currentColorCode2)
-	{
-		return new Color(
-				colorWheel.getRedValue(currentColorCode)/255.0f,
-				colorWheel.getGreenValue(currentColorCode)/255.0f,
-				colorWheel.getBlueValue(currentColorCode)/255.0f,
-				1);
 	}
 
 	@Override

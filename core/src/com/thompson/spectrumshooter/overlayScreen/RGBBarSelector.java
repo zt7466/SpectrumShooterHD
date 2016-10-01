@@ -24,8 +24,9 @@ public class RGBBarSelector extends ColorSelector
 	protected ProgressBar greenBar;
 	protected ProgressBar blueBar;
 	
-	
-	
+	/**
+	 * Constructor that builds the Color selector
+	 */
 	public RGBBarSelector() 
 	{
 		super(160, 500);
@@ -43,6 +44,11 @@ public class RGBBarSelector extends ColorSelector
 		inerdTable.add(blueBar).padRight(5).padLeft(5).minHeight(450).row();
 	}
 
+	/**
+	 * Creates a Progress Bar Style of the given color
+	 * @param color color of the bar
+	 * @return the completed ProgressBarStyle
+	 */
 	private ProgressBarStyle createBarStyle(Color color) {
 		Texture backgroundTexture = new Texture(Gdx.files.local("colorBar.png"));
 		Texture progressFill = new Texture(Gdx.files.local("colorBar.png"));
@@ -62,12 +68,18 @@ public class RGBBarSelector extends ColorSelector
 		return style;
 	}
 	
+	/**
+	 * returns the current color created by the color select
+	 */
 	@Override
 	public Color selectColor() 
 	{		
 		return new Color(redBar.getValue(), greenBar.getValue(), blueBar.getValue(), 1);
 	}
 
+	/**
+	 * Updates the Color Selector
+	 */
 	@Override
 	public void updateColor() 
 	{
