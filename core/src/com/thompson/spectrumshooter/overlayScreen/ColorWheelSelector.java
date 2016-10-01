@@ -14,6 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
+/**
+ * ColorWheelSelector.java
+ * 
+ * TODO: desctiption
+ * 
+ * @author Zachary Thompson
+ */
 public class ColorWheelSelector extends ColorSelector 
 {
 	protected ProgressBar shadeBar;
@@ -73,6 +80,9 @@ public class ColorWheelSelector extends ColorSelector
 		inerdTable.add(firstTable);
 	}
 
+	/**
+	 * TODO: how this ColorSelector updates color
+	 */
 	@Override
 	public void updateColor() 
 	{

@@ -2,11 +2,12 @@ package com.thompson.spectrumshooter.damage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
-import com.thompson.spectrumshooter.util.CollisionThing;
 
 /**
+ * BasicDamage.java
+ * 
  * Calculate damage by averaging the differences between the instigators RGB color values.
+ * 
  * @author Christopher Boyer
  */
 public class BasicDamage implements Damage
@@ -14,6 +15,10 @@ public class BasicDamage implements Damage
 	
 	public static final String TAG = BasicDamage.class.getName();
 
+	/**
+	 * Fine the square root of the sum of each color factor squared. Each color factor comprises
+	 * of the instigator's value minus the target's value clamped at the instigator's max value.
+	 */
 	@Override
 	public float calculateDamge(float damagePower, Color instigatorColor, Color targetColor)
 	{

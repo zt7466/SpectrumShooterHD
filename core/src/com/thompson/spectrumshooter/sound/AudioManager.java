@@ -3,11 +3,13 @@ package com.thompson.spectrumshooter.sound;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 /**
+ * AudioManager.java
+ * 
  * This manages all the playing of sounds in the entire game.
  * As the WorldRenderer handles dealing with graphics, the AudioManager handles
  * the playing of sound files when needed.
- * @author abeloscher
- *
+ * 
+ * @author Abraham Loscher
  */
 public class AudioManager {
 
@@ -22,12 +24,16 @@ public class AudioManager {
 
 	/**
 	 * Plays the sound that is input as a parameter
-	 * @param sound - short audio file you would like to play
+	 * @param sound		short audio file you would like to play
 	 */
 	public void play(Sound sound){
 		sound.play();
 	}
 
+	/**
+	 * Play the given music
+	 * @param music		the given mousic
+	 */
 	public void play(Music music){
 		music.setLooping(true);
 		music.play();

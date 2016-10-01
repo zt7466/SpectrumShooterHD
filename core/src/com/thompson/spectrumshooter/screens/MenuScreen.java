@@ -29,15 +29,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.color.ColorWheel;
-import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
-import com.thompson.spectrumshooter.overlayScreen.ColorWheelSelector;
 import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * MenuScreen.java
- * Main Menu Screen
- * @author Zach
- *
+ * 
+ * The menue screen of the game.
+ * 
+ * @author Zachary Thompson
  */
 public class MenuScreen implements Screen 
 {

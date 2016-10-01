@@ -5,8 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * ColorSelector.java
+ * 
  * Abstract class for a color selector
- * @author Zach
+ * 
+ * @author Zachary Thompson
  *
  */
 public abstract class ColorSelector extends OverlayingScreen
@@ -18,7 +20,14 @@ public abstract class ColorSelector extends OverlayingScreen
 	super(xSize, ySize);
 	}
 
+	/**
+	 * Update the current color of the color selector.
+	 */
 	public abstract void updateColor();
 	
+	/**
+	 * Get the current color of this ColorSelector.
+	 * @return current color of this ColorSelector
+	 */
 	public abstract Color selectColor();
 }

@@ -8,6 +8,8 @@ import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 import com.thompson.spectrumshooter.sound.AudioManager;
 
 /**
+ * LinearEnemySpawn.java
+ * 
  * A normal spawning algorithm where every time an enemy dies, a new enemy is
  * is spawned. Additionally every given so often another enemy spawns.
  *
@@ -21,8 +23,6 @@ public class LinearEnemySpawn implements EnemySpawning
 	private GameObjectFactory gameObjectFactory;
 	private float previousTime;
 
-	private int deadEnemies;
-
 	/**
 	 * Construct the spawning algorithm with the default spawn time of ten
 	 * seconds.
@@ -30,7 +30,6 @@ public class LinearEnemySpawn implements EnemySpawning
 	public LinearEnemySpawn()
 	{
 		this(10);
-		deadEnemies = 0;
 	}
 
 	public LinearEnemySpawn(float spawnTime)
@@ -66,7 +65,6 @@ public class LinearEnemySpawn implements EnemySpawning
 		{
 			if (!enemy.isAlive)
 			{
-				deadEnemies++;
 				world.destroyBody(enemy.getFixture().getBody());
 				enemy.dispose();
 				AudioManager.instance.play(Assets.instance.enemyDeathSound);

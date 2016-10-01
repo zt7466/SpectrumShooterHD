@@ -9,13 +9,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
 /**
- * Enemy objects.
+ * Enemy.java
+ * 
+ * Manages and Enemy enity, include ensureing that the main sprite's position matches
+ * that of it's Fixture's position and ensuring that the inner health Sprite is in
+ * the correct position.
  *
  * @author Christopher Boyer
  */
 public class Enemy extends GameObject
 {
-
 	private static final float KNOCKBACK = 17f;
 
 	private Vector2 linearVelocity;
@@ -36,14 +39,16 @@ public class Enemy extends GameObject
 		fixture.setUserData(this);
 		this.linearVelocity = fixture.getBody().getLinearVelocity();
 
+		// Create the inner sprite of this Enemy
 		Pixmap pixmap = new Pixmap(300, 300, Format.RGBA8888);
 		pixmap.setColor(Color.WHITE);
 		pixmap.fillCircle(150, 150, 150);
 		centerSprite = new Sprite(new Texture(pixmap));
+		// Set as white so it's tint can be it's true color
 		centerSprite.setColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, 0);
 		centerSprite.setSize(spriteSize * INNER_MULTIPLIER, spriteSize * INNER_MULTIPLIER);
 
-		// set the initial position of the Sprite
+		// Set the initial position of the Sprite
 		this.update();
 	}
 
@@ -88,11 +93,5 @@ public class Enemy extends GameObject
 		}
 		fixture.getBody().setLinearVelocity(-linearVelocity.x * KNOCKBACK, -linearVelocity.y * KNOCKBACK);
 	}
-
-	private void setSpritePosition(Sprite sprite, float spriteSize)
-	{
-
-	}
-
 
 }

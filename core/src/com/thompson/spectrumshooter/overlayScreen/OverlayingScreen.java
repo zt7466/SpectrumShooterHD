@@ -15,9 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 /**
  * OverlayingScreen.java
- * Abstract method for setting up colorselecting Screens
- * @author Zach
- *
+ * 
+ * Abstract class for managing OverlayingScreens.
+ * 
+ * @author Zachary Thompson
  */
 public abstract class OverlayingScreen extends Group {
 	protected Table totalTable;

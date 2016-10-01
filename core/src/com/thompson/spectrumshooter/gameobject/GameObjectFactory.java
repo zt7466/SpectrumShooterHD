@@ -1,6 +1,5 @@
 package com.thompson.spectrumshooter.gameobject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -15,20 +14,20 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.util.Constants;
 
 
 /**
- * A factory that allows for the creation of enemies.
+ * GameObjectFactory.java
+ * 
+ * A collection of methods that create different GameObjects.
  *
- * @author cb9619
+ * @author Christopher Boyer
  */
 public class GameObjectFactory
 {
 
 	private static final int PIXMAP_RADIUS = 150;
-	private ColorWheel colorWheel;
 
 	private static final short CATEGORY_ENEMY = 0x0002;
 	private static final short CATEGORY_HERO_PROJECTILE = 0x0001;
@@ -50,11 +49,6 @@ public class GameObjectFactory
 	private static final float DAMAGE_HERO = 0.0f;
 	private static final float DAMAGE_PROJECTILE = 3.0f;
 
-	public GameObjectFactory()
-	{
-		this.colorWheel = new ColorWheel();
-	}
-
 	/**
 	 * Make a new Enemy that moves linearly from it's spawn location towards
 	 * the center of the screen.
@@ -71,7 +65,7 @@ public class GameObjectFactory
 
 
 		Fixture fixture = createDynamicFixture(world,
-				generateRandomSpawnLocation(Constants.ENEMY_RADIUS), spriteSize, INWARDS, 0.1f);
+				createRandomSpawnLocation(Constants.ENEMY_RADIUS), spriteSize, INWARDS, 0.1f);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_ENEMY;
 		filter.maskBits = ~CATEGORY_ENEMY;
@@ -122,7 +116,7 @@ public class GameObjectFactory
 	{
 		Texture texture = new Texture(createPixmap(color));
 		float spriteSize = SIZE_PROJECTILE;
-		Fixture fixture = createDynamicFixture(world, generateProjectilePosition(Constants.PROJECTILE_REDIUS,
+		Fixture fixture = createDynamicFixture(world, createProjectilePosition(Constants.PROJECTILE_REDIUS,
 											   mouseX, mouseY), spriteSize, OUTWARDS, DAMAGE_PROJECTILE);
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_HERO_PROJECTILE;
@@ -210,7 +204,7 @@ public class GameObjectFactory
 	 * Generate a random spawn location for an Enemy.
 	 * @return	a random spawn location for an Enemy
 	 */
-	private Vector2 generateRandomSpawnLocation(float spawnRadius)
+	private Vector2 createRandomSpawnLocation(float spawnRadius)
 	{
 		float theta = MathUtils.random(0f, 360.0f);
 
@@ -226,7 +220,7 @@ public class GameObjectFactory
 	 * @param mouseY		the y location of the mouse when pressed
 	 * @return				the Vector2 location of the projectile
 	 */
-	private Vector2 generateProjectilePosition(float spawnRadius, float mouseX, float mouseY)
+	private Vector2 createProjectilePosition(float spawnRadius, float mouseX, float mouseY)
 	{
 		float theta = MathUtils.radiansToDegrees * MathUtils.atan2(mouseY, mouseX);
 		if (mouseY < 0)
@@ -249,8 +243,8 @@ public class GameObjectFactory
 	}
 	
 	/**
-	 * Create a color for a enemy that can be reached by a basic color selector
-	 * @return the Random Color
+	 * Create a color that is reachable by the basic color selector.
+	 * @return a random reachable Color
 	 */
 	private Color createCreatableColor()
 	{

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -29,7 +28,6 @@ import com.thompson.spectrumshooter.overlayScreen.HealthBar;
 import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
 import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.spawning.EnemySpawning;
-import com.thompson.spectrumshooter.spawning.ExponentialEnemySpawn;
 import com.thompson.spectrumshooter.spawning.LinearEnemySpawn;
 import com.thompson.spectrumshooter.spawning.NormalProjectileSpawn;
 import com.thompson.spectrumshooter.spawning.ProjectileSpawn;
@@ -38,6 +36,8 @@ import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * MainScreen.java
+ * 
+ * The screen where the bulk of the game occurs.
  *
  * @author Christopher Boyer
  */
@@ -59,14 +59,11 @@ public class MainScreen implements Screen
 
 	private World world;
 
-	// TODO this
+	// TODO refactor this
 	private Stage backgroundStage;
 
 	private ColorSelector colorSelector;
 	private HealthBar healthBar;
-
-	// TODO remove
-	//Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
@@ -83,26 +80,32 @@ public class MainScreen implements Screen
 
 	private static final float SPAWN_SPEED = 1.5f;
 
-	public MainScreen() {
+	public MainScreen()
+	{
 		init();
 	}
 
 	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-
+	public void show()
+	{
+		// TODO figure out what is to be done when show() is called
 	}
 
+	/**
+	 * Update and then draw all the game objects.
+	 */
 	@Override
-	public void render(float deltaTime) {
+	public void render(float deltaTime)
+	{
 
 		currentDelay = currentDelay + deltaTime;
 
 		// update information about the game
 		updateBackgroundColor();
-		colorSelector.updateColor(); // Tells the colorSelector to updateItSelf
+		colorSelector.updateColor();
 		backgroundStage.draw();
 
+		// update all the fixures in the world
 		world.step(1 / 30f, 9, 2);
 
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && currentDelay >= shootDelay)
@@ -167,61 +170,43 @@ public class MainScreen implements Screen
 			projectile.draw(spriteBatch);
 		}
 		spriteBatch.end();
-
-		//debugRenderer.render(world, camera.combined);
-
-	}
-
-	private void updateBackgroundColor() {
-		Color backgroundColor = new Color(colorWheel.getRedValue(currentColorCode) / 255.0f,
-				colorWheel.getBlueValue(currentColorCode) / 255.0f, colorWheel.getGreenValue(currentColorCode) / 255.0f,
-				1);
-
-		Gdx.gl.glClearColor(backgroundColor.r,backgroundColor.g,backgroundColor.b,1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-
-		healthBar.changeColor(backgroundColor);
-		colorSelector.changeColor(backgroundColor);
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height)
+	{
 		camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
 		camera.update();
 	}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public Color getColorSelectorColor()
+	public void pause()
 	{
-		return colorSelector.selectColor();
+		// TODO find out what needs to be done when pause() is called
 	}
 
-	private void init()
+	@Override
+	public void resume()
+	{
+		// TODO found out what needs to be done when resume() is called
+	}
+
+	@Override
+	public void hide()
+	{
+		// TODO find out what we need to do when we call hide()
+	}
+
+	@Override
+	public void dispose() 
+	{
+		// TODO find out what needs to be disposed
+	}
+
+	/**
+	 * Initialize a new MainScreen object.
+	 */
+	public void init()
 	{
 		AudioManager.instance.play(Assets.instance.gameMusic);
 
@@ -253,12 +238,12 @@ public class MainScreen implements Screen
 		colorWheel = new ColorWheel();
 		spriteBatch  = new SpriteBatch();
 
-		enemySpawning = new LinearEnemySpawn();
+		enemySpawning = new LinearEnemySpawn(SPAWN_SPEED);
 		projectileSpawning = new NormalProjectileSpawn();
 
 		backgroundStage = new Stage(new FitViewport(Constants.GAME_WIDTH, Constants.GAME_HEIGHT), spriteBatch);
 
-		// TODO fix this to not be shitty
+		// TODO refactor all this
 		Table backgroundTable = new Table();
 		backgroundTable.setFillParent(true);
 		Sprite circleBackground = new Sprite(new Texture(Gdx.files.local("whiteCircleFaded.png")));
@@ -278,5 +263,22 @@ public class MainScreen implements Screen
 		colorSelectorTable.add(colorSelector.getTable()).padRight(Constants.GAME_WIDTH * .75f);
 		backgroundStage.addActor(colorSelectorTable);
 	}
+	
+	/**
+	 * Update the current color of the background.
+	 */
+	private void updateBackgroundColor()
+	{
+		Color backgroundColor = new Color(colorWheel.getRedValue(currentColorCode) / 255.0f,
+				colorWheel.getBlueValue(currentColorCode) / 255.0f, colorWheel.getGreenValue(currentColorCode) / 255.0f,
+				1);
 
+		Gdx.gl.glClearColor(backgroundColor.r,backgroundColor.g,backgroundColor.b,1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
+
+		healthBar.changeColor(backgroundColor);
+		colorSelector.changeColor(backgroundColor);
+	}
 }

@@ -9,9 +9,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Disposable;
 import com.thompson.spectrumshooter.util.Constants;
 /**
- * Assets class, where we load the assets
+ * Assets.java
+ * 
+ * Class for loading and managing access to Assets.
+ * 
  * @author Abraham Loscher
- *
  */
 public class Assets implements Disposable, AssetErrorListener {
 
@@ -25,15 +27,12 @@ public class Assets implements Disposable, AssetErrorListener {
 	public Music gameMusic;
 
 
-	/**
-	 * Constructor for Assets
-	 */
 	private Assets(){
 		init();
 	}
 
 	/**
-	 * Initializes the Assets class
+	 * Initialize a new instance of the Assets class.
 	 */
 	public void init(){
 		assetManager = new AssetManager();
@@ -48,7 +47,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	}
 
 	/**
-	 * This throws an error if it finds one
+	 * There an error when the AssetManager encounters an issue.
 	 */
 	@Override
 	public void error(AssetDescriptor asset, Throwable throwable) {
@@ -56,7 +55,7 @@ public class Assets implements Disposable, AssetErrorListener {
 	}
 
 	/**
-	 * This will free the specified resources
+	 * Dispose of the resources used in this Asset.
 	 */
 	@Override
 	public void dispose() {

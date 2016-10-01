@@ -1,6 +1,5 @@
 package com.thompson.spectrumshooter.util;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -13,9 +12,11 @@ import com.thompson.spectrumshooter.gameobject.Hero;
 import com.thompson.spectrumshooter.gameobject.Projectile;
 
 /**
+ * CollisionThing.java
+ * 
  * Determine what happens when collision occurs, and keeps track of the number of enemies killed.
+ * 
  * @author Christopher Boyer
- *
  */
 public class CollisionThing implements ContactListener
 {
@@ -58,7 +59,7 @@ public class CollisionThing implements ContactListener
 	/**
 	 * Determine if the collision was between a projectile and an enemy, and if so take
 	 * the appropriate action.
-	 * @param contact
+	 * @param contact	the instance of the contact
 	 */
 	private void projectileEnemyResolve(Contact contact)
 	{
@@ -76,8 +77,8 @@ public class CollisionThing implements ContactListener
 
 	/**
 	 * Complete necessary action for Projectile/Enemy collision.
-	 * @param enemy
-	 * @param projectile
+	 * @param enemy			the Fixture of the Enemy
+	 * @param projectile	the Fixture of the Projectile
 	 */
 	private void projectileEnemyCollision(Fixture enemy, Fixture projectile)
 	{
@@ -98,7 +99,7 @@ public class CollisionThing implements ContactListener
 	/**
 	 * Determine if the collision is the result of a Hero/Enemy collision,
 	 * and take the appropriate action if it is.
-	 * @param contact	the instacne of contact
+	 * @param contact	the instance of contact
 	 */
 	private void enemyHeroResolve(Contact contact)
 	{

@@ -5,7 +5,10 @@ import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 
 /**
- * The way in which Enemies spawn into the world
+ * EnemySpawning.java
+ * 
+ * Defines an interface for spawning enemies.
+ * 
  * @author Christopher Boyer
  */
 public interface EnemySpawning

@@ -2,12 +2,14 @@ package com.thompson.spectrumshooter.gameobject;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.thompson.spectrumshooter.util.Constants;
 
 /**
- * Implementation of the GameObject: Projectile.
+ * Projectile.java
+ * 
+ * Implementation of the GameObject used for killing enemies.
+ * 
  * @author Christopher Boyer
  */
 public class Projectile extends GameObject

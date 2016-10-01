@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
+ * ColorWheel.java
+ * 
  * Creates a color wheel that contains all colors on the RGB color wheel
  * excluding tints, shades, and hues. Each position in the
  *

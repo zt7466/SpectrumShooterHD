@@ -22,6 +22,12 @@ import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.color.ColorWheel;
 import com.thompson.spectrumshooter.util.Constants;
 
+/**
+ * GameOverScreen.java
+ * 
+ * 
+ * @author Zachary Thompson
+ */
 public class GameOverScreen implements Screen
 {
 	private OrthographicCamera camera;

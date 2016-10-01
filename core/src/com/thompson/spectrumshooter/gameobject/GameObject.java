@@ -1,11 +1,17 @@
 package com.thompson.spectrumshooter.gameobject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Fixture;
 
+/**
+ * GameObject.java
+ * 
+ * Shared information management between all objects existing in the game.
+ * 
+ * @author Christopher Boyer
+ */
 public abstract class GameObject extends Sprite
 {
 	protected Color color;
@@ -35,36 +41,51 @@ public abstract class GameObject extends Sprite
 	abstract public void update();
 
 	/**
-	 * Take the given amount of damage.
+	 * Take the given damage out of health.
 	 * @param damage	the damage taken
 	 */
 	abstract public void takeHit(float damage);
 
 	/**
-	 * Get the fixture of this GameObject
-	 * @return
+	 * Get the fixture of this GameObject.
+	 * @return fixture of this GameObject
 	 */
 	public Fixture getFixture()
 	{
 		return this.fixture;
 	}
-
+	
+	/**
+	 * Get the health of this GameObject.
+	 * @return health of this GameObject
+	 */
 	public float getHealth()
 	{
 		return this.health;
 	}
 
+	/**
+	 * Get the stored color of this GameObject.
+	 */
 	@Override
 	public Color getColor()
 	{
 		return this.color;
 	}
 
+	/**
+	 * Get the damage of this GameObject.
+	 * @return damage of this GameObject
+	 */
 	public float getDamage()
 	{
 		return this.damage;
 	}
 
+	/**
+	 * Get the max health of this GameObject.
+	 * @return max health of this GameObject
+	 */
 	public float getMaxHealth()
 	{
 		return this.maxHealth;

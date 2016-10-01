@@ -13,9 +13,10 @@ import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * RGBBarSelector.java
- * standard color selector
- * @author Zach
- *
+ * 
+ * Standard Color Selector implementation of the ColorSelector.
+ * 
+ * @author Zachary Thompson
  */
 public class RGBBarSelector extends ColorSelector 
 {

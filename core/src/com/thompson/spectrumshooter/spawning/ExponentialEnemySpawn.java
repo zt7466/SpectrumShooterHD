@@ -5,17 +5,21 @@ import com.badlogic.gdx.utils.Array;
 import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 
+/**
+ * ExponentialEnemySpawn.java
+ * 
+ * 
+ * 
+ * @author Zachary Thompson
+ */
 public class ExponentialEnemySpawn implements EnemySpawning 
 {
 	private float spawnTime;
-	private int previousEnemyCount;
 	private GameObjectFactory gameObjectFactory;
 	private float previousTime;
-
 	public ExponentialEnemySpawn()
 	{
 		this(15);
-		deadEnemies = 0;
 	}
 	
 	public ExponentialEnemySpawn(float spawnTime)
@@ -25,7 +29,6 @@ public class ExponentialEnemySpawn implements EnemySpawning
 		this.previousTime = spawnTime;
 	}
 	
-	private int deadEnemies;
 	@Override
 	public Array<GameObject> update(Array<GameObject> enemies, World world, float deltaTime) 
 	{
@@ -41,7 +44,6 @@ public class ExponentialEnemySpawn implements EnemySpawning
 		{
 			if (!enemy.isAlive)
 			{
-				deadEnemies++;
 				world.destroyBody(enemy.getFixture().getBody());
 				enemy.dispose();
 				// false indicates using .equals; true indicated using ==

@@ -9,13 +9,15 @@ import com.thompson.spectrumshooter.screens.MenuScreen;
 
 /**
  * SpectrumShooter.java
- * @author Zach
- * Main class for the game that manages the games screens
+ * 
+ * @author Zachary Thompson\
+ * 
+ * Main class for runninng the game and managing the current game screen.
  */
 public class SpectrumShooter extends Game
 {
 	private static SpectrumShooter instance = null;
-	private boolean testMode;
+	private boolean testMode;	// discerns whether or not we're in test mode
 
 	public SpectrumShooter(boolean testMode)
 	{
@@ -23,7 +25,7 @@ public class SpectrumShooter extends Game
 	}
 
 	/**
-	 * Class run where the game is started
+	 * Create a new instance of the game.
 	 */
 	@Override
 	public void create()
@@ -41,11 +43,13 @@ public class SpectrumShooter extends Game
 	}
 
 	/**
-	 * Class run on repeat
+	 * Main game loop.
 	 */
 	@Override
 	public void render()
 	{
+		// if the current screen is MainScreen and the game is curently over, then switch to
+		// the game over screen.
 		if (instance.getScreen().getClass() == MainScreen.class &&
 				((MainScreen) instance.getScreen()).gameOver)
 		{
@@ -61,8 +65,8 @@ public class SpectrumShooter extends Game
 	}
 
 	/**
-	 * Singleton method call
-	 * @return
+	 * Get the only instance of SpectrumShooter.
+	 * @return only instance of SpectrumShooter
 	 */
 	public static SpectrumShooter getInstance()
 	{

@@ -10,14 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 /**
  * HealthBar.java 
- * class for main character's healthbar
- * @author Zachary
+ * 
+ * Represents the current health of the player's character.
+ * 
+ * @author Zachary Thompson
  *
  */
 public class HealthBar extends OverlayingScreen 
 {
 	protected ProgressBar healthBar;
 	protected Sprite fillSprite;
+	
 	public HealthBar(int MaxHealthBar)
 	{
 		super(400, 40);
@@ -42,11 +45,18 @@ public class HealthBar extends OverlayingScreen
 		inerdTable.add(healthBar).minWidth(375);
 	}
 
+	/**
+	 * Sets the current health percentage of the hero.
+	 * @param value	the current health percentage of the hero
+	 */
 	public void setValue(int value)
 	{
 		healthBar.setValue(value);
 	}
 	
+	/**
+	 * TODO: why is this here?
+	 */
 	@Override
 	public void changeColor(Color c)
 	{
