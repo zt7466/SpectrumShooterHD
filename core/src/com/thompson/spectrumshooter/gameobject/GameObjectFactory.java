@@ -19,7 +19,7 @@ import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * GameObjectFactory.java
- * 
+ *
  * A collection of methods that create different GameObjects.
  *
  * @author Christopher Boyer
@@ -36,8 +36,8 @@ public class GameObjectFactory
 	private static final int INWARDS = -1;
 	private static final int STATIONARY = 1;
 
-	private static final float SIZE_ENEMY_MIN = 0.25f;
-	private static final float SIZE__ENEMY_MAX = 0.75f;
+	private static final float SIZE_ENEMY_MIN = 0.4f;
+	private static final float SIZE__ENEMY_MAX = 0.6f;
 	private static final float SIZE_HERO = 0.5f;
 	private static final float SIZE_PROJECTILE = 0.2f;
 
@@ -48,6 +48,9 @@ public class GameObjectFactory
 	private static final float DAMAGE_ENEMY = 1.0f;
 	private static final float DAMAGE_HERO = 0.0f;
 	private static final float DAMAGE_PROJECTILE = 3.0f;
+
+	private static final float SPEED_ENEMY_MIN = .06f;
+	private static final float SPEED_ENEMY_MAX = .15f;
 
 	/**
 	 * Make a new Enemy that moves linearly from it's spawn location towards
@@ -64,8 +67,10 @@ public class GameObjectFactory
 		float spriteSize =  MathUtils.random(SIZE_ENEMY_MIN, SIZE__ENEMY_MAX);
 
 
+
 		Fixture fixture = createDynamicFixture(world,
-				createRandomSpawnLocation(Constants.ENEMY_RADIUS), spriteSize, INWARDS, 0.1f);
+				createRandomSpawnLocation(Constants.ENEMY_RADIUS), spriteSize, INWARDS,
+				MathUtils.random(SPEED_ENEMY_MIN, SPEED_ENEMY_MAX));
 		Filter filter = new Filter();
 		filter.categoryBits = CATEGORY_ENEMY;
 		filter.maskBits = ~CATEGORY_ENEMY;
@@ -241,7 +246,7 @@ public class GameObjectFactory
 		return new Vector2(spawnRadius * MathUtils.cosDeg(theta),
 						   spawnRadius * MathUtils.sinDeg(theta));
 	}
-	
+
 	/**
 	 * Create a color that is reachable by the basic color selector.
 	 * @return a random reachable Color
@@ -249,12 +254,12 @@ public class GameObjectFactory
 	private Color createCreatableColor()
 	{
 		float maxValue = Constants.MAX_COMBINATION / 100;
-		
+
 		float redValue = (float)Math.random();
 		float greenValue;
 		float blueValue;
 		maxValue = maxValue - redValue;
-		
+
 		if(maxValue > 1)
 		{
 			greenValue = (float)Math.random();
@@ -264,7 +269,7 @@ public class GameObjectFactory
 			greenValue = (float)Math.random() * maxValue;
 		}
 		maxValue = maxValue - greenValue;
-		
+
 		if(maxValue > 1)
 		{
 			blueValue = (float)Math.random();
@@ -273,7 +278,7 @@ public class GameObjectFactory
 		{
 			blueValue = maxValue;
 		}
-		
+
 		return new Color(redValue, greenValue, blueValue, 1);
 	}
 
