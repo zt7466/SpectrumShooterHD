@@ -66,12 +66,12 @@ public class GameOverScreen implements Screen
 		parameter.shadowOffsetX = 2;
 		parameter.shadowOffsetY = 2;
 
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("master_of_break.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.local("GosmickSansBold.ttf"));
 		titleLabelStyle = new LabelStyle(generator.generateFont(parameter), new Color(0.255f, 0.412f, 0.882f, 1f));
 
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);
-		mainTable.add(new Label("Game Over", titleLabelStyle)).row();
+		mainTable.add(new Label("GAME OVER", titleLabelStyle)).row();
 
 		mainTable.add(new Label( numberKilled + " Kills", titleLabelStyle)).row();
 
