@@ -9,9 +9,9 @@ import com.thompson.spectrumshooter.screens.MenuScreen;
 
 /**
  * SpectrumShooter.java
- * 
+ *
  * @author Zachary Thompson\
- * 
+ *
  * Main class for runninng the game and managing the current game screen.
  */
 public class SpectrumShooter extends Game

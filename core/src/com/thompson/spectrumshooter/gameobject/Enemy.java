@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 
 /**
  * Enemy.java
- * 
+ *
  * Manages and Enemy enity, include ensureing that the main sprite's position matches
  * that of it's Fixture's position and ensuring that the inner health Sprite is in
  * the correct position.
@@ -19,12 +19,12 @@ import com.badlogic.gdx.physics.box2d.Fixture;
  */
 public class Enemy extends GameObject
 {
-	private static final float KNOCKBACK = 17f;
+	private static final float KNOCKBACK = 10f;
 
 	private Vector2 linearVelocity;
 	private Sprite centerSprite;
 
-	private static final float INNER_MULTIPLIER = 0.75f;
+	private static final float INNER_MULTIPLIER = 0.67f;
 
 	/**
 	 * Create a new Enemy with the given texture and the given color code.
