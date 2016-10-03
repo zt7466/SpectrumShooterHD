@@ -9,7 +9,7 @@ import com.thompson.spectrumshooter.sound.AudioManager;
 
 /**
  * LinearEnemySpawn.java
- * 
+ *
  * A normal spawning algorithm where every time an enemy dies, a new enemy is
  * is spawned. Additionally every given so often another enemy spawns.
  *

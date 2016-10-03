@@ -1,5 +1,6 @@
 package com.thompson.spectrumshooter.assets;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
@@ -10,9 +11,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.thompson.spectrumshooter.util.Constants;
 /**
  * Assets.java
- * 
+ *
  * Class for loading and managing access to Assets.
- * 
+ *
  * @author Abraham Loscher
  */
 public class Assets implements Disposable, AssetErrorListener {
@@ -39,13 +40,14 @@ public class Assets implements Disposable, AssetErrorListener {
 	public void init(){
 		assetManager = new AssetManager();
 		assetManager.setErrorListener(this);
-		String s = Constants.SOUND_PATH + "/bubbles.wav";
-		String m = Constants.MUSIC_PATH + "/evan_music1.mp3";
+		String s = "sound/bubbles.wav";
+		String m = "music/evan_music1.mp3";
 		assetManager.load(s, Sound.class);
 		assetManager.load(m, Music.class);
 		assetManager.finishLoading();
-		enemyDeathSound = assetManager.get(s, Sound.class);
-		gameMusic = assetManager.get(m, Music.class);
+		enemyDeathSound = Gdx.audio.newSound(Gdx.files.internal(s));
+		gameMusic = Gdx.audio.newMusic(Gdx.files.internal(m));
+
 	}
 
 	/**
