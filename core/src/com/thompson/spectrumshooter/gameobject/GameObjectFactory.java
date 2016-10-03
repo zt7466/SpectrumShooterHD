@@ -36,8 +36,8 @@ public class GameObjectFactory
 	private static final int INWARDS = -1;
 	private static final int STATIONARY = 1;
 
-	private static final float SIZE_ENEMY_MIN = 0.25f;
-	private static final float SIZE__ENEMY_MAX = 0.75f;
+	private static final float SIZE_ENEMY_MIN = 0.4f;
+	private static final float SIZE__ENEMY_MAX = 0.6f;
 	private static final float SIZE_HERO = 0.5f;
 	private static final float SIZE_PROJECTILE = 0.2f;
 
