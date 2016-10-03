@@ -172,6 +172,20 @@ public class MainScreen implements Screen
 		spriteBatch.end();
 	}
 
+	private void updateBackgroundColor() {
+		Color backgroundColor = new Color(colorWheel.getRedValue(currentColorCode) / 255.0f,
+				colorWheel.getBlueValue(currentColorCode) / 255.0f, colorWheel.getGreenValue(currentColorCode) / 255.0f,
+				1);
+
+		Gdx.gl.glClearColor(backgroundColor.r,backgroundColor.g,backgroundColor.b,1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
+
+		healthBar.changeColor(backgroundColor);
+		colorSelector.changeColor(backgroundColor);
+	}
+
 	@Override
 	public void resize(int width, int height)
 	{
@@ -208,6 +222,8 @@ public class MainScreen implements Screen
 	 */
 	public void init()
 	{
+		// proof that Evan J. Trump Schoenberger contributed to this project.
+		//He contributed a small loan of a million sound files
 		AudioManager.instance.play(Assets.instance.gameMusic);
 
 

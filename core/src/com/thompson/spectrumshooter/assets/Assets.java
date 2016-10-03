@@ -26,7 +26,9 @@ public class Assets implements Disposable, AssetErrorListener {
 	public Sound enemyDeathSound;
 	public Music gameMusic;
 
-
+	/**
+	 * Constructor for Assets
+	 */
 	private Assets(){
 		init();
 	}

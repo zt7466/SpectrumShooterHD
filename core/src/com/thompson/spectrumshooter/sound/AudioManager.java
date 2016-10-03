@@ -39,4 +39,8 @@ public class AudioManager {
 		music.play();
 	}
 
+	public void stop(Music music){
+		music.stop();
+	}
+
 }
