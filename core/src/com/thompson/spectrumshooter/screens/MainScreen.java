@@ -36,7 +36,7 @@ import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * MainScreen.java
- * 
+ *
  * The screen where the bulk of the game occurs.
  *
  * @author Christopher Boyer
@@ -212,7 +212,7 @@ public class MainScreen implements Screen
 	}
 
 	@Override
-	public void dispose() 
+	public void dispose()
 	{
 		// TODO find out what needs to be disposed
 	}
@@ -279,22 +279,5 @@ public class MainScreen implements Screen
 		colorSelectorTable.add(colorSelector.getTable()).padRight(Constants.GAME_WIDTH * .75f);
 		backgroundStage.addActor(colorSelectorTable);
 	}
-	
-	/**
-	 * Update the current color of the background.
-	 */
-	private void updateBackgroundColor()
-	{
-		Color backgroundColor = new Color(colorWheel.getRedValue(currentColorCode) / 255.0f,
-				colorWheel.getBlueValue(currentColorCode) / 255.0f, colorWheel.getGreenValue(currentColorCode) / 255.0f,
-				1);
 
-		Gdx.gl.glClearColor(backgroundColor.r,backgroundColor.g,backgroundColor.b,1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		currentColorCode = colorWheel.incrementColorCode(currentColorCode);
-
-		healthBar.changeColor(backgroundColor);
-		colorSelector.changeColor(backgroundColor);
-	}
 }
