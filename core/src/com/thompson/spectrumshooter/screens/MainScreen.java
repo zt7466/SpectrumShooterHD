@@ -82,7 +82,6 @@ public class MainScreen implements Screen
 
 	private boolean fadeFinished = false;
 
-	private boolean fadeFinished = false;
 
 	public MainScreen()
 	{
