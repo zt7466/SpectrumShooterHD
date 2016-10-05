@@ -3,14 +3,16 @@ package com.thompson.spectrumshooter;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.screens.GameOverScreen;
 import com.thompson.spectrumshooter.screens.MainScreen;
 import com.thompson.spectrumshooter.screens.MenuScreen;
+import com.thompson.spectrumshooter.sound.AudioManager;
 
 /**
  * SpectrumShooter.java
  *
- * @author Zachary Thompson\
+ * @author Zachary Thompson
  *
  * Main class for runninng the game and managing the current game screen.
  */
@@ -34,10 +36,12 @@ public class SpectrumShooter extends Game
 		instance = this;
 		if(!testMode)
 		{
+			AudioManager.instance.play(Assets.instance.mainMenuMusic);
 			instance.setScreen(new MenuScreen());
 		}
 		else
 		{
+			AudioManager.instance.play(Assets.instance.gameMusic);
 			instance.setScreen(new MainScreen());
 		}
 	}

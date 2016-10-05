@@ -4,11 +4,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 /**
  * AudioManager.java
- * 
+ *
  * This manages all the playing of sounds in the entire game.
  * As the WorldRenderer handles dealing with graphics, the AudioManager handles
  * the playing of sound files when needed.
- * 
+ *
  * @author Abraham Loscher
  */
 public class AudioManager {
@@ -21,6 +21,16 @@ public class AudioManager {
 	private AudioManager(){
 
 	}
+
+
+	public void fade(Music music){
+		float i = music.getVolume();
+		i = i -.01f;
+		music.setVolume(i);
+		System.out.println(i + "");
+
+	}
+
 
 	/**
 	 * Plays the sound that is input as a parameter
@@ -36,6 +46,7 @@ public class AudioManager {
 	 */
 	public void play(Music music){
 		music.setLooping(true);
+		music.setVolume(1.0f);
 		music.play();
 	}
 

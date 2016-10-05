@@ -80,6 +80,8 @@ public class MainScreen implements Screen
 
 	private static final float SPAWN_SPEED = 1.175f;
 
+	private boolean fadeFinished = false;
+
 	public MainScreen()
 	{
 		init();
@@ -169,6 +171,18 @@ public class MainScreen implements Screen
 		{
 			projectile.draw(spriteBatch);
 		}
+
+		//Abe Loscher
+		//King of Backwards-Ass Solutions
+		//Comin' 'atcha with a brand new youtube video
+		if(!fadeFinished){
+			if(Assets.instance.mainMenuMusic.getVolume() > 0){
+				AudioManager.instance.fade(Assets.instance.mainMenuMusic);
+			}else{
+				AudioManager.instance.stop(Assets.instance.mainMenuMusic);
+				fadeFinished = true;
+			}
+		}
 		spriteBatch.end();
 	}
 
@@ -225,7 +239,6 @@ public class MainScreen implements Screen
 		// proof that Evan J. Trump Schoenberger contributed to this project.
 		//He contributed a small loan of a million sound files
 		AudioManager.instance.play(Assets.instance.gameMusic);
-
 
 		enemiesKilled = 0;
 

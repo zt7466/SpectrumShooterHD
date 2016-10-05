@@ -30,16 +30,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.color.ColorWheel;
-import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
-import com.thompson.spectrumshooter.overlayScreen.ColorWheelSelector;
 import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * MenuScreen.java
- * 
+ *
  * The menue screen of the game.
- * 
+ *
  * @author Zachary Thompson
  */
 public class MenuScreen implements Screen
@@ -116,6 +114,7 @@ public class MenuScreen implements Screen
 			public void changed(ChangeEvent event, Actor actor)
 			{
 				SpectrumShooter.getInstance().setScreen(new MainScreen());
+				AudioManager.instance.play(Assets.instance.gameMusic);
 				dispose();
 			}
 		});
@@ -208,14 +207,14 @@ public class MenuScreen implements Screen
 	public backgroundEnemy generateEnemy()
 	{
 		int colorCode = colorWheel.random();
-		Color Color = new Color(colorWheel.getRedValue(colorCode) / 255f, 
-				colorWheel.getGreenValue(colorCode) / 255f, 
+		Color Color = new Color(colorWheel.getRedValue(colorCode) / 255f,
+				colorWheel.getGreenValue(colorCode) / 255f,
 				colorWheel.getBlueValue(colorCode) / 255f,
 				1f);
-		
+
 		return new backgroundEnemy(
-				(float)Math.random() * 360f, 
-				CIRCLEWIDTH/2, 
+				(float)Math.random() * 360f,
+				CIRCLEWIDTH/2,
 				(float)Math.random() * 120 + 15,
 				(float)Math.random() * 20 + 15,
 				Color);

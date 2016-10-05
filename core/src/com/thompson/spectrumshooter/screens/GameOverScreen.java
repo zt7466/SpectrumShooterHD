@@ -19,13 +19,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.SpectrumShooter;
+import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.util.Constants;
 
 /**
  * GameOverScreen.java
  * Screen to be placed after the game ends
- * 
+ *
  * @author Zachary Thompson
  */
 public class GameOverScreen implements Screen
@@ -98,6 +100,8 @@ public class GameOverScreen implements Screen
 			@Override
 			public void changed(ChangeEvent event, Actor actor)
 			{
+				AudioManager.instance.stop(Assets.instance.gameMusic);
+				AudioManager.instance.play(Assets.instance.mainMenuMusic);
 				SpectrumShooter.getInstance().setScreen(new MenuScreen());
 				dispose();
 			}

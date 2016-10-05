@@ -1,6 +1,5 @@
 package com.thompson.spectrumshooter.assets;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
@@ -8,7 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Disposable;
-import com.thompson.spectrumshooter.util.Constants;
+import com.thompson.spectrumshooter.SpectrumShooter;
 /**
  * Assets.java
  *
@@ -26,6 +25,7 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	public Sound enemyDeathSound;
 	public Music gameMusic;
+	public Music mainMenuMusic;
 
 	/**
 	 * Constructor for Assets
@@ -42,11 +42,14 @@ public class Assets implements Disposable, AssetErrorListener {
 		assetManager.setErrorListener(this);
 		String s = "sound/bubbles.wav";
 		String m = "music/evan_music1.mp3";
+		String menuMusic = "music/space_music.ogg";
 		assetManager.load(s, Sound.class);
 		assetManager.load(m, Music.class);
+		assetManager.load(menuMusic, Music.class);
 		assetManager.finishLoading();
 		enemyDeathSound = Gdx.audio.newSound(Gdx.files.internal(s));
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal(m));
+		mainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal(menuMusic));
 
 	}
 
