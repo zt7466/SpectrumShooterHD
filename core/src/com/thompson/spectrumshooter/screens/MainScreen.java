@@ -78,7 +78,7 @@ public class MainScreen implements Screen
 
 	private CollisionThing collision;
 
-	private static final float SPAWN_SPEED = 1.175f;
+	private static final float SPAWN_SPEED = 5f;
 
 	private boolean fadeFinished = false;
 

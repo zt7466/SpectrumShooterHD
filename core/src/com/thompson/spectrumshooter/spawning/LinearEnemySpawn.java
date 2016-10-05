@@ -42,38 +42,39 @@ public class LinearEnemySpawn implements EnemySpawning
 	@Override
 	public Array<GameObject> update(Array<GameObject> enemies, World world, float deltaTime)
 	{
-
-		previousTime = previousTime + deltaTime;
-
-		if (previousTime > spawnTime)
-		{
-			enemies.add(gameObjectFactory.makeBasicEnemy(world));
-			previousTime = previousTime - spawnTime;
-		}
-
-		if (enemies.size < previousEnemyCount)
-		{
-			enemies.add(gameObjectFactory.makeBasicEnemy(world));
-		}
-
+		previousTime += deltaTime;
+		
+		// if it's the start of the game, then an initial enemy needs to spawned
 		if (enemies.size == 0)
 		{
 			enemies.add(gameObjectFactory.makeBasicEnemy(world));
 		}
+		
+		// if it's been enough time since the last enemy died, make another
+		if (previousTime > spawnTime)
+		{
+			enemies.add(gameObjectFactory.makeBasicEnemy(world));
+			previousTime = 0f;
+		}
 
+		// all the dead enemies need to be removed, their bodies destroyed, and a bell tolled
+		// commemorating their death; a new enemy is added
 		for (GameObject enemy : enemies)
 		{
 			if (!enemy.isAlive)
 			{
+				// add a new enemy
+				enemies.add(gameObjectFactory.makeBasicEnemy(world));
+				
+				// remove the body
 				world.destroyBody(enemy.getFixture().getBody());
 				enemy.dispose();
+				enemies.removeValue(enemy, false); // false indicates .equal; true indicated ==
 				AudioManager.instance.play(Assets.instance.enemyDeathSound);
-				// false indicates using .equals; true indicated using ==
-				enemies.removeValue(enemy, false);
 			}
 		}
-
-		previousEnemyCount = enemies.size;
+		
+		
 
 		return enemies;
 	}
