@@ -30,6 +30,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.overlayScreen.InstructionScreen;
+import com.thompson.spectrumshooter.overlayScreen.OverlayingScreen;
 import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.util.Constants;
 
@@ -51,13 +53,15 @@ public class MenuScreen implements Screen
 	private ColorWheel colorWheel;
 	private int currentColorCode;
 	private TextButton newGameButton;
+	private TextButton instructionButton;
+	private Label title;
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private ArrayList<backgroundEnemy> array = new ArrayList<backgroundEnemy>();
 
+	private boolean isPaused = false;
 	private final int CIRCLEWIDTH = 550;
 
-	//private Sprite colorWheel2;
-	//ColorSelector selector;
+	InstructionScreen instructionScreen;
 
 	public MenuScreen()
 	{
@@ -98,7 +102,8 @@ public class MenuScreen implements Screen
 
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);
-		mainTable.add(new Label("Spectrum Shooter", titleLabelStyle)).row();
+		title = new Label("Spectrum Shooter", titleLabelStyle);
+		mainTable.add(title).row();
 
 		TextButtonStyle style= new TextButtonStyle();
 		parameter.size = Constants.GAME_HEIGHT/20;
@@ -118,12 +123,30 @@ public class MenuScreen implements Screen
 				dispose();
 			}
 		});
+		
+		instructionButton = new TextButton("Instructions", style);
+		instructionButton.addListener(new ChangeListener()
+		{
+			@Override
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				disable();
+				instructionScreen.makeVisibile();		
+			}
+		});
+		
 		mainTable.add(newGameButton).size(200, 75).row();;
-
-//		selector = new ColorWheelSelector();
-//		mainTable.add(selector.getTable());
-
+		mainTable.add(instructionButton);
+	
 		stage.addActor(mainTable);
+		
+		Table overTable = new Table();
+		overTable.setFillParent(true);
+		instructionScreen = new InstructionScreen(style);
+		overTable.add(instructionScreen.getTable());
+		
+		stage.addActor(overTable);
+		
 	}
 
 	@Override
@@ -131,7 +154,11 @@ public class MenuScreen implements Screen
 	{
 		updateColors();
 		camera.update();
-		//selector.changeColor();
+		
+		if(!instructionScreen.getVisbleStatus() && isPaused)
+		{
+			enable();
+		}
 
 		backgroundStage.draw();
 		for(int i = 0; i < array.size(); i++)
@@ -159,13 +186,37 @@ public class MenuScreen implements Screen
 	}
 
 	@Override
-	public void pause() {
+	public void pause() 
+	{
+		
 	}
 
 	@Override
-	public void resume() {
+	public void resume() 
+	{
+		
 	}
 
+	public void disable()
+	{
+		isPaused = true;
+		newGameButton.setDisabled(true);
+		instructionButton.setDisabled(true);
+		newGameButton.setVisible(false);
+		instructionButton.setVisible(false);
+		title.setVisible(false);
+	}
+	
+	public void enable()
+	{
+		isPaused = false;
+		newGameButton.setDisabled(false);
+		instructionButton.setDisabled(false);
+		newGameButton.setVisible(true);
+		instructionButton.setVisible(true);
+		title.setVisible(true);
+	}
+	
 	@Override
 	public void hide() {
 	}
@@ -184,7 +235,11 @@ public class MenuScreen implements Screen
 	 */
 	public void updateColors()
 	{
-		Color newColor = createColor(currentColorCode);
+		Color newColor =  new Color(
+				colorWheel.getRedValue(currentColorCode)/255.0f,
+				colorWheel.getGreenValue(currentColorCode)/255.0f,
+				colorWheel.getBlueValue(currentColorCode)/255.0f,
+				1);
 		//newColor = selector.selectColor();
 		Gdx.gl.glClearColor(newColor.r, newColor.g, newColor.b, newColor.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -195,14 +250,6 @@ public class MenuScreen implements Screen
 		//colorWheel2.setColor(selector.selectColor());
 	}
 
-	public Color createColor(int currentColorCode)
-	{
-		return new Color(
-				colorWheel.getRedValue(currentColorCode)/255.0f,
-				colorWheel.getGreenValue(currentColorCode)/255.0f,
-				colorWheel.getBlueValue(currentColorCode)/255.0f,
-				1);
-	}
 
 	public backgroundEnemy generateEnemy()
 	{

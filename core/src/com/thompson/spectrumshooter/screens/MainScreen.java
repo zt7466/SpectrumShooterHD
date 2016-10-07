@@ -68,7 +68,7 @@ public class MainScreen implements Screen
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
 
-	private float shootDelay = 0.2f;
+	private float shootDelay = 0.1f;
 	private float currentDelay;
 
 	private boolean spawn;
@@ -78,7 +78,7 @@ public class MainScreen implements Screen
 
 	private CollisionThing collision;
 
-	private static final float SPAWN_SPEED = 5f;
+	private static final float SPAWN_SPEED = 10f;
 
 	private boolean fadeFinished = false;
 

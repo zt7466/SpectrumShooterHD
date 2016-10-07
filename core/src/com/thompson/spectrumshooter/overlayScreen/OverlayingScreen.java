@@ -24,7 +24,6 @@ public abstract class OverlayingScreen extends Group {
 	protected Table totalTable;
 	protected Table inerdTable;
 	protected ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-	protected LabelStyle LABELSTYLE;
 	private final int CORNERSIZE = 10;
 
 	public OverlayingScreen(float xSize, float ySize) 
