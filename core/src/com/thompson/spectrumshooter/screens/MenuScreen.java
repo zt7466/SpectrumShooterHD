@@ -30,8 +30,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.color.ColorWheel;
+import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
 import com.thompson.spectrumshooter.overlayScreen.InstructionScreen;
 import com.thompson.spectrumshooter.overlayScreen.OverlayingScreen;
+import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
 import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.util.Constants;
 
@@ -61,7 +63,8 @@ public class MenuScreen implements Screen
 	private boolean isPaused = false;
 	private final int CIRCLEWIDTH = 550;
 
-	InstructionScreen instructionScreen;
+	private InstructionScreen instructionScreen;
+	private ColorSelector colorSelector = new RGBBarSelector();
 
 	public MenuScreen()
 	{
@@ -154,10 +157,15 @@ public class MenuScreen implements Screen
 	{
 		updateColors();
 		camera.update();
+		colorSelector.updateColor();
 		
 		if(!instructionScreen.getVisbleStatus() && isPaused)
 		{
 			enable();
+		}
+		else
+		{
+			instructionScreen.changeColor(colorSelector.selectColor());
 		}
 
 		backgroundStage.draw();
