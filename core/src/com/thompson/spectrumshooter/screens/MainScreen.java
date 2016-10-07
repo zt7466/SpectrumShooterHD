@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -24,6 +25,7 @@ import com.thompson.spectrumshooter.gameobject.GameObject;
 import com.thompson.spectrumshooter.gameobject.GameObjectFactory;
 import com.thompson.spectrumshooter.gameobject.Hero;
 import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
+import com.thompson.spectrumshooter.overlayScreen.EnemiesKilledScreen;
 import com.thompson.spectrumshooter.overlayScreen.HealthBar;
 import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
 import com.thompson.spectrumshooter.sound.AudioManager;
@@ -64,6 +66,7 @@ public class MainScreen implements Screen
 
 	private ColorSelector colorSelector;
 	private HealthBar healthBar;
+	private EnemiesKilledScreen killedScreen;
 
 	private EnemySpawning enemySpawning;
 	private ProjectileSpawn projectileSpawning;
@@ -150,7 +153,8 @@ public class MainScreen implements Screen
 		}
 
 		enemiesKilled = collision.enemiesKilled;
-
+		killedScreen.setText(enemiesKilled);
+		
 		// draw everything in the game
 		spriteBatch.setProjectionMatrix(camera.combined);
 
@@ -199,6 +203,7 @@ public class MainScreen implements Screen
 
 		healthBar.changeColor(backgroundColor);
 		colorSelector.changeColor(backgroundColor);
+		killedScreen.changeColor(backgroundColor);
 	}
 
 	@Override
@@ -292,6 +297,12 @@ public class MainScreen implements Screen
 		colorSelectorTable.setFillParent(true);
 		colorSelectorTable.add(colorSelector.getTable()).padRight(Constants.GAME_WIDTH * .75f);
 		backgroundStage.addActor(colorSelectorTable);
+		
+		killedScreen = new EnemiesKilledScreen();
+		Table killedScreenTable = new Table();
+		killedScreenTable.setFillParent(true);
+		killedScreenTable.add(killedScreen.getTable()).padLeft(Constants.GAME_WIDTH * .75f);
+		backgroundStage.addActor(killedScreenTable);
+		
 	}
-
 }
