@@ -30,10 +30,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.thompson.spectrumshooter.SpectrumShooter;
 import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.color.ColorWheel;
-import com.thompson.spectrumshooter.overlayScreen.ColorSelector;
-import com.thompson.spectrumshooter.overlayScreen.InstructionScreen;
-import com.thompson.spectrumshooter.overlayScreen.OverlayingScreen;
-import com.thompson.spectrumshooter.overlayScreen.RGBBarSelector;
+import com.thompson.spectrumshooter.overlay.ColorSelector;
+import com.thompson.spectrumshooter.overlay.InstructionScreen;
+import com.thompson.spectrumshooter.overlay.OverlayingScreen;
+import com.thompson.spectrumshooter.overlay.RGBBarSelector;
 import com.thompson.spectrumshooter.sound.AudioManager;
 import com.thompson.spectrumshooter.util.Constants;
 

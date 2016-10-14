@@ -1,4 +1,4 @@
-package com.thompson.spectrumshooter.overlayScreen;
+package com.thompson.spectrumshooter.overlay;
 
 import java.util.ArrayList;
 

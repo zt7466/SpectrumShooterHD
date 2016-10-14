@@ -1,4 +1,4 @@
-package com.thompson.spectrumshooter.overlayScreen;
+package com.thompson.spectrumshooter.overlay;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
