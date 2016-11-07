@@ -100,8 +100,11 @@ public class GameOverScreen implements Screen
 			@Override
 			public void changed(ChangeEvent event, Actor actor)
 			{
-				AudioManager.instance.stop(Assets.instance.gameMusic);
-				AudioManager.instance.play(Assets.instance.mainMenuMusic);
+				AudioManager.instance.stop(Assets.instance.music.gameMusic);
+				while(!Assets.instance.music.mainMenuMusic.isPlaying()){
+					AudioManager.instance.play(Assets.instance.music.mainMenuMusic);
+				}
+
 				SpectrumShooter.getInstance().setScreen(new MenuScreen());
 				dispose();
 			}

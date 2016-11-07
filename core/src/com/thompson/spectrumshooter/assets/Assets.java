@@ -21,11 +21,9 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	public static final Assets instance = new Assets(); //Assets instance *Singleton*
 
-	private AssetManager assetManager;
+	public MusicAssets music; //Holds our game's music
+	public SoundAssets sound; //Holds our game's sounds
 
-	public Sound enemyDeathSound;
-	public Music gameMusic;
-	public Music mainMenuMusic;
 
 	/**
 	 * Constructor for Assets
@@ -38,19 +36,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	 * Initialize a new instance of the Assets class.
 	 */
 	public void init(){
-		assetManager = new AssetManager();
-		assetManager.setErrorListener(this);
-		String s = "sound/bubbles.wav";
-		String m = "music/evan_music1.mp3";
-		String menuMusic = "music/space_music.ogg";
-		assetManager.load(s, Sound.class);
-		assetManager.load(m, Music.class);
-		assetManager.load(menuMusic, Music.class);
-		assetManager.finishLoading();
-		enemyDeathSound = Gdx.audio.newSound(Gdx.files.internal(s));
-		gameMusic = Gdx.audio.newMusic(Gdx.files.internal(m));
-		mainMenuMusic = Gdx.audio.newMusic(Gdx.files.internal(menuMusic));
-
+		music = new MusicAssets();
+		sound = new SoundAssets();
 	}
 
 	/**
@@ -66,6 +53,5 @@ public class Assets implements Disposable, AssetErrorListener {
 	 */
 	@Override
 	public void dispose() {
-		assetManager.dispose();
 	}
 }

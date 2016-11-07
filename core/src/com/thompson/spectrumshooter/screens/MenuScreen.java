@@ -122,11 +122,11 @@ public class MenuScreen implements Screen
 			public void changed(ChangeEvent event, Actor actor)
 			{
 				SpectrumShooter.getInstance().setScreen(new MainScreen());
-				AudioManager.instance.play(Assets.instance.gameMusic);
+				AudioManager.instance.play(Assets.instance.music.gameMusic);
 				dispose();
 			}
 		});
-		
+
 		instructionButton = new TextButton("Instructions", style);
 		instructionButton.addListener(new ChangeListener()
 		{
@@ -134,22 +134,22 @@ public class MenuScreen implements Screen
 			public void changed(ChangeEvent event, Actor actor)
 			{
 				disable();
-				instructionScreen.makeVisibile();		
+				instructionScreen.makeVisibile();
 			}
 		});
-		
+
 		mainTable.add(newGameButton).size(200, 75).row();;
 		mainTable.add(instructionButton);
-	
+
 		stage.addActor(mainTable);
-		
+
 		Table overTable = new Table();
 		overTable.setFillParent(true);
 		instructionScreen = new InstructionScreen(style);
 		overTable.add(instructionScreen.getTable());
-		
+
 		stage.addActor(overTable);
-		
+
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class MenuScreen implements Screen
 		updateColors();
 		camera.update();
 		colorSelector.updateColor();
-		
+
 		if(!instructionScreen.getVisbleStatus() && isPaused)
 		{
 			enable();
@@ -194,15 +194,15 @@ public class MenuScreen implements Screen
 	}
 
 	@Override
-	public void pause() 
+	public void pause()
 	{
-		
+
 	}
 
 	@Override
-	public void resume() 
+	public void resume()
 	{
-		
+
 	}
 
 	public void disable()
@@ -214,7 +214,7 @@ public class MenuScreen implements Screen
 		instructionButton.setVisible(false);
 		title.setVisible(false);
 	}
-	
+
 	public void enable()
 	{
 		isPaused = false;
@@ -224,7 +224,7 @@ public class MenuScreen implements Screen
 		instructionButton.setVisible(true);
 		title.setVisible(true);
 	}
-	
+
 	@Override
 	public void hide() {
 	}

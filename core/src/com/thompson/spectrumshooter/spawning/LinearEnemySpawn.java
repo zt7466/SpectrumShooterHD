@@ -43,13 +43,13 @@ public class LinearEnemySpawn implements EnemySpawning
 	public Array<GameObject> update(Array<GameObject> enemies, World world, float deltaTime)
 	{
 		previousTime += deltaTime;
-		
+
 		// if it's the start of the game, then an initial enemy needs to spawned
 		if (enemies.size == 0)
 		{
 			enemies.add(gameObjectFactory.makeBasicEnemy(world));
 		}
-		
+
 		// if it's been enough time since the last enemy died, make another
 		if (previousTime > spawnTime)
 		{
@@ -65,16 +65,16 @@ public class LinearEnemySpawn implements EnemySpawning
 			{
 				// add a new enemy
 				enemies.add(gameObjectFactory.makeBasicEnemy(world));
-				
+
 				// remove the body
 				world.destroyBody(enemy.getFixture().getBody());
 				enemy.dispose();
 				enemies.removeValue(enemy, false); // false indicates .equal; true indicated ==
-				AudioManager.instance.play(Assets.instance.enemyDeathSound);
+				AudioManager.instance.play(Assets.instance.sound.enemyDeathSound);
 			}
 		}
-		
-		
+
+
 
 		return enemies;
 	}

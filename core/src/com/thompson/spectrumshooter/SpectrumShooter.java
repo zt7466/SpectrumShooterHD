@@ -36,12 +36,12 @@ public class SpectrumShooter extends Game
 		instance = this;
 		if(!testMode)
 		{
-			AudioManager.instance.play(Assets.instance.mainMenuMusic);
+			AudioManager.instance.play(Assets.instance.music.mainMenuMusic);
 			instance.setScreen(new MenuScreen());
 		}
 		else
 		{
-			AudioManager.instance.play(Assets.instance.gameMusic);
+			AudioManager.instance.play(Assets.instance.music.gameMusic);
 			instance.setScreen(new MainScreen());
 		}
 	}

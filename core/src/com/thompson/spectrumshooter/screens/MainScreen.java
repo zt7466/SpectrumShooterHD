@@ -154,7 +154,7 @@ public class MainScreen implements Screen
 
 		enemiesKilled = collision.enemiesKilled;
 		killedScreen.setText(enemiesKilled);
-		
+
 		// draw everything in the game
 		spriteBatch.setProjectionMatrix(camera.combined);
 
@@ -181,10 +181,10 @@ public class MainScreen implements Screen
 		//King of Backwards-Ass Solutions
 		//Comin' 'atcha with a brand new youtube video
 		if(!fadeFinished){
-			if(Assets.instance.mainMenuMusic.getVolume() > 0){
-				AudioManager.instance.fade(Assets.instance.mainMenuMusic);
+			if(Assets.instance.music.mainMenuMusic.getVolume() > 0){
+				AudioManager.instance.fade(Assets.instance.music.mainMenuMusic);
 			}else{
-				AudioManager.instance.stop(Assets.instance.mainMenuMusic);
+				AudioManager.instance.stop(Assets.instance.music.mainMenuMusic);
 				fadeFinished = true;
 			}
 		}
@@ -244,7 +244,7 @@ public class MainScreen implements Screen
 	{
 		// proof that Evan J. Trump Schoenberger contributed to this project.
 		//He contributed a small loan of a million sound files
-		AudioManager.instance.play(Assets.instance.gameMusic);
+		AudioManager.instance.play(Assets.instance.music.gameMusic);
 
 		enemiesKilled = 0;
 
@@ -297,12 +297,12 @@ public class MainScreen implements Screen
 		colorSelectorTable.setFillParent(true);
 		colorSelectorTable.add(colorSelector.getTable()).padRight(Constants.GAME_WIDTH * .75f);
 		backgroundStage.addActor(colorSelectorTable);
-		
+
 		killedScreen = new EnemiesKilledScreen();
 		Table killedScreenTable = new Table();
 		killedScreenTable.setFillParent(true);
 		killedScreenTable.add(killedScreen.getTable()).padLeft(Constants.GAME_WIDTH * .75f);
 		backgroundStage.addActor(killedScreenTable);
-		
+
 	}
 }
