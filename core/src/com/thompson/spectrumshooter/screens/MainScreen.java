@@ -36,6 +36,9 @@ import com.thompson.spectrumshooter.spawning.ProjectileSpawn;
 import com.thompson.spectrumshooter.util.CollisionThing;
 import com.thompson.spectrumshooter.util.Constants;
 
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
+
 /**
  * MainScreen.java
  *
@@ -45,8 +48,6 @@ import com.thompson.spectrumshooter.util.Constants;
  */
 public class MainScreen implements Screen
 {
-
-
 	public static final String TAG = MainScreen.class.getName();
 	private int currentColorCode;
 
@@ -84,8 +85,7 @@ public class MainScreen implements Screen
 	private static final float SPAWN_SPEED = 10f;
 
 	private boolean fadeFinished = false;
-
-
+	
 	public MainScreen()
 	{
 		init();
@@ -109,6 +109,7 @@ public class MainScreen implements Screen
 		// update information about the game
 		updateBackgroundColor();
 		colorSelector.updateColor();
+
 		backgroundStage.draw();
 
 		// update all the fixures in the world
@@ -119,7 +120,11 @@ public class MainScreen implements Screen
 			spawn = true;
 			currentDelay = 0;
 		}
-
+		
+		hero.updateDirection((float) Math.toDegrees(
+				Math.atan2(Gdx.input.getX() - Gdx.graphics.getWidth() / 2,
+				Gdx.input.getY() - Gdx.graphics.getHeight() / 2)));
+		
 		hero.setColor(colorSelector.selectColor().r,
 					  colorSelector.selectColor().g,
 					  colorSelector.selectColor().b,
@@ -160,9 +165,11 @@ public class MainScreen implements Screen
 
 		spriteBatch.begin();
 
+		
 		if (!gameOver)
 		{
 			hero.draw(spriteBatch);
+			
 			healthBar.setValue((int)hero.getHealth());
 		}
 
@@ -259,9 +266,9 @@ public class MainScreen implements Screen
 
 		world = new World(new Vector2(0,0), true);
 		world.setContactListener(collision);
-
+		
 		GameObjectFactory gameObjectFactory = new GameObjectFactory();
-
+	
 		hero = gameObjectFactory.makeHero(world);
 
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH,

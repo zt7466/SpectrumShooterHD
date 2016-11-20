@@ -7,6 +7,7 @@ import com.thompson.spectrumshooter.assets.Assets;
 import com.thompson.spectrumshooter.screens.GameOverScreen;
 import com.thompson.spectrumshooter.screens.MainScreen;
 import com.thompson.spectrumshooter.screens.MenuScreen;
+import com.thompson.spectrumshooter.screens.NeonMenuScreen;
 import com.thompson.spectrumshooter.sound.AudioManager;
 
 /**

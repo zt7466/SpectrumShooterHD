@@ -20,6 +20,9 @@ public class Hero extends GameObject
 		super(color, health, fixture, texture, spriteSize, damage);
 		// this is done inside of this class so that it saves as a Hero.class
 		fixture.setUserData(this);
+		Texture heroTexture = new Texture(Gdx.files.local("Hero.png"));
+		this.setSize(spriteSize * 1.05f, spriteSize * 1.05f);
+		this.setTexture(heroTexture);
 	}
 
 	/**
@@ -47,4 +50,13 @@ public class Hero extends GameObject
 		Gdx.app.debug("HERO", "" + health);
 	}
 
+	/**
+	 * Changes the direction of the hero's sprite to an inputed direction
+	 */
+	public void updateDirection(float direction) 
+	{	
+		this.setRotation(direction - 90);
+	}
+	
+	
 }
